@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
+import { Sidebar } from './components/Sidebar';
 import { Hero } from './components/Hero';
 import { PrincipalWelcome } from './components/PrincipalWelcome';
 import { AcademicsSection } from './components/AcademicsSection';
@@ -12,8 +13,10 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { StudentPortalModal } from './components/StudentPortalModal';
 import { ApplicationModal } from './components/ApplicationModal';
+import { PanelLeft } from 'lucide-react';
 
 export function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -48,14 +51,40 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-school-gold selection:text-school-dark">
+    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-school-gold selection:text-school-dark relative">
       {/* Navigation Bar */}
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}
         onOpenApply={() => setIsApplyOpen(true)}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
+        onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
       />
+
+      {/* Slide-out Campus Navigation Sidebar */}
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        onOpenPortal={() => setIsPortalOpen(true)}
+        onOpenApply={() => setIsApplyOpen(true)}
+      />
+
+      {/* Floating Quick Sidebar Dock Trigger on Left Viewport Margin */}
+      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:block">
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="bg-school-dark/95 hover:bg-school-navy text-white hover:text-school-gold py-3 px-2 rounded-r-2xl shadow-royal border-y border-r border-school-gold/40 backdrop-blur-md flex flex-col items-center gap-2 group transition-all duration-300 transform hover:translate-x-1"
+          title="Open Campus Navigation Sidebar"
+          aria-label="Open Campus Navigation Sidebar"
+        >
+          <PanelLeft className="w-5 h-5 text-school-gold group-hover:scale-110 transition-transform" />
+          <span className="text-[10px] font-extrabold tracking-widest [writing-mode:vertical-lr] rotate-180 uppercase text-slate-200 group-hover:text-school-gold">
+            NAV SIDEBAR
+          </span>
+        </button>
+      </div>
 
       <main>
         {/* Hero Section */}

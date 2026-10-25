@@ -11,7 +11,8 @@ import {
   FileText, 
   ChevronRight,
   Sparkles,
-  BookOpen
+  BookOpen,
+  PanelLeft
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -19,13 +20,15 @@ interface NavbarProps {
   onOpenApply: () => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
+  onToggleSidebar: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   onOpenPortal, 
   onOpenApply, 
   activeSection,
-  setActiveSection 
+  setActiveSection,
+  onToggleSidebar 
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -116,14 +119,26 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo & School Branding */}
-          <a 
-            href="#home" 
-            className="flex items-center gap-3.5 group cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick('home', '#home');
-            }}
-          >
+          <div className="flex items-center gap-3">
+            {/* Sidebar Toggle Button */}
+            <button
+              onClick={onToggleSidebar}
+              className="p-2 rounded-xl text-slate-700 hover:text-school-dark hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-1.5 shadow-sm group"
+              title="Open Navigation Sidebar"
+              aria-label="Open Navigation Sidebar"
+            >
+              <PanelLeft className="w-5 h-5 text-school-navy group-hover:text-school-blue transition-colors" />
+              <span className="hidden xl:inline text-xs font-bold text-slate-700">Sidebar</span>
+            </button>
+
+            <a 
+              href="#home" 
+              className="flex items-center gap-3.5 group cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick('home', '#home');
+              }}
+            >
             {/* School Crest / Monogram Badge */}
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-school-dark via-school-navy to-school-blue p-0.5 shadow-md flex items-center justify-center group-hover:shadow-royal transition-all duration-300">
               <div className="w-full h-full bg-school-dark rounded-[10px] flex flex-col items-center justify-center p-1 border border-school-gold/40">
@@ -151,7 +166,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Motto: Knowledge, Character and Excellence
               </span>
             </div>
-          </a>
+            </a>
+          </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
