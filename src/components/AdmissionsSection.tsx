@@ -1,0 +1,168 @@
+import React from 'react';
+import { SCHOOL_INFO, ADMISSION_STEPS } from '../data/schoolData';
+import { 
+  FileCheck, 
+  Sparkles, 
+  Calendar, 
+  Download, 
+  HelpCircle, 
+  CheckCircle, 
+  ArrowRight,
+  Clock,
+  BadgeAlert
+} from 'lucide-react';
+
+interface AdmissionsSectionProps {
+  onOpenApply: () => void;
+}
+
+export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => {
+  return (
+    <section id="admissions" className="py-20 bg-slate-900 text-white relative overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-96 h-96 bg-school-blue/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-goldLight text-xs font-bold uppercase tracking-wider mb-3 border border-white/15">
+            <Sparkles className="w-4 h-4 text-school-gold" />
+            <span>Admissions Portal 2026/2027</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+            Begin Your Child's Journey to Excellence
+          </h2>
+          <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+            Admissions are ongoing for Junior Secondary (JSS 1, JSS 2) and Senior Secondary (SSS 1, SSS 2 transfers). Day and Boarding slots are available on merit.
+          </p>
+        </div>
+
+        {/* 4-Step Admission Pathway */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {ADMISSION_STEPS.map((item, idx) => (
+            <div 
+              key={idx}
+              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-school-gold/50 transition-all duration-300 relative group"
+            >
+              <div className="text-4xl font-black font-heading text-school-gold/30 group-hover:text-school-gold transition-colors mb-4">
+                {item.step}
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-school-goldLight transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Requirements & Key Dates Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
+          
+          {/* Left: Requirements Checklist (7 cols) */}
+          <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-md flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 mb-4 text-school-gold">
+                <FileCheck className="w-5 h-5" />
+                <h3 className="text-lg font-bold text-white uppercase tracking-wider">
+                  Admission Requirements Checklist
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-300 mb-6">
+                Please prepare the following credentials before sitting for the screening exercise at our Lafia campus:
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  "Completed Online Application Form or Physical Application Dossier",
+                  "Photocopy of Candidate's National Birth Certificate or Statutory Age Declaration",
+                  "Primary Six (6) School Testimonial / Continuous Assessment Record (for JSS1)",
+                  "Official Transcript & Last Promotion Report Card (for SSS1 / JSS2 transfers)",
+                  "Four (4) recent passport-sized photographs (red/white background)",
+                  "Certificate of Medical Fitness from a recognized Government/General Hospital",
+                  "Letter of Identification from Parent's/Guardian's Employer or Traditional Ruler"
+                ].map((req, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                    <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm text-slate-200">{req}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+              <span>Age Requirement: Minimum of 10 years for JSS1 entry.</span>
+              <span className="text-school-gold font-semibold">Strict Merit Policy</span>
+            </div>
+          </div>
+
+          {/* Right: Key Dates & Quick Register (5 cols) */}
+          <div className="lg:col-span-5 bg-gradient-to-br from-school-dark via-school-navy to-slate-900 border border-school-gold/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl">
+            
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-school-gold uppercase tracking-wider">
+                  2026/2027 Screening Schedule
+                </span>
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded border border-emerald-500/30">
+                  Batch 1 Open
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                  <Calendar className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">First Entrance Examination</h4>
+                    <p className="text-xs text-slate-300 mt-0.5">Saturday, 8th August 2026 • 8:30 AM</p>
+                    <p className="text-[11px] text-slate-400 mt-1">Main Hall, HRA Campus, Lafia, Nasarawa State</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                  <Calendar className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Second (Supplementary) Examination</h4>
+                    <p className="text-xs text-slate-300 mt-0.5">Saturday, 29th August 2026 • 8:30 AM</p>
+                    <p className="text-[11px] text-slate-400 mt-1">For candidates unable to attend Batch 1</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Resumption for 2026/2027 Session</h4>
+                    <p className="text-xs text-slate-300 mt-0.5">Monday, 14th September 2026</p>
+                    <p className="text-[11px] text-slate-400 mt-1">Boarders check-in on Sunday, 13th September</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Direct CTA */}
+            <div className="pt-6 space-y-3">
+              <button
+                onClick={onOpenApply}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-gold-glow transition-all duration-300 transform hover:-translate-y-0.5"
+              >
+                <Sparkles className="w-5 h-5 text-school-dark" />
+                <span>Fill Online Application Form</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <p className="text-center text-[11px] text-slate-400">
+                Application takes only 3 minutes. Instant confirmation and reference ID.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
