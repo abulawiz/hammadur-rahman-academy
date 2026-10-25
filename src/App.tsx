@@ -21,6 +21,32 @@ export function App() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
+  // Dark / Black Light Mode State with Persistence
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('hra_theme');
+      if (savedTheme) {
+        return savedTheme === 'dark';
+      }
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('hra_theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('hra_theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'academics', 'admissions', 'facilities', 'student-life', 'news', 'contact'];
@@ -51,7 +77,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-school-gold selection:text-school-dark relative">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans selection:bg-school-gold selection:text-school-dark relative transition-colors duration-300">
       {/* Navigation Bar */}
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}
@@ -59,6 +85,8 @@ export function App() {
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Slide-out Campus Navigation Sidebar */}
@@ -69,6 +97,8 @@ export function App() {
         setActiveSection={setActiveSection}
         onOpenPortal={() => setIsPortalOpen(true)}
         onOpenApply={() => setIsApplyOpen(true)}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Floating Quick Sidebar Dock Trigger on Left Viewport Margin */}

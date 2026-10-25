@@ -20,7 +20,9 @@ import {
   ShieldCheck,
   FileCheck,
   MapPin,
-  Clock
+  Clock,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -30,6 +32,8 @@ interface SidebarProps {
   setActiveSection: (section: string) => void;
   onOpenPortal: () => void;
   onOpenApply: () => void;
+  isDarkMode: boolean;
+  onToggleDarkMode: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -39,6 +43,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveSection,
   onOpenPortal,
   onOpenApply,
+  isDarkMode,
+  onToggleDarkMode,
 }) => {
   const handleNavClick = (sectionId: string, href: string) => {
     setActiveSection(sectionId);
@@ -118,12 +124,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
           
           {/* Quick Accreditation Ribbon */}
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5 text-xs">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-            <div className="text-[11px] text-slate-300">
-              <span className="font-bold text-white">WAEC & NECO Center: </span>
-              <strong className="text-school-gold">4260189</strong>
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+              <div className="text-[11px] text-slate-300">
+                <span className="font-bold text-white">WAEC & NECO: </span>
+                <strong className="text-school-gold">4260189</strong>
+              </div>
             </div>
+
+            {/* Theme Toggle Button */}
+            <button
+              onClick={onToggleDarkMode}
+              className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold flex items-center gap-1.5 transition-colors border border-white/10 text-school-gold"
+            >
+              {isDarkMode ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-300" />
+                  <span className="text-[10px] text-white">Light Mode</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-school-goldLight" />
+                  <span className="text-[10px] text-white">Black / Dark</span>
+                </>
+              )}
+            </button>
           </div>
 
           {/* Quick Action Buttons */}

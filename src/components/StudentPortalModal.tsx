@@ -51,7 +51,7 @@ export const StudentPortalModal: React.FC<StudentPortalModalProps> = ({ isOpen, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-4xl w-full my-8 overflow-hidden shadow-2xl border border-slate-200 relative animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
+      <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-3xl max-w-4xl w-full my-8 overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 relative animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
         
         {/* Modal Header */}
         <div className="bg-gradient-to-r from-school-dark via-school-navy to-school-dark text-white p-4 sm:p-5 flex items-center justify-between border-b border-school-gold/30 flex-shrink-0">
