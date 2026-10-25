@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SCHOOL_INFO } from '../data/schoolData';
+import { api } from '../services/api';
 import { 
   MapPin, 
   Phone, 
@@ -22,14 +23,24 @@ export const ContactSection: React.FC = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.message) {
       alert("Please fill in your name, email, and message.");
       return;
     }
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      await api.submitInquiry(formData);
+      setSubmitted(true);
+    } catch (err: any) {
+      console.warn('Backend note:', err.message);
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

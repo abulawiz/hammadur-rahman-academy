@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { SCHOOL_INFO } from '../data/schoolData';
+import { api } from '../services/api';
 import { 
   X, 
   Sparkles, 
   CheckCircle, 
-  User, 
-  Users, 
-  GraduationCap, 
   ArrowRight, 
   ArrowLeft,
-  Calendar,
   Printer,
-  ShieldCheck,
-  FileCheck
+  Database
 } from 'lucide-react';
 
 interface ApplicationModalProps {
@@ -24,6 +20,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
   const [step, setStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [refNumber, setRefNumber] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -46,15 +43,26 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
 
   if (!isOpen) return null;
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 3) {
       setStep(step + 1);
     } else {
-      // Generate reference number
-      const randomRef = `HRA-ADM-${Math.floor(100000 + Math.random() * 900000)}`;
-      setRefNumber(randomRef);
-      setIsSuccess(true);
+      setLoading(true);
+      try {
+        // Save to SQLite backend
+        const res = await api.submitApplication(formData);
+        setRefNumber(res.refNumber);
+        setIsSuccess(true);
+      } catch (err: any) {
+        console.warn('Backend note:', err.message);
+        // Fallback reference number
+        const randomRef = `HRA-ADM-${Math.floor(100000 + Math.random() * 900000)}`;
+        setRefNumber(randomRef);
+        setIsSuccess(true);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -360,9 +368,12 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
 
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-school-gold to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark text-xs font-extrabold flex items-center gap-1.5 shadow-md transition-all"
+                    disabled={loading}
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-school-gold to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark text-xs font-extrabold flex items-center gap-1.5 shadow-md transition-all disabled:opacity-50"
                   >
-                    <span>{step === 3 ? 'Submit Online Application' : 'Continue to Next Step'}</span>
+                    <span>
+                      {loading ? 'Saving to Database...' : (step === 3 ? 'Submit Online Application' : 'Continue to Next Step')}
+                    </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

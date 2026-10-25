@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ANNOUNCEMENTS, UPCOMING_EVENTS } from '../data/schoolData';
+import { api } from '../services/api';
 import { 
   Bell, 
   Calendar, 
   Clock, 
   MapPin, 
   FileText,
-  AlertCircle
+  AlertCircle,
+  Database
 } from 'lucide-react';
 
 export const NewsEventsSection: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
+  const [liveAnnouncements, setLiveAnnouncements] = useState<any[]>(ANNOUNCEMENTS);
 
   const categories = ['All', 'Admissions', 'Academic', 'Events'];
 
+  useEffect(() => {
+    loadAnnouncements();
+  }, [selectedFilter]);
+
+  const loadAnnouncements = async () => {
+    try {
+      const data = await api.getAnnouncements(selectedFilter);
+      if (data && data.length > 0) {
+        setLiveAnnouncements(data);
+      }
+    } catch {
+      // Keep static defaults on error
+    }
+  };
+
   const filteredAnnouncements = selectedFilter === 'All'
-    ? ANNOUNCEMENTS
-    : ANNOUNCEMENTS.filter(a => a.category === selectedFilter);
+    ? liveAnnouncements
+    : liveAnnouncements.filter(a => a.category === selectedFilter);
 
   return (
     <section id="news" className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300 relative">
@@ -42,10 +60,16 @@ export const NewsEventsSection: React.FC = () => {
           {/* Announcements (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <FileText className="w-5 h-5 text-school-blue dark:text-school-gold" />
-                <span>Notice Board & Bulletins</span>
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-school-blue dark:text-school-gold" />
+                  <span>Notice Board & Bulletins</span>
+                </h3>
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded border border-emerald-500/30 hidden sm:inline-flex items-center gap-1">
+                  <Database className="w-2.5 h-2.5" />
+                  <span>Live DB</span>
+                </span>
+              </div>
 
               {/* Filter Pills */}
               <div className="flex items-center gap-1.5">
@@ -77,7 +101,7 @@ export const NewsEventsSection: React.FC = () => {
                       <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-school-navy text-white">
                         {item.category}
                       </span>
-                      {item.urgent && (
+                      {(item.urgent === true || item.urgent === 1) && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 flex items-center gap-1">
                           <AlertCircle className="w-3 h-3" />
                           <span>Urgent</span>
@@ -85,7 +109,7 @@ export const NewsEventsSection: React.FC = () => {
                       )}
                     </div>
                     <span className="text-[11px] text-slate-400 font-medium">
-                      {item.date}
+                      {item.date_text || item.date}
                     </span>
                   </div>
 

@@ -13,12 +13,14 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { StudentPortalModal } from './components/StudentPortalModal';
 import { ApplicationModal } from './components/ApplicationModal';
-import { PanelLeft } from 'lucide-react';
+import { AdminDashboardModal } from './components/AdminDashboardModal';
+import { PanelLeft, ShieldCheck } from 'lucide-react';
 
 export function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   const [isApplyOpen, setIsApplyOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   // Dark / Black Light Mode State with Persistence
@@ -82,6 +84,7 @@ export function App() {
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}
         onOpenApply={() => setIsApplyOpen(true)}
+        onOpenAdmin={() => setIsAdminOpen(true)}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
@@ -97,6 +100,7 @@ export function App() {
         setActiveSection={setActiveSection}
         onOpenPortal={() => setIsPortalOpen(true)}
         onOpenApply={() => setIsApplyOpen(true)}
+        onOpenAdmin={() => setIsAdminOpen(true)}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
       />
@@ -165,6 +169,12 @@ export function App() {
       <ApplicationModal
         isOpen={isApplyOpen}
         onClose={() => setIsApplyOpen(false)}
+      />
+
+      {/* Admin Management Dashboard Modal */}
+      <AdminDashboardModal
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
       />
     </div>
   );

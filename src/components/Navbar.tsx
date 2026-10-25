@@ -14,12 +14,14 @@ import {
   BookOpen,
   PanelLeft,
   Sun,
-  Moon
+  Moon,
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
   onOpenPortal: () => void;
   onOpenApply: () => void;
+  onOpenAdmin: () => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onToggleSidebar: () => void;
@@ -30,6 +32,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   onOpenPortal, 
   onOpenApply, 
+  onOpenAdmin,
   activeSection,
   setActiveSection,
   onToggleSidebar,
@@ -116,6 +119,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="text-[11px] font-bold text-white hidden sm:inline">Dark</span>
                 </>
               )}
+            </button>
+
+            {/* Admin Portal Trigger */}
+            <button
+              onClick={onOpenAdmin}
+              className="hidden lg:flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-1 rounded text-xs font-semibold tracking-wide border border-white/10 transition-all duration-200 shadow-sm"
+              title="Staff & Administrator Portal"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-school-gold" />
+              <span>Admin Portal</span>
             </button>
 
             <button
@@ -280,6 +293,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenAdmin();
+              }}
+              className="w-full py-2.5 px-4 rounded-lg bg-school-dark/90 text-school-gold text-xs font-bold flex items-center justify-center gap-2 border border-school-gold/30"
+            >
+              <ShieldCheck className="w-4 h-4 text-school-gold" />
+              <span>Admin & Staff Portal</span>
+            </button>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

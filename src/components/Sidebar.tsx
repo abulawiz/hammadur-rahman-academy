@@ -32,6 +32,7 @@ interface SidebarProps {
   setActiveSection: (section: string) => void;
   onOpenPortal: () => void;
   onOpenApply: () => void;
+  onOpenAdmin: () => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
 }
@@ -43,6 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveSection,
   onOpenPortal,
   onOpenApply,
+  onOpenAdmin,
   isDarkMode,
   onToggleDarkMode,
 }) => {
@@ -180,6 +182,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span>Check Student Termly Results</span>
               </div>
               <ChevronRight className="w-4 h-4 opacity-60" />
+            </button>
+
+            <button
+              onClick={() => {
+                onClose();
+                onOpenAdmin();
+              }}
+              className="w-full py-2 px-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-semibold flex items-center justify-between border border-white/10 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-school-gold" />
+                <span>Admin & Staff Management</span>
+              </div>
+              <ChevronRight className="w-4 h-4 opacity-40" />
             </button>
           </div>
 
