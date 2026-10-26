@@ -46,7 +46,137 @@ export const api = {
     return data;
   },
 
-  // 2. Admissions API
+  async getAllResults() {
+    const res = await fetch(`${API_BASE}/results/all`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch results.');
+    return data;
+  },
+
+  async createResult(resultPayload: any) {
+    const res = await fetch(`${API_BASE}/results/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(resultPayload),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to publish result.');
+    return data;
+  },
+
+  // 2. Students API
+  async getStudents(search?: string, classGrade?: string, status?: string) {
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+    if (classGrade && classGrade !== 'All') params.append('classGrade', classGrade);
+    if (status && status !== 'All') params.append('status', status);
+
+    const res = await fetch(`${API_BASE}/students?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch students.');
+    return data.students;
+  },
+
+  async enrollStudent(studentData: any) {
+    const res = await fetch(`${API_BASE}/students`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(studentData),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to enroll student.');
+    return data;
+  },
+
+  async regenerateStudentPin(id: number) {
+    const res = await fetch(`${API_BASE}/students/${id}/regenerate-pin`, {
+      method: 'POST',
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to regenerate PIN.');
+    return data;
+  },
+
+  async deleteStudent(id: number) {
+    const res = await fetch(`${API_BASE}/students/${id}`, {
+      method: 'DELETE',
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to delete student.');
+    return data;
+  },
+
+  // 3. Staff & Faculty API
+  async getStaff(department?: string) {
+    const params = new URLSearchParams();
+    if (department && department !== 'All') params.append('department', department);
+
+    const res = await fetch(`${API_BASE}/staff?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch staff.');
+    return data.staff;
+  },
+
+  async addStaff(staffData: any) {
+    const res = await fetch(`${API_BASE}/staff`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(staffData),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to add staff member.');
+    return data;
+  },
+
+  // 4. Academics (Classes & Subjects) API
+  async getClasses() {
+    const res = await fetch(`${API_BASE}/academics/classes`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch classes.');
+    return data.classes;
+  },
+
+  async getSubjects(department?: string) {
+    const params = new URLSearchParams();
+    if (department && department !== 'All') params.append('department', department);
+
+    const res = await fetch(`${API_BASE}/academics/subjects?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch subjects.');
+    return data.subjects;
+  },
+
+  // 5. Fees & Bursary API
+  async getFeeSchedules() {
+    const res = await fetch(`${API_BASE}/fees/schedules`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch fee schedules.');
+    return data.schedules;
+  },
+
+  async getFeePayments(search?: string, status?: string) {
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+    if (status && status !== 'All') params.append('status', status);
+
+    const res = await fetch(`${API_BASE}/fees/payments?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch payments.');
+    return data;
+  },
+
+  async recordFeePayment(paymentData: any) {
+    const res = await fetch(`${API_BASE}/fees/record-payment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(paymentData),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to record payment.');
+    return data;
+  },
+
+  // 6. Admissions API
   async submitApplication(applicationData: any) {
     const res = await fetch(`${API_BASE}/admissions/apply`, {
       method: 'POST',
@@ -84,7 +214,7 @@ export const api = {
     return data;
   },
 
-  // 3. Announcements API
+  // 7. Announcements API
   async getAnnouncements(category?: string) {
     const url = category && category !== 'All' 
       ? `${API_BASE}/announcements?category=${encodeURIComponent(category)}`
@@ -118,7 +248,7 @@ export const api = {
     return data;
   },
 
-  // 4. Inquiries / Contact API
+  // 8. Inquiries / Contact API
   async submitInquiry(inquiryData: any) {
     const res = await fetch(`${API_BASE}/inquiries`, {
       method: 'POST',
@@ -150,7 +280,7 @@ export const api = {
     return data;
   },
 
-  // 5. Admin API
+  // 9. Admin API
   async adminLogin(username: string, password: string) {
     const res = await fetch(`${API_BASE}/admin/login`, {
       method: 'POST',
