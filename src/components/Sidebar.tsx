@@ -22,7 +22,8 @@ import {
   MapPin,
   Clock,
   Sun,
-  Moon
+  Moon,
+  LogOut
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -35,6 +36,8 @@ interface SidebarProps {
   onOpenAdmin: () => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
+  adminUser?: any;
+  onLogout?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -47,6 +50,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenAdmin,
   isDarkMode,
   onToggleDarkMode,
+  adminUser,
+  onLogout,
 }) => {
   const handleNavClick = (sectionId: string, href: string) => {
     setActiveSection(sectionId);
@@ -66,7 +71,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'student-life', label: 'Student & Boarding Life', href: '#student-life', icon: <Users className="w-4 h-4" /> },
     { id: 'news', label: 'Bulletins & Term Calendar', href: '#news', icon: <Bell className="w-4 h-4" /> },
     { id: 'contact', label: 'Contact & Lafia Location', href: '#contact', icon: <Phone className="w-4 h-4" /> },
+    { id: 'admin', label: 'Admin Portal & Login', href: '#admin', icon: <ShieldCheck className="w-4 h-4" /> },
   ];
+
 
   const academicDepartments = [
     { label: 'Junior Secondary (JSS 1–3)', icon: <BookOpen className="w-3.5 h-3.5 text-school-gold" />, href: '#academics' },
@@ -89,7 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Drawer Container */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-gradient-to-b from-slate-950 via-school-dark to-slate-950 text-white z-50 shadow-2xl border-r border-school-gold/25 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-gradient-to-b from-[#021d15] via-emerald-950 to-[#022c22] text-white z-50 shadow-2xl border-r border-school-gold/30 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -184,19 +191,57 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <ChevronRight className="w-4 h-4 opacity-60" />
             </button>
 
-            <button
-              onClick={() => {
-                onClose();
-                onOpenAdmin();
-              }}
-              className="w-full py-2 px-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-semibold flex items-center justify-between border border-white/10 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-school-gold" />
-                <span>Admin & Staff Management</span>
+            {/* Admin Management Status / Controls */}
+            {adminUser ? (
+              <div className="p-3 rounded-xl bg-emerald-900/60 border border-school-gold/50 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-bold text-school-gold truncate max-w-[170px]">
+                      {adminUser.fullName || adminUser.username}
+                    </span>
+                  </div>
+                  <span className="text-[9px] bg-emerald-800 text-emerald-200 px-1.5 py-0.5 rounded font-bold">
+                    Active
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenAdmin();
+                    }}
+                    className="py-1.5 px-2 bg-school-gold hover:bg-amber-400 text-emerald-950 rounded-lg text-xs font-bold text-center transition-colors shadow-sm"
+                  >
+                    Dashboard
+                  </button>
+                  <button
+                    onClick={() => {
+                      onClose();
+                      if (onLogout) onLogout();
+                    }}
+                    className="py-1.5 px-2 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-colors"
+                  >
+                    <LogOut className="w-3 h-3" />
+                    <span>Log Out</span>
+                  </button>
+                </div>
               </div>
-              <ChevronRight className="w-4 h-4 opacity-40" />
-            </button>
+            ) : (
+              <button
+                onClick={() => {
+                  onClose();
+                  handleNavClick('admin', '#admin');
+                }}
+                className="w-full py-2 px-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-semibold flex items-center justify-between border border-white/10 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-school-gold" />
+                  <span>Admin Login & Staff Access</span>
+                </div>
+                <ChevronRight className="w-4 h-4 opacity-40" />
+              </button>
+            )}
           </div>
 
           {/* Main Navigation Sections */}

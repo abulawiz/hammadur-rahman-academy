@@ -10,6 +10,7 @@ import { StudentLifeSection } from './components/StudentLifeSection';
 import { NewsEventsSection } from './components/NewsEventsSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactSection } from './components/ContactSection';
+import { AdminSection } from './components/AdminSection';
 import { Footer } from './components/Footer';
 import { StudentPortalModal } from './components/StudentPortalModal';
 import { ApplicationModal } from './components/ApplicationModal';
@@ -22,6 +23,35 @@ export function App() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
+  // Authenticated Administrator Session with localStorage persistence
+  const [adminUser, setAdminUser] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('hra_admin_user');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
+
+  const handleAdminLogin = (user: any) => {
+    setAdminUser(user);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('hra_admin_user', JSON.stringify(user));
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setAdminUser(null);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('hra_admin_user');
+    }
+  };
 
   // Dark / Black Light Mode State with Persistence
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -51,7 +81,7 @@ export function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'academics', 'admissions', 'facilities', 'student-life', 'news', 'contact'];
+      const sections = ['home', 'about', 'academics', 'admissions', 'facilities', 'student-life', 'news', 'admin', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -79,7 +109,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans selection:bg-school-gold selection:text-school-dark relative transition-colors duration-300">
+    <div className="min-h-screen bg-[#043324] dark:bg-[#021d15] text-slate-100 font-sans selection:bg-school-gold selection:text-emerald-950 relative transition-colors duration-300">
       {/* Navigation Bar */}
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}
@@ -90,6 +120,8 @@ export function App() {
         onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
+        adminUser={adminUser}
+        onLogout={handleAdminLogout}
       />
 
       {/* Slide-out Campus Navigation Sidebar */}
@@ -103,18 +135,20 @@ export function App() {
         onOpenAdmin={() => setIsAdminOpen(true)}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
+        adminUser={adminUser}
+        onLogout={handleAdminLogout}
       />
 
       {/* Floating Quick Sidebar Dock Trigger on Left Viewport Margin */}
       <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:block">
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="bg-school-dark/95 hover:bg-school-navy text-white hover:text-school-gold py-3 px-2 rounded-r-2xl shadow-royal border-y border-r border-school-gold/40 backdrop-blur-md flex flex-col items-center gap-2 group transition-all duration-300 transform hover:translate-x-1"
+          className="bg-emerald-950/95 hover:bg-emerald-900 text-white hover:text-school-gold py-3 px-2 rounded-r-2xl shadow-royal border-y border-r border-school-gold/40 backdrop-blur-md flex flex-col items-center gap-2 group transition-all duration-300 transform hover:translate-x-1"
           title="Open Campus Navigation Sidebar"
           aria-label="Open Campus Navigation Sidebar"
         >
           <PanelLeft className="w-5 h-5 text-school-gold group-hover:scale-110 transition-transform" />
-          <span className="text-[10px] font-extrabold tracking-widest [writing-mode:vertical-lr] rotate-180 uppercase text-slate-200 group-hover:text-school-gold">
+          <span className="text-[10px] font-extrabold tracking-widest [writing-mode:vertical-lr] rotate-180 uppercase text-emerald-200 group-hover:text-school-gold">
             NAV SIDEBAR
           </span>
         </button>
@@ -149,6 +183,14 @@ export function App() {
         {/* Testimonials */}
         <TestimonialsSection />
 
+        {/* Staff & Administrative Control Suite with Login/Logout */}
+        <AdminSection
+          adminUser={adminUser}
+          onLogin={handleAdminLogin}
+          onLogout={handleAdminLogout}
+          onOpenDashboard={() => setIsAdminOpen(true)}
+        />
+
         {/* Campus Location & Contact */}
         <ContactSection />
       </main>
@@ -175,9 +217,14 @@ export function App() {
       <AdminDashboardModal
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
+        currentUser={adminUser}
+        onLogoutUser={handleAdminLogout}
+        onLoginUser={handleAdminLogin}
       />
+
     </div>
   );
 }
+
 
 export default App;

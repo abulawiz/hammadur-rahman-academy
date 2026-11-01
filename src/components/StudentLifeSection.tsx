@@ -71,19 +71,19 @@ export const StudentLifeSection: React.FC = () => {
   ];
 
   return (
-    <section id="student-life" className="py-20 bg-slate-50 dark:bg-slate-900 transition-colors duration-300 relative">
+    <section id="student-life" className="py-20 bg-emerald-950/80 dark:bg-[#021d15] text-white transition-colors duration-300 relative border-t border-emerald-800/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-school-navy/10 dark:bg-white/10 text-school-navy dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
             <Users2 className="w-4 h-4 text-school-gold" />
             <span>Vibrant Campus Life</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
             Nurturing Well-Rounded, Confident Scholars
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
             Education at Hammadur Rahman Academy extends far beyond textbooks. We balance academic rigor with creative clubs, physical fitness, and disciplined boarding life.
           </p>
         </div>

@@ -26,15 +26,45 @@ import {
 interface AdminDashboardModalProps {
   isOpen: boolean;
   onClose: () => void;
+  currentUser?: any;
+  onLogoutUser?: () => void;
+  onLoginUser?: (user: any) => void;
 }
 
-export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen, onClose }) => {
+export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ 
+  isOpen, 
+  onClose,
+  currentUser,
+  onLogoutUser,
+  onLoginUser
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminUser, setAdminUser] = useState<any>(null);
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('admin123');
   const [loginError, setLoginError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (currentUser) {
+        setIsAuthenticated(true);
+        setAdminUser(currentUser);
+      } else if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('hra_admin_user');
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            setIsAuthenticated(true);
+            setAdminUser(parsed);
+          } catch {
+            // ignore
+          }
+        }
+      }
+    }
+  }, [isOpen, currentUser]);
+
 
   // Active Tab
   const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'applications' | 'staff' | 'fees' | 'announcements' | 'inquiries'>('overview');
@@ -109,15 +139,18 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
       const data = await api.adminLogin(username, password);
       setIsAuthenticated(true);
       setAdminUser(data.admin);
+      if (onLoginUser) onLoginUser(data.admin);
       loadDashboardData();
     } catch (err: any) {
       if ((username === 'admin' && password === 'admin123') || (username === 'bursar' && password === 'bursar123')) {
-        setIsAuthenticated(true);
-        setAdminUser({
+        const fallback = {
           username,
           fullName: username === 'admin' ? 'Dr. Abdur-Rahman A. Al-Hassan' : 'Alhaji Garba Tanko',
           role: username === 'admin' ? 'Principal & Director of Studies' : 'School Bursar & Chief Accountant'
-        });
+        };
+        setIsAuthenticated(true);
+        setAdminUser(fallback);
+        if (onLoginUser) onLoginUser(fallback);
         loadDashboardData();
       } else {
         setLoginError(err.message || 'Invalid administrator login.');
@@ -474,7 +507,12 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   const handleLogout = () => {
     setIsAuthenticated(false);
     setAdminUser(null);
+    if (onLogoutUser) onLogoutUser();
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('hra_admin_user');
+    }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">

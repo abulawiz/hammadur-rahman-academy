@@ -35,7 +35,7 @@ export const Hero: React.FC<HeroProps> = ({
   ];
 
   return (
-    <section id="home" className="relative pt-28 lg:pt-36 pb-16 md:pb-24 overflow-hidden bg-gradient-to-b from-slate-900 via-school-dark to-slate-900 text-white">
+    <section id="home" className="relative pt-28 lg:pt-36 pb-16 md:pb-24 overflow-hidden bg-gradient-to-b from-[#021d15] via-emerald-950 to-[#022c22] text-white">
       {/* Background Decorative Pattern / Gradient Glows */}
       <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-school-gold/20 rounded-full blur-3xl pointer-events-none" />

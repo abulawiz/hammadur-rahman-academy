@@ -18,7 +18,7 @@ interface AdmissionsSectionProps {
 
 export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => {
   return (
-    <section id="admissions" className="py-20 bg-slate-900 text-white relative overflow-hidden">
+    <section id="admissions" className="py-20 bg-emerald-950 text-white relative overflow-hidden border-t border-emerald-800/40">
       {/* Background accents */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-10 w-96 h-96 bg-school-blue/20 rounded-full blur-3xl pointer-events-none" />

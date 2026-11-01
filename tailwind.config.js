@@ -9,14 +9,20 @@ export default {
     extend: {
       colors: {
         school: {
-          dark: '#0A2540',
-          navy: '#0F3460',
-          blue: '#1A5F7A',
-          gold: '#D4AF37',
-          goldLight: '#F3E5AB',
-          goldHover: '#B8860B',
-          emerald: '#134E4A',
-          accent: '#0284C7',
+          dark: '#064e3b',        // Deep Emerald 900
+          navy: '#047857',        // Emerald 700
+          deepGreen: '#022c22',   // Deep Obsidian Emerald 950
+          forest: '#033527',      // Forest Green
+          green: '#10b981',       // Emerald 500
+          emerald: '#059669',     // Emerald 600
+          lightGreen: '#059669',  // Vibrant Green
+          mint: '#d1fae5',        // Mint 100
+          sage: '#ecfdf5',        // Sage 50
+          blue: '#0d9488',        // Teal 600
+          gold: '#D4AF37',        // Royal Gold
+          goldLight: '#FDF3C7',   // Gold Cream
+          goldHover: '#B8860B',   // Dark Gold
+          accent: '#10b981',      // Emerald Accent
           light: '#F8FAFC',
           cream: '#FFFDF9',
         }

@@ -8,6 +8,17 @@
     font-family: 'Inter', system-ui, sans-serif;
   }
 
+  body {
+    background-color: #064e3b;
+    color: #f8fafc;
+    min-height: 100vh;
+  }
+
+  html.dark body {
+    background-color: #022c22;
+    color: #f1f5f9;
+  }
+
   html.dark {
     color-scheme: dark;
   }
@@ -16,6 +27,7 @@
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   }
 }
+
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

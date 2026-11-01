@@ -6,23 +6,23 @@ export const PrincipalWelcome: React.FC = () => {
   const principal = LEADERSHIP[0];
 
   return (
-    <section id="about" className="py-20 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 relative overflow-hidden transition-colors duration-300">
+    <section id="about" className="py-20 bg-emerald-900/40 dark:bg-[#021d15] text-white relative overflow-hidden transition-colors duration-300 border-t border-emerald-800/40">
       {/* Decorative subtle background accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-school-goldLight/20 dark:bg-school-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-school-blue/5 dark:bg-school-blue/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header Badge */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-school-navy/10 dark:bg-white/10 text-school-navy dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
             <Compass className="w-4 h-4 text-school-gold" />
             <span>Welcome to Hammadur Rahman Academy</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
-            Cultivating Leaders of <span className="text-school-blue dark:text-sky-400">Intellect</span>, <span className="text-amber-600 dark:text-amber-400">Integrity</span> & <span className="text-emerald-700 dark:text-emerald-400">Faith</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+            Cultivating Leaders of <span className="text-school-gold">Intellect</span>, <span className="text-amber-400">Integrity</span> & <span className="text-emerald-400">Faith</span>
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-base sm:text-lg leading-relaxed">
             Established in the heart of Lafia, Nasarawa State, Hammadur Rahman Academy Secondary School is committed to holistic, 21st-century secondary school education that nurtures the mind, body, and soul.
           </p>
         </div>

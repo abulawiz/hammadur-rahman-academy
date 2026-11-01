@@ -20,19 +20,19 @@ export const FacilitiesSection: React.FC = () => {
     : FACILITIES.filter(f => f.category === selectedCategory);
 
   return (
-    <section id="facilities" className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300 relative">
+    <section id="facilities" className="py-20 bg-emerald-900/30 dark:bg-[#021d15] text-white transition-colors duration-300 relative border-t border-emerald-800/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-school-navy/10 dark:bg-white/10 text-school-navy dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
             <Building2 className="w-4 h-4 text-school-gold" />
             <span>World-Class Infrastructure in Lafia</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
             Designed for 21st-Century Learning & Student Welfare
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
             From our solar-powered digital CBT lab to fully fitted science laboratories and serene boarding hostels, our Lafia campus offers everything students need to flourish.
           </p>
         </div>
