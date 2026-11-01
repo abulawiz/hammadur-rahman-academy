@@ -299,4 +299,191 @@ export const api = {
     if (!res.ok) throw new Error(data.error || 'Failed to fetch stats.');
     return data.stats;
   },
+
+  // 10. Attendance API
+  async getAttendanceSummary(date?: string) {
+    const query = date ? `?date=${encodeURIComponent(date)}` : '';
+    const res = await fetch(`${API_BASE}/attendance/summary${query}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch attendance summary.');
+    return data;
+  },
+
+  async getClassAttendance(className: string, date?: string) {
+    const query = date ? `?date=${encodeURIComponent(date)}` : '';
+    const res = await fetch(`${API_BASE}/attendance/class/${encodeURIComponent(className)}${query}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch class attendance.');
+    return data;
+  },
+
+  async getStudentAttendance(admissionNo: string) {
+    const res = await fetch(`${API_BASE}/attendance/student/${encodeURIComponent(admissionNo)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch student attendance.');
+    return data;
+  },
+
+  async markAttendance(payload: any) {
+    const res = await fetch(`${API_BASE}/attendance/mark`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to mark attendance.');
+    return data;
+  },
+
+  // 11. Assignments API
+  async getAssignments(classGrade?: string, subject?: string, status?: string) {
+    const params = new URLSearchParams();
+    if (classGrade && classGrade !== 'All') params.append('classGrade', classGrade);
+    if (subject && subject !== 'All') params.append('subject', subject);
+    if (status && status !== 'All') params.append('status', status);
+
+    const res = await fetch(`${API_BASE}/assignments?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch assignments.');
+    return data.assignments;
+  },
+
+  async getAssignmentById(id: number) {
+    const res = await fetch(`${API_BASE}/assignments/${id}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch assignment.');
+    return data;
+  },
+
+  async createAssignment(assignmentData: any) {
+    const res = await fetch(`${API_BASE}/assignments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(assignmentData)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to create assignment.');
+    return data;
+  },
+
+  async submitAssignment(id: number, payload: { admissionNo: string; submissionText: string }) {
+    const res = await fetch(`${API_BASE}/assignments/${id}/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to submit assignment.');
+    return data;
+  },
+
+  async gradeAssignmentSubmission(submissionId: number, payload: { score: number; teacherFeedback?: string; gradedBy?: string }) {
+    const res = await fetch(`${API_BASE}/assignments/submissions/${submissionId}/grade`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to grade submission.');
+    return data;
+  },
+
+  async getStudentAssignments(admissionNo: string) {
+    const res = await fetch(`${API_BASE}/assignments/student/${encodeURIComponent(admissionNo)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch student assignments.');
+    return data;
+  },
+
+  // 12. CBT Online Testing API
+  async getCbtExams() {
+    const res = await fetch(`${API_BASE}/cbt/exams`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch CBT exams.');
+    return data.exams;
+  },
+
+  async startCbtExam(id: number) {
+    const res = await fetch(`${API_BASE}/cbt/exams/${id}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to start CBT exam.');
+    return data;
+  },
+
+  async submitCbtExam(id: number, payload: { admissionNo: string; answers: Record<number, string> }) {
+    const res = await fetch(`${API_BASE}/cbt/exams/${id}/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to submit CBT answers.');
+    return data;
+  },
+
+  async getStudentCbtAttempts(admissionNo: string) {
+    const res = await fetch(`${API_BASE}/cbt/attempts/${encodeURIComponent(admissionNo)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch student CBT history.');
+    return data.attempts;
+  },
+
+  // 13. Timetable API
+  async getClassTimetable(className: string) {
+    const res = await fetch(`${API_BASE}/timetable/class/${encodeURIComponent(className)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch timetable.');
+    return data;
+  },
+
+  async getExamSchedules(filters?: { session?: string; term?: string; examType?: string; classGrade?: string }) {
+    const params = new URLSearchParams();
+    if (filters?.session) params.append('session', filters.session);
+    if (filters?.term) params.append('term', filters.term);
+    if (filters?.examType) params.append('examType', filters.examType);
+    if (filters?.classGrade) params.append('classGrade', filters.classGrade);
+
+    const res = await fetch(`${API_BASE}/timetable/exams?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch exam schedules.');
+    return data.schedules;
+  },
+
+  // 14. Hostels API
+  async getHostels() {
+    const res = await fetch(`${API_BASE}/hostels`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch hostels.');
+    return data.hostels;
+  },
+
+  async getHostelAllocations(hostelId: number) {
+    const res = await fetch(`${API_BASE}/hostels/${hostelId}/allocations`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch hostel allocations.');
+    return data;
+  },
+
+  async allocateHostelBed(payload: { hostelId: number; admissionNo: string; roomNo: string; bedNo: string; session?: string }) {
+    const res = await fetch(`${API_BASE}/hostels/allocate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to allocate hostel bed.');
+    return data;
+  },
+
+  // 15. Audit Logs API
+  async getAuditLogs(limit = 100, module?: string) {
+    const params = new URLSearchParams();
+    params.append('limit', String(limit));
+    if (module) params.append('module', module);
+
+    const res = await fetch(`${API_BASE}/logs?${params.toString()}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to fetch audit logs.');
+    return data.logs;
+  },
 };

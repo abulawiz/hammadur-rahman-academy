@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { db } from '../db.js';
+import { db, logActivity } from '../db.js';
 
 export const adminRouter = Router();
 
@@ -21,8 +21,11 @@ adminRouter.post('/login', (req, res) => {
     `).get(cleanUser, cleanPass) as any;
 
     if (!admin) {
+      logActivity('ADMIN_LOGIN_FAILED', cleanUser, 'Security', 'Failed login attempt with incorrect credentials.');
       return res.status(401).json({ error: 'Invalid administrator credentials. Please check username and password.' });
     }
+
+    logActivity('ADMIN_LOGIN_SUCCESS', admin.full_name, 'Security', `Logged in successfully as ${admin.role}.`);
 
     return res.json({
       success: true,
@@ -50,6 +53,10 @@ adminRouter.get('/stats', (req, res) => {
     const inquiriesCount = (db.prepare("SELECT COUNT(*) as count FROM inquiries WHERE status = 'Unread'").get() as any).count;
     const announcementsCount = (db.prepare('SELECT COUNT(*) as count FROM announcements').get() as any).count;
     const feesTotal = (db.prepare("SELECT COALESCE(SUM(amount_paid), 0) as total FROM fee_payments WHERE status = 'Verified'").get() as any).total;
+    const hostelsCount = (db.prepare('SELECT COUNT(*) as count FROM hostels').get() as any).count;
+    const cbtExamsCount = (db.prepare('SELECT COUNT(*) as count FROM cbt_exams WHERE is_active = 1').get() as any).count;
+    const cbtAttemptsCount = (db.prepare('SELECT COUNT(*) as count FROM cbt_attempts').get() as any).count;
+    const assignmentsCount = (db.prepare("SELECT COUNT(*) as count FROM assignments WHERE status = 'Active'").get() as any).count;
 
     return res.json({
       success: true,
@@ -61,10 +68,15 @@ adminRouter.get('/stats', (req, res) => {
         academicClasses: classesCount,
         unreadInquiries: inquiriesCount,
         publishedAnnouncements: announcementsCount,
-        totalFeesCollected: feesTotal
+        totalFeesCollected: feesTotal,
+        totalHostels: hostelsCount,
+        activeCbtExams: cbtExamsCount,
+        totalCbtAttempts: cbtAttemptsCount,
+        activeAssignments: assignmentsCount
       }
     });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 });
+

@@ -210,7 +210,192 @@ export function initDatabase() {
     );
   `);
 
+  // 12. Student Attendance Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS attendance (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      admission_no TEXT NOT NULL,
+      class_name TEXT NOT NULL,
+      date TEXT NOT NULL,
+      status TEXT NOT NULL CHECK(status IN ('Present', 'Absent', 'Late', 'Excused')),
+      remarks TEXT,
+      marked_by TEXT DEFAULT 'Class Master',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (admission_no) REFERENCES students(admission_no) ON DELETE CASCADE
+    );
+  `);
+
+  // 13. Assignments & Homework Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS assignments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      class_grade TEXT NOT NULL,
+      teacher_name TEXT NOT NULL,
+      due_date TEXT NOT NULL,
+      max_score INTEGER DEFAULT 20,
+      instructions TEXT NOT NULL,
+      attachments_url TEXT,
+      status TEXT DEFAULT 'Active',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  // 14. Assignment Submissions Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS assignment_submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      assignment_id INTEGER NOT NULL,
+      admission_no TEXT NOT NULL,
+      student_name TEXT NOT NULL,
+      submission_text TEXT NOT NULL,
+      submission_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+      score REAL,
+      teacher_feedback TEXT,
+      status TEXT DEFAULT 'Submitted',
+      FOREIGN KEY (assignment_id) REFERENCES assignments(id) ON DELETE CASCADE,
+      FOREIGN KEY (admission_no) REFERENCES students(admission_no) ON DELETE CASCADE
+    );
+  `);
+
+  // 15. CBT Online Exams Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS cbt_exams (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      target_class TEXT NOT NULL,
+      duration_minutes INTEGER DEFAULT 30,
+      total_questions INTEGER DEFAULT 10,
+      pass_percentage REAL DEFAULT 50.0,
+      is_active INTEGER DEFAULT 1,
+      instructions TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  // 16. CBT Questions Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS cbt_questions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      exam_id INTEGER NOT NULL,
+      question_text TEXT NOT NULL,
+      option_a TEXT NOT NULL,
+      option_b TEXT NOT NULL,
+      option_c TEXT NOT NULL,
+      option_d TEXT NOT NULL,
+      correct_option TEXT NOT NULL,
+      explanation TEXT,
+      FOREIGN KEY (exam_id) REFERENCES cbt_exams(id) ON DELETE CASCADE
+    );
+  `);
+
+  // 17. CBT Student Attempts Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS cbt_attempts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      exam_id INTEGER NOT NULL,
+      admission_no TEXT NOT NULL,
+      student_name TEXT NOT NULL,
+      score INTEGER NOT NULL,
+      total_questions INTEGER NOT NULL,
+      percentage REAL NOT NULL,
+      passed INTEGER NOT NULL,
+      completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (exam_id) REFERENCES cbt_exams(id) ON DELETE CASCADE,
+      FOREIGN KEY (admission_no) REFERENCES students(admission_no) ON DELETE CASCADE
+    );
+  `);
+
+  // 18. Timetables (Daily Class Schedule) Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS timetables (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      class_name TEXT NOT NULL,
+      day_of_week TEXT NOT NULL,
+      period_number INTEGER NOT NULL,
+      start_time TEXT NOT NULL,
+      end_time TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      teacher_name TEXT NOT NULL,
+      room_venue TEXT NOT NULL DEFAULT 'Main Campus Classroom'
+    );
+  `);
+
+  // 19. Exam Schedules (WAEC / NECO / Terminal Examination Timetable) Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS exam_schedules (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      session TEXT NOT NULL,
+      term TEXT NOT NULL,
+      exam_type TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      class_grade TEXT NOT NULL,
+      exam_date TEXT NOT NULL,
+      start_time TEXT NOT NULL,
+      end_time TEXT NOT NULL,
+      venue TEXT NOT NULL
+    );
+  `);
+
+  // 20. Hostels & Dormitories Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS hostels (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      gender TEXT NOT NULL,
+      capacity INTEGER NOT NULL,
+      house_master TEXT NOT NULL,
+      contact_phone TEXT NOT NULL,
+      description TEXT NOT NULL
+    );
+  `);
+
+  // 21. Hostel Bed Allocations Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS hostel_allocations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      hostel_id INTEGER NOT NULL,
+      admission_no TEXT NOT NULL,
+      student_name TEXT NOT NULL,
+      room_no TEXT NOT NULL,
+      bed_no TEXT NOT NULL,
+      session TEXT NOT NULL,
+      status TEXT DEFAULT 'Occupied',
+      allocated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (hostel_id) REFERENCES hostels(id) ON DELETE CASCADE,
+      FOREIGN KEY (admission_no) REFERENCES students(admission_no) ON DELETE CASCADE
+    );
+  `);
+
+  // 22. Audit & Activity Logs Table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS audit_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      action TEXT NOT NULL,
+      actor TEXT NOT NULL,
+      module TEXT NOT NULL,
+      details TEXT,
+      ip_address TEXT DEFAULT '127.0.0.1',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
   seedDefaultData();
+}
+
+// Global Activity Logging Helper
+export function logActivity(action: string, actor: string, module: string, details: string = '', ipAddress: string = '127.0.0.1') {
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO audit_logs (action, actor, module, details, ip_address)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+    stmt.run(action, actor, module, details, ipAddress);
+  } catch (err) {
+    console.error('Audit log error:', err);
+  }
 }
 
 function seedDefaultData() {
@@ -320,6 +505,32 @@ function seedDefaultData() {
       JSON.stringify(demoGrades)
     );
   }
+
+  // Ensure Fatima Zahra Garba exists
+  const fatimaExists = db.prepare('SELECT id FROM students WHERE admission_no = ?').get('HRA/2025/119');
+  if (!fatimaExists) {
+    db.prepare(`
+      INSERT INTO students (
+        admission_no, pin, full_name, class_grade, gender, dob, state_of_origin,
+        lga, guardian_name, guardian_phone, guardian_email, enrollment_type, status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      'HRA/2025/119',
+      '4433-2211-7788',
+      'Fatima Zahra Garba',
+      'Senior Secondary School 1: Pure Sciences (SSS1)',
+      'Female',
+      '2011-06-05',
+      'Nasarawa',
+      'Akwanga',
+      'Alhaji Garba Tanko',
+      '0807 112 3344',
+      'garba.tanko@gmail.com',
+      'Boarding Student',
+      'Enrolled'
+    );
+  }
+
 
   // 2. Seed Staff Members if empty
   const staffCount = (db.prepare('SELECT COUNT(*) as count FROM staff').get() as { count: number }).count;
@@ -523,5 +734,310 @@ function seedDefaultData() {
       'Pending Review'
     );
   }
+
+  // 10. Seed Hostels if empty
+  const hostelsCount = (db.prepare('SELECT COUNT(*) as count FROM hostels').get() as { count: number }).count;
+  if (hostelsCount === 0) {
+    const insertHostel = db.prepare(`
+      INSERT INTO hostels (name, gender, capacity, house_master, contact_phone, description)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+
+    insertHostel.run('Sultan Bello Hall', 'Boys', 120, 'Mallam Suleiman Danladi', '0803 112 9988', 'Senior Boys Boarding Hostel with solar-powered study rooms, water treatment, and 24/7 security.');
+    insertHostel.run('Usman Dan Fodio Hall', 'Boys', 100, 'Ustadh Mukhtar Al-Misri', '0802 554 1122', 'Junior Boys Boarding Hostel featuring spacious dormitories, Quranic memorization lounge, and dedicated house warden.');
+    insertHostel.run("Nana Asma'u Hall", 'Girls', 120, 'Mrs. Halima Gambo Umar', '0815 674 2200', 'Senior Girls Boarding Residence equipped with private courtyard, medical dispensary bay, and air-cooled study facilities.');
+    insertHostel.run('Khadijah Bint Khuwaylid Hall', 'Girls', 100, 'Mrs. Amina Yusuf', '0803 777 6655', 'Junior Girls Boarding Hall offering pastoral care, modern sanitary utilities, and round-the-clock matron surveillance.');
+
+    // Seed Sample Allocations
+    const insertAlloc = db.prepare(`
+      INSERT INTO hostel_allocations (hostel_id, admission_no, student_name, room_no, bed_no, session, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertAlloc.run(1, 'HRA/2024/048', 'Mustapha Ibrahim Al-Hassan', 'B-12', 'Bed 03 (Top)', '2025/2026', 'Occupied');
+    insertAlloc.run(3, 'HRA/2024/015', 'Amina Bello Suleiman', 'A-04', 'Bed 01 (Lower)', '2025/2026', 'Occupied');
+  }
+
+  // 11. Seed CBT Exams and Questions if empty
+  const cbtCount = (db.prepare('SELECT COUNT(*) as count FROM cbt_exams').get() as { count: number }).count;
+  if (cbtCount === 0) {
+    const insertExam = db.prepare(`
+      INSERT INTO cbt_exams (title, subject, target_class, duration_minutes, total_questions, pass_percentage, is_active, instructions)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const ex1 = insertExam.run(
+      'WAEC/NECO Senior Physics & Mechanics Mock CBT',
+      'Physics',
+      'Senior Secondary School 2 (Science - Diamond)',
+      25,
+      5,
+      60.0,
+      1,
+      'Answer all questions. Each correct question awards 20 marks. Time remaining is strictly enforced by the CBT engine.'
+    ).lastInsertRowid;
+
+    const insertQ = db.prepare(`
+      INSERT INTO cbt_questions (exam_id, question_text, option_a, option_b, option_c, option_d, correct_option, explanation)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    insertQ.run(
+      ex1,
+      'Which of the following physical quantities is a scalar quantity?',
+      'Velocity',
+      'Displacement',
+      'Electric Charge',
+      'Gravitational Force',
+      'C',
+      'Electric charge possesses magnitude only with no specific vector direction, making it a scalar quantity.'
+    );
+    insertQ.run(
+      ex1,
+      'A body of mass 5kg moving with a velocity of 10m/s has a kinetic energy of:',
+      '50 Joules',
+      '100 Joules',
+      '250 Joules',
+      '500 Joules',
+      'C',
+      'Kinetic Energy = 1/2 * m * v^2 = 0.5 * 5 * (10)^2 = 250 Joules.'
+    );
+    insertQ.run(
+      ex1,
+      'The S.I unit of magnetic flux density is the:',
+      'Henry',
+      'Weber',
+      'Tesla',
+      'Coulomb',
+      'C',
+      'The SI unit of magnetic flux density (B) is the Tesla (T), equivalent to one Weber per square meter.'
+    );
+    insertQ.run(
+      ex1,
+      'Which law of physics states that energy can neither be created nor destroyed, only transformed?',
+      "Newton's First Law",
+      'Law of Conservation of Energy',
+      "Hooke's Law",
+      "Faraday's Law of Induction",
+      'B',
+      'The principle of conservation of energy establishes that the total energy of an isolated system remains constant.'
+    );
+    insertQ.run(
+      ex1,
+      'Through which of the following media do sound waves travel the fastest?',
+      'Vacuum',
+      'Ambient Air',
+      'Fresh Water',
+      'Solid Steel',
+      'D',
+      'Sound travels fastest in dense solids like steel (approx 5,960 m/s) because particles are closely packed.'
+    );
+
+    const ex2 = insertExam.run(
+      'Islamic Religious Studies & Fiqh General CBT',
+      'Islamic Religious Studies',
+      'All Classes (JSS1 - SSS3)',
+      20,
+      5,
+      50.0,
+      1,
+      'Standard Islamic knowledge assessment. Select the best Islamic historical and theological answer.'
+    ).lastInsertRowid;
+
+    insertQ.run(
+      ex2,
+      'How many chapters (Surahs) are compiled in the Holy Quran?',
+      '110 Surahs',
+      '114 Surahs',
+      '120 Surahs',
+      '124 Surahs',
+      'B',
+      'The Holy Quran consists of 114 Surahs, beginning with Surah Al-Fatihah and concluding with Surah An-Nas.'
+    );
+    insertQ.run(
+      ex2,
+      'The sacred pilgrimage to the Holy Kaaba in Makkah (Hajj) represents the _____ pillar of Islam.',
+      'Second',
+      'Third',
+      'Fourth',
+      'Fifth',
+      'D',
+      'Hajj is the fifth fundamental pillar of Islam, mandatory once in a lifetime for those physically and financially able.'
+    );
+    insertQ.run(
+      ex2,
+      'Which revered companion was elected as the first Caliph (Khalifah) of Islam after the Prophet Muhammad (SAW)?',
+      'Umar ibn al-Khattab (RA)',
+      'Abu Bakr al-Siddiq (RA)',
+      'Uthman ibn Affan (RA)',
+      'Ali ibn Abi Talib (RA)',
+      'B',
+      'Abu Bakr al-Siddiq (RA) was chosen by consensus at Saqifah as the first Rightly Guided Caliph (632-634 CE).'
+    );
+    insertQ.run(
+      ex2,
+      'The customary pre-dawn blessing meal consumed before commencing Ramadan fasting is known as:',
+      'Iftar',
+      'Suhoor',
+      'Walimah',
+      'Tahajjud',
+      'B',
+      'Suhoor is the sunnah meal consumed prior to the break of dawn (Fajr) by fasting Muslims.'
+    );
+    insertQ.run(
+      ex2,
+      'Which decisive historical battle is explicitly designated in the Quran as Yawm al-Furqan (The Day of Criterion)?',
+      'Battle of Badr',
+      'Battle of Uhud',
+      'Battle of the Trench (Khandaq)',
+      'Conquest of Makkah',
+      'A',
+      'The Battle of Badr (17th Ramadan, 2 AH) is designated in Surah Al-Anfal (8:41) as Yawm al-Furqan.'
+    );
+
+    // Seed sample attempt
+    const insertAttempt = db.prepare(`
+      INSERT INTO cbt_attempts (exam_id, admission_no, student_name, score, total_questions, percentage, passed)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertAttempt.run(ex1, 'HRA/2024/048', 'Mustapha Ibrahim Al-Hassan', 5, 5, 100.0, 1);
+  }
+
+  // 12. Seed Attendance if empty
+  const attCount = (db.prepare('SELECT COUNT(*) as count FROM attendance').get() as { count: number }).count;
+  if (attCount === 0) {
+    const insertAtt = db.prepare(`
+      INSERT INTO attendance (admission_no, class_name, date, status, remarks, marked_by)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+
+    const dates = ['2026-10-20', '2026-10-21', '2026-10-22', '2026-10-23', '2026-10-24'];
+    const studentsToMark = [
+      { adm: 'HRA/2024/048', cls: 'Senior Secondary School 2 (Science - Diamond)', teacher: 'Engr. David Emmanuel' },
+      { adm: 'HRA/2024/015', cls: 'Senior Secondary School 1 (Arts & Humanities)', teacher: 'Mallam Idris Kassim' },
+      { adm: 'HRA/2025/102', cls: 'Junior Secondary School 1 (Gold)', teacher: 'Mrs. Amina Yusuf' },
+      { adm: 'HRA/2025/119', cls: 'Senior Secondary School 1: Pure Sciences (SSS1)', teacher: 'Mrs. Halima Gambo' },
+    ];
+
+    for (const d of dates) {
+      for (const st of studentsToMark) {
+        const exists = db.prepare('SELECT id FROM students WHERE admission_no = ?').get(st.adm);
+        if (exists) {
+          const isExcused = st.adm === 'HRA/2025/119' && d === '2026-10-22';
+          insertAtt.run(
+            st.adm,
+            st.cls,
+            d,
+            isExcused ? 'Excused' : 'Present',
+            isExcused ? 'Clinic medical rest check' : 'Regular punctual attendance',
+            st.teacher
+          );
+        }
+      }
+    }
+
+  }
+
+  // 13. Seed Assignments and Submissions if empty
+  const assignCount = (db.prepare('SELECT COUNT(*) as count FROM assignments').get() as { count: number }).count;
+  if (assignCount === 0) {
+    const insertAssign = db.prepare(`
+      INSERT INTO assignments (title, subject, class_grade, teacher_name, due_date, max_score, instructions, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const asg1 = insertAssign.run(
+      'Newtonian Mechanics & Harmonic Motion Lab Report',
+      'Physics',
+      'Senior Secondary School 2 (Science - Diamond)',
+      'Engr. David O. Emmanuel',
+      '2026-11-15',
+      20,
+      'Submit a typed or neatly written 3-page laboratory analysis documenting the relationship between pendulum length, period squared, and local acceleration due to gravity (g) measured at Lafia campus.',
+      'Active'
+    ).lastInsertRowid;
+
+    insertAssign.run(
+      'Comparative Analysis of Surah Al-Kahf Moral Lessons',
+      'Islamic Religious Studies',
+      'Senior Secondary School 2 (Science - Diamond)',
+      'Ustadh Mukhtar Al-Misri',
+      '2026-11-18',
+      20,
+      'Examine the four distinct trials presented in Surah Al-Kahf (Faith, Wealth, Knowledge, and Power) and write an essay illustrating their application to contemporary Muslim youth.',
+      'Active'
+    );
+
+    insertAssign.run(
+      'Differential Calculus & Optimization Problems',
+      'Further Mathematics',
+      'Senior Secondary School 2 (Science - Diamond)',
+      'Mr. Victor Okafor',
+      '2026-11-20',
+      20,
+      'Solve Exercises 4.1 to 4.5 in New General Further Mathematics. Show full step-by-step differentiation and identification of local turning points.',
+      'Active'
+    );
+
+    // Seed sample student submission
+    const insertSub = db.prepare(`
+      INSERT INTO assignment_submissions (assignment_id, admission_no, student_name, submission_text, score, teacher_feedback, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertSub.run(
+      asg1,
+      'HRA/2024/048',
+      'Mustapha Ibrahim Al-Hassan',
+      'Lab Report: Investigation of Simple Harmonic Motion using a 100cm Inextensible String and Brass Bob at Lafia Campus Lab. Calculated g = 9.81 m/s^2 with a standard error of 0.4%. Full graph and tabular records attached.',
+      19.5,
+      'Exceptional lab execution, rigorous calculation of error margins, and neat graphical representation. Keep up the high standard!',
+      'Graded'
+    );
+  }
+
+  // 14. Seed Timetables if empty
+  const timeCount = (db.prepare('SELECT COUNT(*) as count FROM timetables').get() as { count: number }).count;
+  if (timeCount === 0) {
+    const insertTime = db.prepare(`
+      INSERT INTO timetables (class_name, day_of_week, period_number, start_time, end_time, subject, teacher_name, room_venue)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const cls = 'Senior Secondary School 2 (Science - Diamond)';
+    insertTime.run(cls, 'Monday', 1, '08:00 AM', '08:45 AM', 'General Mathematics', 'Mr. Samuel Kalu', 'Room 201 (Science Block)');
+    insertTime.run(cls, 'Monday', 2, '08:45 AM', '09:30 AM', 'Physics & Mechanics', 'Engr. David Emmanuel', 'Physics Laboratory');
+    insertTime.run(cls, 'Monday', 3, '09:30 AM', '10:15 AM', 'English Studies & Speech', 'Mallam Suleiman Danladi', 'Language Lab');
+    insertTime.run(cls, 'Monday', 4, '10:45 AM', '11:30 AM', 'Chemistry & Lab Work', 'Mrs. Halima Gambo', 'Chemistry Laboratory');
+    insertTime.run(cls, 'Monday', 5, '11:30 AM', '12:15 PM', 'Islamic Religious Studies', 'Ustadh Mukhtar Al-Misri', 'Room 201 (Science Block)');
+    insertTime.run(cls, 'Monday', 6, '12:15 PM', '01:00 PM', 'Computer Studies & CBT', 'Engr. David Emmanuel', '120-Seat Solar CBT Lab');
+
+    insertTime.run(cls, 'Tuesday', 1, '08:00 AM', '08:45 AM', 'Biology & Genetics', 'Mrs. Halima Gambo', 'Biology Laboratory');
+    insertTime.run(cls, 'Tuesday', 2, '08:45 AM', '09:30 AM', 'Further Mathematics', 'Mr. Victor Okafor', 'Room 201 (Science Block)');
+    insertTime.run(cls, 'Tuesday', 3, '09:30 AM', '10:15 AM', 'Civic & Leadership', 'Mallam Idris Kassim', 'Room 201 (Science Block)');
+    insertTime.run(cls, 'Tuesday', 4, '10:45 AM', '11:30 AM', 'Arabic Grammar (Nahw)', 'Ustadh Mukhtar Al-Misri', 'Room 201 (Science Block)');
+    insertTime.run(cls, 'Tuesday', 5, '11:30 AM', '12:15 PM', 'Physics Practical', 'Engr. David Emmanuel', 'Physics Laboratory');
+  }
+
+  // 15. Seed Exam Schedules if empty
+  const examCount = (db.prepare('SELECT COUNT(*) as count FROM exam_schedules').get() as { count: number }).count;
+  if (examCount === 0) {
+    const insertExamSch = db.prepare(`
+      INSERT INTO exam_schedules (session, term, exam_type, subject, class_grade, exam_date, start_time, end_time, venue)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    insertExamSch.run('2026/2027', 'First Term', 'WAEC/NECO Joint Mock', 'General Mathematics (Paper 1 & 2)', 'SSS 3 (Graduating Class)', '2026-11-23', '08:30 AM', '11:30 AM', 'Main School Auditorium');
+    insertExamSch.run('2026/2027', 'First Term', 'WAEC/NECO Joint Mock', 'English Language (Essay & Test of Orals)', 'SSS 3 (Graduating Class)', '2026-11-24', '08:30 AM', '11:30 AM', 'Main School Auditorium');
+    insertExamSch.run('2026/2027', 'First Term', 'WAEC/NECO Joint Mock', 'Physics Practical & Alternative B', 'SSS 3 (Graduating Class)', '2026-11-25', '09:00 AM', '11:45 AM', 'Ultra-Modern Physics Lab');
+    insertExamSch.run('2026/2027', 'First Term', 'Mid-Term CBT Assessment', 'Computer Studies & JAMB Practice', 'Senior Secondary (SSS 1 - 3)', '2026-11-26', '10:00 AM', '01:00 PM', '120-Seat Solar CBT Lab');
+  }
+
+  // 16. Seed Audit Logs if empty
+  const logsCount = (db.prepare('SELECT COUNT(*) as count FROM audit_logs').get() as { count: number }).count;
+  if (logsCount === 0) {
+    logActivity('SYSTEM_INIT', 'System', 'Core', 'Hammadur Rahman Academy School Management Engine and SQLite database initialized successfully.');
+    logActivity('RESULT_PUBLISHED', 'admin', 'Results', 'Published 2025/2026 Third Term terminal examination report cards for SSS 2 Science class.');
+    logActivity('FEE_VERIFIED', 'bursar', 'Bursary', 'Verified tuition and boarding payment receipt HRA-REC-2026-0041 for student Mustapha Ibrahim Al-Hassan.');
+  }
 }
+
 

@@ -10,6 +10,12 @@ import { studentsRouter } from './routes/students.js';
 import { staffRouter } from './routes/staff.js';
 import { academicsRouter } from './routes/academics.js';
 import { feesRouter } from './routes/fees.js';
+import { attendanceRouter } from './routes/attendance.js';
+import { assignmentsRouter } from './routes/assignments.js';
+import { cbtRouter } from './routes/cbt.js';
+import { timetableRouter } from './routes/timetable.js';
+import { hostelsRouter } from './routes/hostels.js';
+import { logsRouter } from './routes/logs.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,6 +37,12 @@ app.use('/api/students', studentsRouter);
 app.use('/api/staff', staffRouter);
 app.use('/api/academics', academicsRouter);
 app.use('/api/fees', feesRouter);
+app.use('/api/attendance', attendanceRouter);
+app.use('/api/assignments', assignmentsRouter);
+app.use('/api/cbt', cbtRouter);
+app.use('/api/timetable', timetableRouter);
+app.use('/api/hostels', hostelsRouter);
+app.use('/api/logs', logsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -47,7 +59,13 @@ app.get('/api/health', (req, res) => {
       'fees',
       'announcements',
       'inquiries',
-      'admin'
+      'admin',
+      'attendance',
+      'assignments',
+      'cbt',
+      'timetable',
+      'hostels',
+      'logs'
     ],
     timestamp: new Date().toISOString()
   });
@@ -56,3 +74,4 @@ app.get('/api/health', (req, res) => {
 app.listen(PORT, () => {
   console.log(`[HRA Server] Complete Backend API running at http://127.0.0.1:${PORT}`);
 });
+
