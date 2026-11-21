@@ -85,11 +85,8 @@ export const Hero: React.FC<HeroProps> = ({
               <span className="hidden sm:inline-block text-school-gold">Govt. Approved</span>
             </div>
 
-            {/* Arabic Welcome & School Title */}
+            {/* School Title */}
             <div>
-              <p className="text-sm md:text-base font-serif text-school-goldLight mb-2 tracking-wide">
-                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ • {SCHOOL_INFO.arabicName}
-              </p>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-heading text-white tracking-tight leading-[1.15]">
                 Nurturing <span className="bg-gradient-to-r from-school-gold via-amber-300 to-yellow-500 bg-clip-text text-transparent">Academic Distinction</span> & Noble Character.
               </h1>
