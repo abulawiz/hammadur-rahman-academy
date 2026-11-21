@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SCHOOL_INFO } from '../data/schoolData';
 import { 
-  Phone, 
   Mail, 
-  MapPin, 
   GraduationCap, 
   Menu, 
   X, 
@@ -11,12 +9,13 @@ import {
   FileText, 
   ChevronRight,
   Sparkles,
-  BookOpen,
   PanelLeft,
   Sun,
   Moon,
   ShieldCheck,
-  LogOut
+  LogOut,
+  Lock,
+  ArrowRight
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -49,12 +48,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 25);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Ordered navigation links matching user specification
   const navLinks = [
     { label: 'Home', href: '#home', id: 'home' },
     { label: 'About Us', href: '#about', id: 'about' },
@@ -67,7 +67,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'Admin Portal', href: '#admin', id: 'admin' },
   ];
 
-
   const handleLinkClick = (id: string, href: string) => {
     setActiveSection(id);
     setMobileMenuOpen(false);
@@ -77,266 +76,335 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const handleAdminAction = () => {
+    if (adminUser) {
+      onOpenAdmin();
+    } else {
+      handleLinkClick('admin', '#admin');
+    }
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      {/* Top Notification Bar */}
-      <div className="bg-school-dark dark:bg-black text-slate-200 text-xs py-2 px-4 border-b border-school-navy/40 dark:border-slate-800">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans">
+      
+      {/* ======================================================== */}
+      {/* 1. TOP BAR                                               */}
+      {/* Email | WAEC/NECO No | Dark Mode | Admin Login |         */}
+      {/* Student Result Portal | Apply Online                     */}
+      {/* ======================================================== */}
+      <div className="bg-[#022419] dark:bg-[#01140e] text-emerald-100 text-xs py-2 px-3 sm:px-6 border-b border-emerald-800/60 transition-colors duration-300">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
-          {/* Left contact items */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-            <div className="flex items-center gap-1.5 text-school-goldLight font-medium">
-              <MapPin className="w-3.5 h-3.5 text-school-gold" />
-              <span>Lafia, Nasarawa State, Nigeria</span>
-            </div>
-            <div className="hidden sm:flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5 text-school-gold" />
-              <a href={`tel:${SCHOOL_INFO.phone}`} className="hover:text-school-gold transition-colors">
-                {SCHOOL_INFO.phone}
-              </a>
-            </div>
-            <div className="hidden lg:flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-school-gold" />
-              <a href={`mailto:${SCHOOL_INFO.email}`} className="hover:text-school-gold transition-colors">
-                {SCHOOL_INFO.email}
-              </a>
+          
+          {/* Top Bar Left: Email & WAEC/NECO Center Number */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-5 text-[11px] sm:text-xs">
+            {/* Email link */}
+            <a 
+              href={`mailto:${SCHOOL_INFO.email}`} 
+              className="flex items-center gap-1.5 text-emerald-200 hover:text-school-gold transition-colors font-medium group"
+              title="Official School Inquiries Email"
+            >
+              <div className="w-5 h-5 rounded-full bg-emerald-900/80 border border-school-gold/40 flex items-center justify-center group-hover:border-school-gold transition-colors">
+                <Mail className="w-3 h-3 text-school-gold" />
+              </div>
+              <span className="tracking-tight">{SCHOOL_INFO.email}</span>
+            </a>
+
+            <span className="hidden sm:inline text-emerald-700/80">•</span>
+
+            {/* WAEC/NECO Center Number */}
+            <div className="flex items-center gap-1.5 text-emerald-200/90 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-school-gold flex-shrink-0" />
+              <span>
+                WAEC/NECO Center No: <strong className="text-white font-bold tracking-wider">4260189 / 025114</strong>
+              </span>
             </div>
           </div>
 
-          {/* Right Action Links */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="hidden xl:inline text-slate-400 border-r border-slate-700 pr-3">
-              WAEC & NECO Center: <strong className="text-white">4260189</strong>
-            </span>
-
-            {/* Dark / Light Mode Toggle Button */}
+          {/* Top Bar Right: Dark Mode | Admin Login | Student Result Portal | Apply Online */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+            
+            {/* Dark Mode / Light Mode Toggle */}
             <button
               onClick={onToggleDarkMode}
-              className="p-1 sm:px-2 sm:py-1 rounded-lg bg-white/10 hover:bg-white/20 text-school-gold flex items-center gap-1.5 transition-colors border border-white/10"
-              title={isDarkMode ? "Switch to Light Mode" : "Switch to Black / Dark Mode"}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/80 hover:bg-emerald-900 text-school-gold border border-emerald-700/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm"
+              title={isDarkMode ? "Switch to Light Theme" : "Switch to Dark / Black Theme"}
               aria-label="Toggle Light and Dark Mode"
             >
               {isDarkMode ? (
                 <>
                   <Sun className="w-3.5 h-3.5 text-amber-300" />
-                  <span className="text-[11px] font-bold text-white hidden sm:inline">Light</span>
+                  <span className="text-white hidden xs:inline">Light Mode</span>
                 </>
               ) : (
                 <>
-                  <Moon className="w-3.5 h-3.5 text-school-goldLight" />
-                  <span className="text-[11px] font-bold text-white hidden sm:inline">Dark</span>
+                  <Moon className="w-3.5 h-3.5 text-school-gold" />
+                  <span className="text-emerald-100 hidden xs:inline">Dark Mode</span>
                 </>
               )}
             </button>
 
-            {/* Admin Management Section Trigger / Status */}
+            {/* Admin Login / Status */}
             {adminUser ? (
-              <div className="flex items-center gap-1.5 bg-emerald-950/90 border border-school-gold/60 text-white px-2.5 py-1 rounded-lg text-xs shadow-sm">
+              <div className="flex items-center gap-1 bg-emerald-950/90 border border-school-gold/60 text-white px-2 py-0.5 rounded-md text-[11px] shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[11px] font-bold text-school-gold hidden md:inline">
+                <span className="font-bold text-school-gold hidden lg:inline">
                   {adminUser.fullName ? adminUser.fullName.split(' ')[0] : 'Admin'}
                 </span>
                 <button
                   onClick={onOpenAdmin}
-                  className="px-2 py-0.5 bg-school-gold hover:bg-amber-400 text-emerald-950 rounded text-[10px] font-extrabold transition-colors shadow-sm ml-1"
-                  title="Open Full Administrator Workspace"
+                  className="px-2 py-0.5 bg-school-gold hover:bg-amber-400 text-[#022419] rounded text-[10px] font-black uppercase tracking-wider transition-colors"
+                  title="Open Admin Dashboard Modal"
                 >
                   Dashboard
                 </button>
                 <button
                   onClick={onLogout}
-                  className="px-2 py-0.5 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 transition-colors ml-1"
-                  title="Sign Out of Administrator Session"
+                  className="px-1.5 py-0.5 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded text-[10px] font-bold flex items-center gap-0.5 transition-colors"
+                  title="Sign Out of Admin Session"
                 >
                   <LogOut className="w-3 h-3" />
-                  <span>Logout</span>
+                  <span className="hidden sm:inline">Logout</span>
                 </button>
               </div>
             ) : (
               <button
-                onClick={() => handleLinkClick('admin', '#admin')}
-                className="hidden lg:flex items-center gap-1.5 bg-emerald-800/80 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-xs font-semibold tracking-wide border border-emerald-600/50 transition-all duration-200 shadow-sm"
+                onClick={handleAdminAction}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-900/90 hover:bg-emerald-800 text-emerald-100 hover:text-white border border-emerald-700/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm group"
                 title="Staff & Administrator Portal Login"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-school-gold" />
+                <Lock className="w-3 h-3 text-school-gold group-hover:scale-110 transition-transform" />
                 <span>Admin Login</span>
               </button>
             )}
 
+            {/* Student Result Portal */}
             <button
               onClick={onOpenPortal}
-              className="flex items-center gap-1.5 bg-school-navy/80 hover:bg-school-blue text-white px-2.5 py-1 rounded text-xs font-semibold tracking-wide border border-school-blue/40 transition-all duration-200 shadow-sm"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-800/80 hover:bg-emerald-700 text-white border border-emerald-600/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm"
+              title="Check Student Examination Results"
             >
-              <UserCheck className="w-3.5 h-3.5 text-school-gold" />
-              <span className="hidden sm:inline">Student Result Portal</span>
-              <span className="sm:hidden">Portal</span>
+              <UserCheck className="w-3 h-3 text-school-gold" />
+              <span>Student Result Portal</span>
             </button>
+
+            {/* Apply Online */}
             <button
               onClick={onOpenApply}
-              className="flex items-center gap-1 bg-gradient-to-r from-amber-500 to-school-gold hover:from-amber-600 hover:to-school-goldHover text-school-dark font-bold px-3 py-1 rounded text-xs shadow-sm transition-all duration-200 transform hover:scale-105"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-gradient-to-r from-amber-500 via-school-gold to-amber-600 hover:from-amber-400 hover:to-school-goldHover text-[#022419] font-black text-[11px] shadow-sm hover:shadow-gold-glow transition-all transform hover:scale-105"
+              title="Apply Online for 2026/2027 Academic Session"
             >
-              <Sparkles className="w-3.5 h-3.5 text-school-dark" />
+              <Sparkles className="w-3 h-3 text-[#022419]" />
               <span>Apply Online</span>
             </button>
+
           </div>
+
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
+      {/* ======================================================== */}
+      {/* 2. MAIN NAVBAR                                           */}
+      {/* Sidebar toggle | School Logo/Name | Home | About Us |    */}
+      {/* Academics | Admissions | Facilities | Student Life |     */}
+      {/* News & Events | Contact | Admin Portal | Enroll Now      */}
+      {/* ======================================================== */}
       <nav 
-        className={`w-full transition-all duration-300 ${
+        className={`w-full transition-all duration-300 border-b border-emerald-800/50 shadow-xl ${
           isScrolled 
-            ? 'bg-emerald-950/95 dark:bg-[#021d15]/95 backdrop-blur-md shadow-2xl border-b border-emerald-800/60 py-2.5' 
-            : 'bg-emerald-900 dark:bg-[#02241a] shadow-lg border-b border-emerald-800/40 py-3.5'
+            ? 'bg-[#022419]/98 dark:bg-[#01140e]/98 backdrop-blur-md py-2.5' 
+            : 'bg-[#033527] dark:bg-[#021d15] py-3 sm:py-3.5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo & School Branding */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
+          
+          {/* Left Group: Sidebar Toggle + School Logo & Name */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            
             {/* Sidebar Toggle Button */}
             <button
               onClick={onToggleSidebar}
-              className="p-2 rounded-xl text-emerald-100 hover:text-white hover:bg-emerald-800/60 border border-emerald-700/50 transition-all flex items-center gap-1.5 shadow-sm group"
-              title="Open Navigation Sidebar"
-              aria-label="Open Navigation Sidebar"
+              className="p-2 sm:px-2.5 sm:py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-800/80 text-emerald-100 hover:text-white border border-emerald-700/60 hover:border-school-gold/60 transition-all flex items-center gap-1.5 shadow-sm group"
+              title="Open Campus Navigation Sidebar"
+              aria-label="Toggle Sidebar"
             >
-              <PanelLeft className="w-5 h-5 text-school-gold group-hover:scale-110 transition-transform" />
-              <span className="hidden xl:inline text-xs font-bold text-emerald-100">Sidebar</span>
+              <PanelLeft className="w-4 h-4 sm:w-5 sm:h-5 text-school-gold group-hover:scale-110 transition-transform" />
+              <span className="hidden xl:inline text-xs font-bold text-emerald-100 group-hover:text-school-gold transition-colors">
+                Sidebar
+              </span>
             </button>
 
+            {/* School Logo & Branding (Clickable Home Link) */}
             <a 
               href="#home" 
-              className="flex items-center gap-3 group cursor-pointer"
               onClick={(e) => {
                 e.preventDefault();
                 handleLinkClick('home', '#home');
               }}
+              className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
+              title="Hammadur Rahman Academy Homepage"
             >
-              {/* School Crest / Monogram Badge */}
-              <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-green-700 p-0.5 shadow-md flex items-center justify-center group-hover:shadow-royal transition-all duration-300">
-                <div className="w-full h-full bg-emerald-950 rounded-[10px] flex flex-col items-center justify-center p-1 border border-school-gold/40">
-                  <GraduationCap className="w-6 h-6 text-school-gold group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-[8px] font-black tracking-widest text-school-goldLight uppercase">HRA</span>
+              {/* Crest Monogram Badge */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-school-gold via-amber-500 to-emerald-700 p-0.5 shadow-md flex items-center justify-center group-hover:shadow-royal transition-all duration-300">
+                <div className="w-full h-full bg-[#022419] rounded-[10px] flex flex-col items-center justify-center p-1 border border-school-gold/50">
+                  <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-school-gold group-hover:scale-110 transition-transform duration-300" />
+                  <span className="text-[7px] sm:text-[8px] font-black tracking-widest text-school-goldLight uppercase">HRA</span>
                 </div>
               </div>
 
-              {/* School Text */}
+              {/* School Name & Campus Subtitle */}
               <div className="flex flex-col">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight font-heading leading-tight group-hover:text-school-gold transition-colors">
+                <div className="flex items-baseline gap-1 sm:gap-1.5">
+                  <span className="text-sm sm:text-base md:text-lg font-black text-white tracking-tight font-heading leading-tight group-hover:text-school-gold transition-colors whitespace-nowrap">
                     Hammadur Rahman
                   </span>
-                  <span className="text-xs md:text-sm font-bold text-school-gold uppercase tracking-wider">
+                  <span className="text-xs sm:text-sm font-bold text-school-gold uppercase tracking-wider">
                     Academy
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[11px] text-emerald-200 font-medium">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-200/90 font-medium whitespace-nowrap">
                   <span className="text-school-goldLight font-semibold">Secondary School</span>
                   <span>•</span>
-                  <span>Lafia, Nasarawa</span>
+                  <span>Lafia, Nasarawa State</span>
                 </div>
               </div>
             </a>
+
           </div>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          {/* Desktop Navigation Links (Center) */}
+          <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1.5">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => handleLinkClick(link.id, link.href)}
-                  className={`px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200 relative ${
+                  className={`px-2 xl:px-2.5 py-1.5 text-xs xl:text-[13px] font-semibold rounded-lg transition-all duration-200 relative whitespace-nowrap ${
                     isActive
-                      ? 'text-school-gold bg-emerald-800/80 font-bold border border-school-gold/30'
-                      : 'text-emerald-100 hover:text-white hover:bg-emerald-800/50'
+                      ? 'text-school-gold bg-emerald-950/80 font-bold border border-school-gold/40 shadow-sm'
+                      : 'text-emerald-100/90 hover:text-white hover:bg-emerald-800/50'
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-school-gold rounded-full" />
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-0.5 bg-school-gold rounded-full" />
                   )}
                 </button>
               );
             })}
           </div>
 
-          {/* Right Action buttons */}
-          <div className="hidden md:flex items-center gap-2.5">
+          {/* Right Action: Enroll Now CTA + Mobile Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            
+            {/* Enroll Now Button */}
             <button
               onClick={onOpenApply}
-              className="bg-school-gold hover:bg-amber-400 text-emerald-950 text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-md hover:shadow-gold-glow transition-all duration-300 flex items-center gap-1.5 border border-school-gold/50 transform hover:scale-105"
+              className="bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-[#022419] text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg shadow-md hover:shadow-gold-glow transition-all duration-300 flex items-center gap-1.5 border border-school-gold/60 transform hover:scale-105 whitespace-nowrap"
+              title="Enroll into Hammadur Rahman Academy"
             >
-              <FileText className="w-3.5 h-3.5 text-emerald-950" />
+              <FileText className="w-3.5 h-3.5 text-[#022419]" />
               <span>Enroll Now</span>
             </button>
-          </div>
 
-          {/* Mobile Menu & Theme Toggle */}
-          <div className="flex lg:hidden items-center gap-1.5">
-            <button
-              onClick={onToggleDarkMode}
-              className="p-2 rounded-lg text-emerald-100 hover:bg-emerald-800/50"
-              aria-label="Toggle Theme"
-            >
-              {isDarkMode ? <Sun className="w-5 h-5 text-amber-300" /> : <Moon className="w-5 h-5 text-emerald-100" />}
-            </button>
-
+            {/* Mobile Menu Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-emerald-100 hover:text-white hover:bg-emerald-800/50 focus:outline-none transition-colors"
-              aria-label="Toggle Navigation Menu"
+              className="p-2 rounded-xl text-emerald-100 hover:text-white bg-emerald-950/70 hover:bg-emerald-800/80 border border-emerald-700/60 lg:hidden transition-colors"
+              aria-label="Toggle Mobile Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 text-school-gold" /> : <Menu className="w-5 h-5 text-emerald-100" />}
             </button>
+
           </div>
+
         </div>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* ======================================================== */}
+      {/* 3. MOBILE MENU DRAWER                                    */}
+      {/* Comprehensive responsive menu with all links & actions   */}
+      {/* ======================================================== */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white/98 dark:bg-slate-900/98 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4 duration-300 max-h-[80vh] overflow-y-auto">
-          <div className="p-3 mb-2 rounded-lg bg-school-dark dark:bg-black text-white flex items-center justify-between border border-school-gold/30">
-            <div>
-              <p className="text-xs font-semibold text-school-gold">Hammadur Rahman Academy</p>
-              <p className="text-[11px] text-slate-300">Lafia, Nasarawa State</p>
+        <div className="lg:hidden bg-[#022419]/98 dark:bg-[#01140e]/98 backdrop-blur-xl border-b border-emerald-800/60 shadow-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-300 max-h-[85vh] overflow-y-auto">
+          
+          {/* Header Card inside Mobile Menu */}
+          <div className="p-3 rounded-xl bg-emerald-950/90 border border-school-gold/40 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-school-gold/20 border border-school-gold/40 flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-school-gold" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-white">Hammadur Rahman Academy</p>
+                <p className="text-[10px] text-emerald-200">Secondary School • Lafia, Nasarawa</p>
+              </div>
             </div>
-            <span className="text-[10px] bg-school-gold text-school-dark font-extrabold px-2 py-0.5 rounded">
+            <span className="text-[9px] bg-school-gold text-[#022419] font-black px-2 py-0.5 rounded uppercase tracking-wider">
               Govt. Approved
             </span>
           </div>
 
-          <div className="space-y-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleLinkClick(link.id, link.href)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  activeSection === link.id
-                    ? 'bg-school-navy text-white font-bold'
-                    : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
-              >
-                <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 opacity-50" />
-              </button>
-            ))}
+          {/* Quick Action Pills in Mobile Menu */}
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenPortal();
+              }}
+              className="p-2.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 text-white border border-emerald-700/60 flex items-center justify-center gap-1.5 font-bold text-center"
+            >
+              <UserCheck className="w-3.5 h-3.5 text-school-gold" />
+              <span>Result Portal</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenApply();
+              }}
+              className="p-2.5 rounded-lg bg-school-gold hover:bg-amber-400 text-[#022419] flex items-center justify-center gap-1.5 font-extrabold text-center shadow-sm"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#022419]" />
+              <span>Apply Online</span>
+            </button>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+          {/* All 9 Main Navigation Links */}
+          <div className="space-y-1 pt-1 border-t border-emerald-800/40">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleLinkClick(link.id, link.href)}
+                  className={`w-full flex items-center justify-between px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-emerald-950 text-school-gold font-bold border border-school-gold/40'
+                      : 'text-emerald-100 hover:text-white hover:bg-emerald-900/60'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <ChevronRight className="w-4 h-4 opacity-60 text-school-gold" />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mobile Admin Status & Login Footer */}
+          <div className="pt-3 border-t border-emerald-800/50 space-y-2">
             {adminUser ? (
-              <div className="p-3 rounded-xl bg-emerald-950 border border-school-gold/50 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-emerald-950 border border-school-gold/40 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold text-school-gold">{adminUser.fullName || adminUser.username}</p>
                   <p className="text-[10px] text-emerald-200">{adminUser.role || 'Administrator'}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5">
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
                       onOpenAdmin();
                     }}
-                    className="px-2.5 py-1 bg-school-gold text-emerald-950 rounded text-xs font-bold"
+                    className="px-2.5 py-1 bg-school-gold text-[#022419] rounded text-xs font-bold"
                   >
                     Dashboard
                   </button>
@@ -345,7 +413,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setMobileMenuOpen(false);
                       if (onLogout) onLogout();
                     }}
-                    className="px-2.5 py-1 bg-red-600/80 hover:bg-red-600 text-white rounded text-xs font-bold flex items-center gap-1"
+                    className="px-2 py-1 bg-red-600/80 hover:bg-red-600 text-white rounded text-xs font-bold flex items-center gap-1"
                   >
                     <LogOut className="w-3 h-3" />
                     <span>Logout</span>
@@ -358,36 +426,30 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   handleLinkClick('admin', '#admin');
                 }}
-                className="w-full py-2.5 px-4 rounded-lg bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-2 border border-school-gold/40 shadow-sm"
+                className="w-full py-2.5 px-4 rounded-lg bg-emerald-900 hover:bg-emerald-800 text-emerald-100 hover:text-white text-xs font-bold flex items-center justify-center gap-2 border border-emerald-700/60 shadow-sm"
               >
-                <ShieldCheck className="w-4 h-4 text-school-gold" />
+                <Lock className="w-3.5 h-3.5 text-school-gold" />
                 <span>Admin Login & Staff Access</span>
               </button>
             )}
 
+            {/* Sidebar Opener from inside Mobile Drawer */}
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenPortal();
+                onToggleSidebar();
               }}
-              className="w-full py-2.5 px-4 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-school-dark dark:text-white text-xs font-bold flex items-center justify-center gap-2"
+              className="w-full py-2 px-4 rounded-lg bg-emerald-950/60 hover:bg-emerald-900 text-emerald-200 text-xs font-semibold flex items-center justify-center gap-2 border border-emerald-800/60"
             >
-              <UserCheck className="w-4 h-4 text-school-blue" />
-              <span>Access Student / Parent Portal</span>
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenApply();
-              }}
-              className="w-full py-2.5 px-4 rounded-lg bg-gradient-to-r from-school-gold to-amber-600 text-school-dark text-xs font-extrabold flex items-center justify-center gap-2 shadow-md"
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>Apply for Admission (2026/2027)</span>
+              <PanelLeft className="w-3.5 h-3.5 text-school-gold" />
+              <span>Open Campus Navigation Sidebar</span>
+              <ArrowRight className="w-3 h-3 text-emerald-400" />
             </button>
           </div>
+
         </div>
       )}
+
     </header>
   );
 };
