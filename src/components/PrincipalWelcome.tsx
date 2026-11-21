@@ -39,7 +39,7 @@ export const PrincipalWelcome: React.FC = () => {
               
               <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800">
                 <img 
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" 
+                  src="/images/principal.jpg" 
                   alt="Dr. Abdur-Rahman A. Al-Hassan - Principal Hammadur Rahman Academy Lafia" 
                   className="w-full h-96 object-cover object-top"
                 />

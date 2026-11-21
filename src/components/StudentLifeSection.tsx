@@ -200,8 +200,8 @@ export const StudentLifeSection: React.FC = () => {
               <div className="lg:col-span-6 relative">
                 <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-xl border border-slate-100 dark:border-slate-800">
                   <img 
-                    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" 
-                    alt="Boarding students at Hammadur Rahman Academy Lafia" 
+                    src="/images/student-life.jpg" 
+                    alt="Nigerian boarding students at Hammadur Rahman Academy Lafia" 
                     className="w-full h-full object-cover"
                   />
                 </div>

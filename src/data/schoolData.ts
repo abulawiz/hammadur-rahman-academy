@@ -174,7 +174,7 @@ export const FACILITIES: Facility[] = [
     name: "120-Seat Digital CBT & ICT Complex",
     category: "Technology",
     description: "Fully air-conditioned, solar-backed computer laboratory configured for online examinations, JAMB simulations, coding lessons, and digital research.",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-cbt.jpg",
     features: ["120 high-spec networked workstations", "High-speed optical fiber internet", "Dedicated uninterrupted solar inverter system", "Smart interactive projector boards"]
   },
   {
@@ -182,7 +182,7 @@ export const FACILITIES: Facility[] = [
     name: "Specialized Science Laboratories",
     category: "Academics",
     description: "Three independent, standard laboratories for Physics, Chemistry, and Biology stocked with modern reagent stores, microscopes, and apparatus.",
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-science.jpg",
     features: ["Safety fume cupboards & emergency wash stations", "Digital microscopes and analytical balances", "Certified WAEC & NECO inspection rating", "Strict adherence to lab safety protocols"]
   },
   {
@@ -190,7 +190,7 @@ export const FACILITIES: Facility[] = [
     name: "e-Library & Research Resource Center",
     category: "Academics",
     description: "A serene academic sanctuary combining over 12,000 physical volumes with a subscribed digital repository of international journals and study guides.",
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-library.jpg",
     features: ["12,000+ curriculum books & past question archives", "Quiet cubicles for independent scholarship", "e-Reader tablets loaded with encyclopedias", "Dedicated reading coach and research assistant"]
   },
   {
@@ -198,7 +198,7 @@ export const FACILITIES: Facility[] = [
     name: "Secure Boarding Hostels (Boys & Girls)",
     category: "Student Life",
     description: "Separate, comfortable, and well-supervised residential houses with clean dormitories, study halls, hygienic dining halls, and 24/7 security surveillance.",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-hostel.jpg",
     features: ["24/7 CCTV surveillance & perimeter security", "Resident house masters and matrons", "Nutritious three-course hygienic meals daily", "Treated borehole water supply and power backup"]
   },
   {
@@ -206,7 +206,7 @@ export const FACILITIES: Facility[] = [
     name: "Multi-Purpose Sports Arena",
     category: "Recreation",
     description: "Promoting physical fitness and team spirit through a full football pitch, basketball court, volleyball court, table tennis court, and track athletics.",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-sports.jpg",
     features: ["Standard football turf and spectator stands", "Paved basketball and volleyball courts", "Qualified physical & health education coaches", "Annual Inter-House Sports championship"]
   },
   {
@@ -214,7 +214,7 @@ export const FACILITIES: Facility[] = [
     name: "Registered Campus Clinic & Sickbay",
     category: "Health & Welfare",
     description: "Well-equipped healthcare station staffed with registered nurses and an on-call physician for primary medical care and routine health screenings.",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+    image: "/images/facility-clinic.jpg",
     features: ["First aid & emergency response equipment", "Licensed resident nursing personnel", "Partnership with Dalhatu Araf Specialist Hospital (DASH) Lafia", "Routine health and wellness assessments"]
   }
 ];
@@ -225,21 +225,21 @@ export const LEADERSHIP: StaffMember[] = [
     role: "Principal & Director of Studies",
     qualification: "B.Ed, M.Sc (Educ. Admin), Ph.D (Curriculum Studies), TRCN Certified",
     message: "At Hammadur Rahman Academy Lafia, we do not merely teach subjects; we mold noble character, inspire scientific curiosity, and raise dignified future leaders who can stand shoulder-to-shoulder with their peers globally.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+    image: "/images/principal.jpg"
   },
   {
     name: "Mrs. Halima Gambo Umar",
     role: "Vice Principal (Academic Affairs)",
     qualification: "B.Sc (Hons) Chemistry, PGDE, M.Ed (Science Education)",
     message: "Our pedagogical approach prioritizes hands-on mastery over rote memorization. Every child is guided by passionate teachers to unlock their highest intellectual potential.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+    image: "/images/vp-academics.jpg"
   },
   {
     name: "Mallam Suleiman Danladi",
     role: "Vice Principal (Administration & Boarding)",
     qualification: "B.A. (Ed) English, MPA (Public Admin)",
     message: "We maintain a pristine, safe, and disciplined environment where pastoral care ensures every student feels cherished, protected, and motivated to thrive.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+    image: "/images/vp-admin.jpg"
   }
 ];
 
@@ -251,7 +251,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: "GRA, Lafia, Nasarawa State",
     comment: "The transformation in my son since he joined Hammadur Rahman Academy has been extraordinary. Not only did he clear his WAEC with 7 distinctions, but his respectfulness and daily prayer commitment are a joy to behold.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
+    avatar: "/images/avatar-parent-1.jpg"
   },
   {
     id: "test-2",
@@ -260,7 +260,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: "Keffi / Abuja Road, Nasarawa State",
     comment: "As a parent in the medical profession, the standard of science laboratories and ICT facilities at HRA Lafia convinced me immediately. The teachers are genuinely dedicated and accessible.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80"
+    avatar: "/images/avatar-parent-2.jpg"
   },
   {
     id: "test-3",
@@ -269,7 +269,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: "Currently State Counsel, Ministry of Justice",
     comment: "The debating sessions, mock trials, and Islamic ethics instilled in me at Hammadur Rahman Academy provided the bedrock for my first-class journey in Law school. HRA is a citadel of real champions.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80"
+    avatar: "/images/avatar-alumnus.jpg"
   }
 ];
 

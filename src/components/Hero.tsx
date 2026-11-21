@@ -178,8 +178,8 @@ export const Hero: React.FC<HeroProps> = ({
                 {/* Hero Showcase Image */}
                 <div className="relative rounded-xl overflow-hidden aspect-video border border-white/10 group">
                   <img 
-                    src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" 
-                    alt="Students in science laboratory at Hammadur Rahman Academy Lafia" 
+                    src="/images/hero-students.jpg" 
+                    alt="Nigerian secondary school students in classroom at Hammadur Rahman Academy Lafia" 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-4">
@@ -188,7 +188,7 @@ export const Hero: React.FC<HeroProps> = ({
                         Campus Spotlight
                       </span>
                       <p className="text-xs font-semibold text-white mt-1">
-                        Ultra-Modern Chemistry, Physics & Robotic Labs
+                        Active Secondary Classroom & Collaborative Learning
                       </p>
                     </div>
                   </div>
