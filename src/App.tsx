@@ -15,7 +15,6 @@ import { Footer } from './components/Footer';
 import { StudentPortalModal } from './components/StudentPortalModal';
 import { ApplicationModal } from './components/ApplicationModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
-import { PanelLeft, ShieldCheck } from 'lucide-react';
 
 export function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -138,21 +137,6 @@ export function App() {
         adminUser={adminUser}
         onLogout={handleAdminLogout}
       />
-
-      {/* Floating Quick Sidebar Dock Trigger on Left Viewport Margin */}
-      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:block">
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="bg-emerald-950/95 hover:bg-emerald-900 text-white hover:text-school-gold py-3 px-2 rounded-r-2xl shadow-royal border-y border-r border-school-gold/40 backdrop-blur-md flex flex-col items-center gap-2 group transition-all duration-300 transform hover:translate-x-1"
-          title="Open Campus Navigation Sidebar"
-          aria-label="Open Campus Navigation Sidebar"
-        >
-          <PanelLeft className="w-5 h-5 text-school-gold group-hover:scale-110 transition-transform" />
-          <span className="text-[10px] font-extrabold tracking-widest [writing-mode:vertical-lr] rotate-180 uppercase text-emerald-200 group-hover:text-school-gold">
-            NAV SIDEBAR
-          </span>
-        </button>
-      </div>
 
       <main>
         {/* Hero Section */}

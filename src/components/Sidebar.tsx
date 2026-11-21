@@ -161,34 +161,53 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </button>
           </div>
 
-          {/* Quick Action Buttons */}
-          <div className="space-y-2">
+          {/* Quick Services & Portals (Moved from Top Bar) */}
+          <div className="space-y-2.5">
+            <p className="text-[10px] font-black uppercase tracking-wider text-school-gold px-1 flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-school-gold" />
+              <span>Student & Parent Portals</span>
+            </p>
+
+            {/* Apply Online */}
             <button
               onClick={() => {
                 onClose();
                 onOpenApply();
               }}
-              className="w-full py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark text-xs font-black flex items-center justify-between shadow-gold-glow transition-all"
+              className="w-full py-3 px-3.5 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-[#022419] text-xs font-black flex items-center justify-between shadow-gold-glow transition-all transform hover:scale-[1.02]"
+              title="Apply Online for 2026/2027 Admission"
             >
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-school-dark" />
-                <span>Apply for 2026/2027 Session</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-[#022419]/20 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-[#022419]" />
+                </div>
+                <div className="text-left">
+                  <div className="font-black text-xs leading-tight">Apply Online</div>
+                  <div className="text-[10px] font-bold text-[#022419]/80">2026/2027 Admission Form</div>
+                </div>
               </div>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 text-[#022419]" />
             </button>
 
+            {/* Student Result Portal */}
             <button
               onClick={() => {
                 onClose();
                 onOpenPortal();
               }}
-              className="w-full py-2.5 px-3.5 rounded-xl bg-school-navy/80 hover:bg-school-blue text-white text-xs font-bold flex items-center justify-between border border-school-blue/50 transition-colors"
+              className="w-full py-3 px-3.5 rounded-xl bg-emerald-900/90 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-between border border-school-gold/40 shadow-sm transition-all transform hover:scale-[1.02]"
+              title="Open Student Result Checker"
             >
-              <div className="flex items-center gap-2">
-                <UserCheck className="w-4 h-4 text-school-gold" />
-                <span>Check Student Termly Results</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-school-gold/20 flex items-center justify-center border border-school-gold/40">
+                  <UserCheck className="w-4 h-4 text-school-gold" />
+                </div>
+                <div className="text-left">
+                  <div className="font-bold text-xs text-white leading-tight">Student Result Portal</div>
+                  <div className="text-[10px] text-emerald-300">Termly Online Checker</div>
+                </div>
               </div>
-              <ChevronRight className="w-4 h-4 opacity-60" />
+              <ChevronRight className="w-4 h-4 text-school-gold" />
             </button>
 
             {/* Admin Management Status / Controls */}
@@ -233,13 +252,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   onClose();
                   handleNavClick('admin', '#admin');
                 }}
-                className="w-full py-2 px-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-semibold flex items-center justify-between border border-white/10 transition-colors"
+                className="w-full py-2.5 px-3.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 text-xs font-semibold flex items-center justify-between border border-emerald-700/60 transition-colors"
               >
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-school-gold" />
                   <span>Admin Login & Staff Access</span>
                 </div>
-                <ChevronRight className="w-4 h-4 opacity-40" />
+                <ChevronRight className="w-4 h-4 opacity-40 text-school-gold" />
               </button>
             )}
           </div>

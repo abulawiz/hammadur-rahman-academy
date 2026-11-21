@@ -120,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Top Bar Right: Dark Mode | Admin Login | Student Result Portal | Apply Online */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+          {/* Top Bar Right: Dark Mode & Admin Login */}
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
             
             {/* Dark Mode / Light Mode Toggle */}
             <button
@@ -176,26 +176,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>Admin Login</span>
               </button>
             )}
-
-            {/* Student Result Portal */}
-            <button
-              onClick={onOpenPortal}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-800/80 hover:bg-emerald-700 text-white border border-emerald-600/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm"
-              title="Check Student Examination Results"
-            >
-              <UserCheck className="w-3 h-3 text-school-gold" />
-              <span>Student Result Portal</span>
-            </button>
-
-            {/* Apply Online */}
-            <button
-              onClick={onOpenApply}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-gradient-to-r from-amber-500 via-school-gold to-amber-600 hover:from-amber-400 hover:to-school-goldHover text-[#022419] font-black text-[11px] shadow-sm hover:shadow-gold-glow transition-all transform hover:scale-105"
-              title="Apply Online for 2026/2027 Academic Session"
-            >
-              <Sparkles className="w-3 h-3 text-[#022419]" />
-              <span>Apply Online</span>
-            </button>
 
           </div>
 
