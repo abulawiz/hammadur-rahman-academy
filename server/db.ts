@@ -2,16 +2,43 @@ import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbPath = path.resolve(__dirname, 'school.db');
-export const db = new Database(dbPath);
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const dbDir = isVercel ? '/tmp' : __dirname;
+const dbPath = path.resolve(dbDir, 'school.db');
 
-// Enable foreign keys and WAL mode for high performance
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
+// If running in serverless environment, make sure /tmp/school.db exists or copy seed
+if (isVercel) {
+  try {
+    const sourceDb = path.resolve(__dirname, 'school.db');
+    if (fs.existsSync(sourceDb) && !fs.existsSync(dbPath)) {
+      fs.copyFileSync(sourceDb, dbPath);
+    }
+  } catch (err) {
+    console.warn('[DB] Notice copying to /tmp:', err);
+  }
+}
+
+let dbInstance: any;
+try {
+  dbInstance = new Database(dbPath);
+  try {
+    dbInstance.pragma('journal_mode = WAL');
+    dbInstance.pragma('foreign_keys = ON');
+  } catch (e) {
+    // Some serverless environments restrict WAL mode on /tmp
+    console.warn('[DB] Notice setting pragma:', e);
+  }
+} catch (err) {
+  console.warn('[DB] File database error, falling back to memory database:', err);
+  dbInstance = new Database(':memory:');
+}
+
+export const db = dbInstance;
 
 // Helper to hash password with SHA-256
 export function hashPassword(password: string): string {
