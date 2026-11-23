@@ -90,19 +90,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPortal, onOpenApply }) => 
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Portals & Services</h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a
-                  href="#admin"
-                  className="text-left text-school-gold hover:text-school-goldLight font-medium transition-colors flex items-center gap-1.5"
-                >
-                  <span>🔐 School Admin Portal (Staff Login)</span>
-                </a>
-              </li>
-              <li>
                 <button
                   onClick={onOpenPortal}
                   className="text-left text-slate-300 hover:text-school-gold transition-colors flex items-center gap-1.5"
                 >
-                  <span>→ Student Termly Result Checker</span>
+                  <span>→ Student Fees & Result Portal</span>
                 </button>
               </li>
               <li>

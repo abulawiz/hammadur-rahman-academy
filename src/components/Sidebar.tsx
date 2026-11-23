@@ -71,7 +71,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'student-life', label: 'Student & Boarding Life', href: '#student-life', icon: <Users className="w-4 h-4" /> },
     { id: 'news', label: 'Bulletins & Term Calendar', href: '#news', icon: <Bell className="w-4 h-4" /> },
     { id: 'contact', label: 'Contact & Lafia Location', href: '#contact', icon: <Phone className="w-4 h-4" /> },
-    { id: 'admin', label: 'Admin Portal & Login', href: '#admin', icon: <ShieldCheck className="w-4 h-4" /> },
   ];
 
 
@@ -197,58 +196,79 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <ChevronRight className="w-4 h-4 text-school-gold" />
             </button>
 
-            {/* Admin Management Status / Controls */}
-            {adminUser ? (
-              <div className="p-3 rounded-xl bg-emerald-900/60 border border-school-gold/50 space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-bold text-school-gold truncate max-w-[170px]">
-                      {adminUser.fullName || adminUser.username}
+            {/* Staff Administrative Access Section (Exclusively in Sidebar) */}
+            <div className="pt-2 border-t border-white/10 space-y-1.5">
+              <p className="text-[10px] font-black uppercase tracking-wider text-school-gold px-1 flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-school-gold" />
+                <span>Staff & Administrative Access</span>
+              </p>
+
+              {adminUser ? (
+                <div className="p-3.5 rounded-2xl bg-[#022419] border border-school-gold/50 shadow-md space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <div>
+                        <div className="text-xs font-bold text-white truncate max-w-[180px]">
+                          {adminUser.fullName || adminUser.username}
+                        </div>
+                        <div className="text-[10px] text-school-gold font-medium">
+                          {adminUser.role || 'Staff Administrator'}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-extrabold uppercase">
+                      Active
                     </span>
                   </div>
-                  <span className="text-[9px] bg-emerald-800 text-emerald-200 px-1.5 py-0.5 rounded font-bold">
-                    Active
-                  </span>
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/10">
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenAdmin();
+                      }}
+                      className="py-2 px-3 bg-school-gold hover:bg-amber-400 text-emerald-950 rounded-xl text-xs font-black text-center transition-colors shadow-sm"
+                    >
+                      Dashboard
+                    </button>
+                    <button
+                      onClick={() => {
+                        onClose();
+                        if (onLogout) onLogout();
+                      }}
+                      className="py-2 px-3 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-red-500/30"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Log Out</span>
+                    </button>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 pt-1">
-                  <button
-                    onClick={() => {
-                      onClose();
-                      onOpenAdmin();
-                    }}
-                    className="py-1.5 px-2 bg-school-gold hover:bg-amber-400 text-emerald-950 rounded-lg text-xs font-bold text-center transition-colors shadow-sm"
-                  >
-                    Dashboard
-                  </button>
-                  <button
-                    onClick={() => {
-                      onClose();
-                      if (onLogout) onLogout();
-                    }}
-                    className="py-1.5 px-2 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-colors"
-                  >
-                    <LogOut className="w-3 h-3" />
-                    <span>Log Out</span>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => {
-                  onClose();
-                  onOpenAdmin();
-                }}
-                className="w-full py-2.5 px-3.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 text-xs font-semibold flex items-center justify-between border border-emerald-700/60 transition-colors"
-                title="Open Administrative Staff Login"
-              >
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-school-gold" />
-                  <span>Admin Login & Staff Access</span>
-                </div>
-                <ChevronRight className="w-4 h-4 opacity-70 text-school-gold" />
-              </button>
-            )}
+              ) : (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenAdmin();
+                  }}
+                  className="w-full py-3 px-3.5 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#033022] to-emerald-950 hover:border-school-gold text-white text-xs font-bold flex items-center justify-between border border-school-gold/40 shadow-md transition-all group hover:scale-[1.01]"
+                  title="Staff & Administrative Login (Principal & Bursar)"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-school-gold/20 border border-school-gold/40 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <ShieldCheck className="w-4 h-4 text-school-gold" />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-bold text-xs text-white group-hover:text-school-gold transition-colors">
+                        Admin & Staff Login
+                      </div>
+                      <div className="text-[10px] text-emerald-300/80">
+                        Principal & Bursar Portals
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-school-gold group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Main Navigation Sections */}

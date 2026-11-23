@@ -10,7 +10,6 @@ import { StudentLifeSection } from './components/StudentLifeSection';
 import { NewsEventsSection } from './components/NewsEventsSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactSection } from './components/ContactSection';
-import { AdminSection } from './components/AdminSection';
 import { Footer } from './components/Footer';
 import { StudentPortalModal } from './components/StudentPortalModal';
 import { ApplicationModal } from './components/ApplicationModal';
@@ -80,7 +79,7 @@ export function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'academics', 'admissions', 'facilities', 'student-life', 'news', 'admin', 'contact'];
+      const sections = ['home', 'about', 'academics', 'admissions', 'facilities', 'student-life', 'news', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -166,14 +165,6 @@ export function App() {
 
         {/* Testimonials */}
         <TestimonialsSection />
-
-        {/* Staff & Administrative Control Suite with Login/Logout */}
-        <AdminSection
-          adminUser={adminUser}
-          onLogin={handleAdminLogin}
-          onLogout={handleAdminLogout}
-          onOpenDashboard={() => setIsAdminOpen(true)}
-        />
 
         {/* Campus Location & Contact */}
         <ContactSection />

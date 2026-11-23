@@ -64,7 +64,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'Student Life', href: '#student-life', id: 'student-life' },
     { label: 'News & Events', href: '#news', id: 'news' },
     { label: 'Contact', href: '#contact', id: 'contact' },
-    { label: 'Admin Portal', href: '#admin', id: 'admin' },
   ];
 
   const handleLinkClick = (id: string, href: string) => {
@@ -73,14 +72,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleAdminAction = () => {
-    if (adminUser) {
-      onOpenAdmin();
-    } else {
-      handleLinkClick('admin', '#admin');
     }
   };
 
@@ -226,13 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={link.id}
-                  onClick={() => {
-                    if (link.id === 'admin') {
-                      onOpenAdmin();
-                    } else {
-                      handleLinkClick(link.id, link.href);
-                    }
-                  }}
+                  onClick={() => handleLinkClick(link.id, link.href)}
                   className={`px-2 xl:px-2.5 py-1.5 text-xs xl:text-[13px] font-semibold rounded-lg transition-all duration-200 relative whitespace-nowrap ${
                     isActive
                       ? 'text-school-gold bg-emerald-950/80 font-bold border border-school-gold/40 shadow-sm'
@@ -323,7 +308,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* All 9 Main Navigation Links */}
+          {/* Main Navigation Links */}
           <div className="space-y-1 pt-1 border-t border-emerald-800/40">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
@@ -332,11 +317,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={link.id}
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    if (link.id === 'admin') {
-                      onOpenAdmin();
-                    } else {
-                      handleLinkClick(link.id, link.href);
-                    }
+                    handleLinkClick(link.id, link.href);
                   }}
                   className={`w-full flex items-center justify-between px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors ${
                     isActive
@@ -351,9 +332,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </div>
 
-          {/* Mobile Admin Status & Login Footer */}
+          {/* Mobile Footer: Sidebar Opener */}
           <div className="pt-3 border-t border-emerald-800/50 space-y-2">
-            {adminUser ? (
+            {adminUser && (
               <div className="p-3 rounded-xl bg-emerald-950 border border-school-gold/40 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-bold text-school-gold">{adminUser.fullName || adminUser.username}</p>
@@ -381,17 +362,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 </div>
               </div>
-            ) : (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  handleLinkClick('admin', '#admin');
-                }}
-                className="w-full py-2.5 px-4 rounded-lg bg-emerald-900 hover:bg-emerald-800 text-emerald-100 hover:text-white text-xs font-bold flex items-center justify-center gap-2 border border-emerald-700/60 shadow-sm"
-              >
-                <Lock className="w-3.5 h-3.5 text-school-gold" />
-                <span>Admin Login & Staff Access</span>
-              </button>
             )}
 
             {/* Sidebar Opener from inside Mobile Drawer */}
@@ -400,11 +370,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setMobileMenuOpen(false);
                 onToggleSidebar();
               }}
-              className="w-full py-2 px-4 rounded-lg bg-emerald-950/60 hover:bg-emerald-900 text-emerald-200 text-xs font-semibold flex items-center justify-center gap-2 border border-emerald-800/60"
+              className="w-full py-2.5 px-4 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-200 text-xs font-bold flex items-center justify-center gap-2 border border-emerald-700/60 shadow-sm"
             >
-              <Menu className="w-3.5 h-3.5 text-school-gold" />
-              <span>Open Campus Navigation Sidebar</span>
-              <ArrowRight className="w-3 h-3 text-emerald-400" />
+              <Menu className="w-4 h-4 text-school-gold" />
+              <span>Open Campus Sidebar & Staff Access</span>
+              <ArrowRight className="w-3.5 h-3.5 text-school-gold" />
             </button>
           </div>
 
