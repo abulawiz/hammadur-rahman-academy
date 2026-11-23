@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SCHOOL_INFO } from '../data/schoolData';
 import { 
   Mail, 
+  Phone,
   GraduationCap, 
   Menu, 
   X, 
@@ -9,7 +10,6 @@ import {
   FileText, 
   ChevronRight,
   Sparkles,
-  PanelLeft,
   Sun,
   Moon,
   ShieldCheck,
@@ -89,14 +89,14 @@ export const Navbar: React.FC<NavbarProps> = ({
       
       {/* ======================================================== */}
       {/* 1. TOP BAR                                               */}
-      {/* Email | WAEC/NECO No | Dark Mode | Admin Login |         */}
-      {/* Student Result Portal | Apply Online                     */}
+      {/* Clean Header: Email | Helpline Phone | Light/Dark Mode   */}
+      {/* (WAEC/NECO, Admin Login & Portals moved to Sidebar)      */}
       {/* ======================================================== */}
       <div className="bg-[#022419] dark:bg-[#01140e] text-emerald-100 text-xs py-2 px-3 sm:px-6 border-b border-emerald-800/60 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           
-          {/* Top Bar Left: Email & WAEC/NECO Center Number */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-5 text-[11px] sm:text-xs">
+          {/* Top Bar Left: Email & Phone */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-[11px] sm:text-xs">
             {/* Email link */}
             <a 
               href={`mailto:${SCHOOL_INFO.email}`} 
@@ -111,23 +111,23 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <span className="hidden sm:inline text-emerald-700/80">•</span>
 
-            {/* WAEC/NECO Center Number */}
-            <div className="flex items-center gap-1.5 text-emerald-200/90 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 text-school-gold flex-shrink-0" />
-              <span>
-                WAEC/NECO Center No: <strong className="text-white font-bold tracking-wider">4260189 / 025114</strong>
-              </span>
-            </div>
+            {/* Helpline Phone */}
+            <a 
+              href={`tel:${SCHOOL_INFO.phone}`} 
+              className="hidden sm:flex items-center gap-1.5 text-emerald-200/90 hover:text-school-gold transition-colors font-medium"
+              title="Campus Helpline & Inquiries"
+            >
+              <Phone className="w-3.5 h-3.5 text-school-gold flex-shrink-0" />
+              <span>{SCHOOL_INFO.phone}</span>
+            </a>
           </div>
 
-          {/* Top Bar Right: Dark Mode & Admin Login */}
-          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
-            
-            {/* Dark Mode / Light Mode Toggle */}
+          {/* Top Bar Right: Theme Mode Toggle */}
+          <div className="flex items-center gap-2">
             <button
               onClick={onToggleDarkMode}
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/80 hover:bg-emerald-900 text-school-gold border border-emerald-700/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm"
-              title={isDarkMode ? "Switch to Light Theme" : "Switch to Dark / Black Theme"}
+              title={isDarkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
               aria-label="Toggle Light and Dark Mode"
             >
               {isDarkMode ? (
@@ -142,41 +142,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </>
               )}
             </button>
-
-            {/* Admin Login / Status */}
-            {adminUser ? (
-              <div className="flex items-center gap-1 bg-emerald-950/90 border border-school-gold/60 text-white px-2 py-0.5 rounded-md text-[11px] shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-bold text-school-gold hidden lg:inline">
-                  {adminUser.fullName ? adminUser.fullName.split(' ')[0] : 'Admin'}
-                </span>
-                <button
-                  onClick={onOpenAdmin}
-                  className="px-2 py-0.5 bg-school-gold hover:bg-amber-400 text-[#022419] rounded text-[10px] font-black uppercase tracking-wider transition-colors"
-                  title="Open Admin Dashboard Modal"
-                >
-                  Dashboard
-                </button>
-                <button
-                  onClick={onLogout}
-                  className="px-1.5 py-0.5 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded text-[10px] font-bold flex items-center gap-0.5 transition-colors"
-                  title="Sign Out of Admin Session"
-                >
-                  <LogOut className="w-3 h-3" />
-                  <span className="hidden sm:inline">Logout</span>
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={handleAdminAction}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-900/90 hover:bg-emerald-800 text-emerald-100 hover:text-white border border-emerald-700/60 hover:border-school-gold/60 transition-all text-[11px] font-semibold shadow-sm group"
-                title="Staff & Administrator Portal Login"
-              >
-                <Lock className="w-3 h-3 text-school-gold group-hover:scale-110 transition-transform" />
-                <span>Admin Login</span>
-              </button>
-            )}
-
           </div>
 
         </div>
@@ -184,9 +149,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* ======================================================== */}
       {/* 2. MAIN NAVBAR                                           */}
-      {/* Sidebar toggle | School Logo/Name | Home | About Us |    */}
-      {/* Academics | Admissions | Facilities | Student Life |     */}
-      {/* News & Events | Contact | Admin Portal | Enroll Now      */}
+      {/* 3-Line Sidebar Toggle | Logo/Name | Navigation Links     */}
       {/* ======================================================== */}
       <nav 
         className={`w-full transition-all duration-300 border-b border-emerald-800/50 shadow-xl ${
@@ -197,19 +160,24 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
           
-          {/* Left Group: Sidebar Toggle + School Logo & Name */}
+          {/* Left Group: 3-Line Sidebar Toggle + School Logo & Name */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             
-            {/* Sidebar Toggle Button */}
+            {/* Sidebar Toggle Button - Prominent 3 Horizontal Lines */}
             <button
               onClick={onToggleSidebar}
-              className="p-2 sm:px-2.5 sm:py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-800/80 text-emerald-100 hover:text-white border border-emerald-700/60 hover:border-school-gold/60 transition-all flex items-center gap-1.5 shadow-sm group"
-              title="Open Campus Navigation Sidebar"
-              aria-label="Toggle Sidebar"
+              className="p-2 sm:px-3 sm:py-2.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-school-gold hover:text-white border border-emerald-700/60 hover:border-school-gold transition-all flex items-center gap-2 shadow-sm group"
+              title="Open Navigation Menu & Portals"
+              aria-label="Open Sidebar Menu"
             >
-              <PanelLeft className="w-4 h-4 sm:w-5 sm:h-5 text-school-gold group-hover:scale-110 transition-transform" />
-              <span className="hidden xl:inline text-xs font-bold text-emerald-100 group-hover:text-school-gold transition-colors">
-                Sidebar
+              {/* Three horizontal lines (hamburger icon) */}
+              <div className="flex flex-col justify-between w-5 h-3.5 space-y-1">
+                <span className="w-5 h-0.5 bg-school-gold group-hover:bg-amber-300 rounded-full transition-colors block"></span>
+                <span className="w-5 h-0.5 bg-school-gold group-hover:bg-amber-300 rounded-full transition-colors block"></span>
+                <span className="w-5 h-0.5 bg-school-gold group-hover:bg-amber-300 rounded-full transition-colors block"></span>
+              </div>
+              <span className="hidden sm:inline text-xs font-bold text-emerald-100 group-hover:text-school-gold transition-colors tracking-wide">
+                Menu
               </span>
             </button>
 
@@ -421,7 +389,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
               className="w-full py-2 px-4 rounded-lg bg-emerald-950/60 hover:bg-emerald-900 text-emerald-200 text-xs font-semibold flex items-center justify-center gap-2 border border-emerald-800/60"
             >
-              <PanelLeft className="w-3.5 h-3.5 text-school-gold" />
+              <Menu className="w-3.5 h-3.5 text-school-gold" />
               <span>Open Campus Navigation Sidebar</span>
               <ArrowRight className="w-3 h-3 text-emerald-400" />
             </button>

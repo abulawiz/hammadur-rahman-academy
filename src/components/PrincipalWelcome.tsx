@@ -7,23 +7,23 @@ export const PrincipalWelcome: React.FC = () => {
   const principal = LEADERSHIP[0];
 
   return (
-    <section id="about" className="py-20 bg-white dark:bg-[#021d15] text-slate-800 dark:text-white relative overflow-hidden transition-colors duration-300 border-t border-slate-200 dark:border-emerald-800/40">
+    <section id="about" className="py-20 bg-[#033827] dark:bg-[#021d15] text-white relative overflow-hidden transition-colors duration-300 border-t border-emerald-800/40">
       {/* Decorative subtle background accents */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 dark:bg-school-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header Badge */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-white/10 text-emerald-800 dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-emerald-200 dark:border-school-gold/30">
-            <Compass className="w-4 h-4 text-emerald-700 dark:text-school-gold" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
+            <Compass className="w-4 h-4 text-school-gold" />
             <span>Welcome to Hammadur Rahman Academy</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
-            Cultivating Leaders of <span className="text-emerald-700 dark:text-school-gold">Intellect</span>, <span className="text-amber-600 dark:text-amber-400">Integrity</span> & <span className="text-emerald-600 dark:text-emerald-400">Faith</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+            Cultivating Leaders of <span className="text-school-gold">Intellect</span>, <span className="text-amber-400">Integrity</span> & <span className="text-emerald-400">Faith</span>
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-emerald-100/90 text-base sm:text-lg leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-base sm:text-lg leading-relaxed">
             Established in the heart of Lafia, Nasarawa State, Hammadur Rahman Academy Secondary School is committed to holistic, 21st-century secondary school education that nurtures the mind, body, and soul.
           </p>
         </div>
@@ -82,16 +82,16 @@ export const PrincipalWelcome: React.FC = () => {
 
           {/* Principal Address Content */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 text-school-navy dark:text-school-gold font-bold text-sm tracking-wide">
-              <Quote className="w-6 h-6 text-school-gold" />
+            <div className="inline-flex items-center gap-2 text-school-gold font-bold text-sm tracking-wide">
+              <Quote className="w-5 h-5 text-school-gold" />
               <span>Message from the Principal / Director of Studies</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-snug">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-snug font-heading">
               "We provide an inspiring environment where every young scholar discovers their purpose and achieves academic brilliance."
             </h3>
 
-            <div className="space-y-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+            <div className="space-y-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
               <p>
                 Dear Parents, Prospective Students, and Valued Visitors,
               </p>
@@ -108,44 +108,44 @@ export const PrincipalWelcome: React.FC = () => {
 
             {/* Core Commitments */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/60">
+                <CheckCircle2 className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">100% University Transition Track</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Dedicated JAMB CBT coaching & career counseling.</p>
+                  <h4 className="text-xs font-bold text-white">100% University Transition Track</h4>
+                  <p className="text-[11px] text-emerald-200/80">Dedicated JAMB CBT coaching & career counseling.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/60">
+                <CheckCircle2 className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Safe & Monitored Campus</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Round-the-clock security and pastoral hostel care.</p>
+                  <h4 className="text-xs font-bold text-white">Safe & Monitored Campus</h4>
+                  <p className="text-[11px] text-emerald-200/80">Round-the-clock security and pastoral hostel care.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/60">
+                <CheckCircle2 className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Integrated Islamic Values</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Tahfeez, Arabic, Hadith & character grooming.</p>
+                  <h4 className="text-xs font-bold text-white">Integrated Islamic Values</h4>
+                  <p className="text-[11px] text-emerald-200/80">Tahfeez, Arabic, Hadith & character grooming.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/60">
+                <CheckCircle2 className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white">Continuous Assessment</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Transparent online results portal for parents.</p>
+                  <h4 className="text-xs font-bold text-white">Continuous Assessment</h4>
+                  <p className="text-[11px] text-emerald-200/80">Transparent online results portal for parents.</p>
                 </div>
               </div>
             </div>
 
             {/* Principal Signature Signoff */}
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div className="pt-4 border-t border-emerald-800/60 flex items-center justify-between">
               <div>
-                <p className="font-serif italic text-base text-slate-800 dark:text-white font-bold">Dr. Abdur-Rahman A. Al-Hassan</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Principal, Hammadur Rahman Academy Lafia</p>
+                <p className="font-serif italic text-base text-white font-bold">Dr. Abdur-Rahman A. Al-Hassan</p>
+                <p className="text-xs text-school-gold">Principal, Hammadur Rahman Academy Lafia</p>
               </div>
               <div className="text-right">
-                <span className="text-[11px] font-mono text-school-navy dark:text-school-gold bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full font-semibold">
+                <span className="text-[11px] font-mono text-school-gold bg-emerald-950/80 px-3 py-1 rounded-full font-semibold border border-school-gold/30">
                   Motto: Knowledge, Character, Excellence
                 </span>
               </div>
@@ -159,49 +159,49 @@ export const PrincipalWelcome: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
           
           {/* Mission */}
-          <div className="p-7 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-school-navy/30 dark:hover:border-school-gold/40 hover:shadow-lg transition-all duration-300">
-            <div className="w-12 h-12 rounded-xl bg-school-navy dark:bg-school-dark text-white flex items-center justify-center mb-5 shadow-md border border-school-gold/30">
+          <div className="p-7 rounded-2xl bg-emerald-950/70 border border-emerald-800/70 hover:border-school-gold/40 hover:shadow-lg transition-all duration-300 text-white">
+            <div className="w-12 h-12 rounded-xl bg-emerald-900 text-white flex items-center justify-center mb-5 shadow-md border border-school-gold/30">
               <BookMarked className="w-6 h-6 text-school-gold" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white font-heading mb-2">Our Mission</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            <h3 className="text-lg font-bold text-white font-heading mb-2">Our Mission</h3>
+            <p className="text-sm text-emerald-100/90 leading-relaxed">
               To provide qualitative, comprehensive, and morally uplifting secondary education using modern technological tools and dedicated educators to cultivate globally competitive, God-fearing leaders.
             </p>
           </div>
 
           {/* Vision */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-school-dark to-school-navy text-white shadow-xl relative overflow-hidden group border border-school-gold/25">
+          <div className="p-7 rounded-2xl bg-gradient-to-br from-[#022419] to-emerald-950 text-white shadow-xl relative overflow-hidden group border border-school-gold/30">
             <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center mb-5 border border-white/20 shadow-md">
               <Compass className="w-6 h-6 text-school-gold" />
             </div>
             <h3 className="text-lg font-bold text-white font-heading mb-2">Our Vision</h3>
-            <p className="text-sm text-slate-200 leading-relaxed">
+            <p className="text-sm text-emerald-100 leading-relaxed">
               To stand as the foremost citadel of secondary academic excellence in Nasarawa State and Northern Nigeria, renowned for unmatched WAEC/NECO results and virtuous character.
             </p>
             <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-school-gold/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500 pointer-events-none" />
           </div>
 
           {/* Core Values */}
-          <div className="p-7 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500/30 dark:hover:border-school-gold/40 hover:shadow-lg transition-all duration-300">
-            <div className="w-12 h-12 rounded-xl bg-amber-500 dark:bg-school-gold text-school-dark flex items-center justify-center mb-5 shadow-md">
-              <Shield className="w-6 h-6 text-slate-900" />
+          <div className="p-7 rounded-2xl bg-emerald-950/70 border border-emerald-800/70 hover:border-school-gold/40 hover:shadow-lg transition-all duration-300 text-white">
+            <div className="w-12 h-12 rounded-xl bg-school-gold text-emerald-950 flex items-center justify-center mb-5 shadow-md">
+              <Shield className="w-6 h-6 text-emerald-950" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white font-heading mb-2">Our Core Values</h3>
-            <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-1.5">
+            <h3 className="text-lg font-bold text-white font-heading mb-2">Our Core Values</h3>
+            <ul className="text-sm text-emerald-100/90 space-y-1.5">
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-school-gold" />
                 <strong>Taqwa & Integrity:</strong> Reverence of Allah in all endeavors.
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-school-gold" />
                 <strong>Academic Distinction:</strong> Pursuit of supreme knowledge.
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-school-gold" />
                 <strong>Discipline & Respect:</strong> Moral decorum and punctuality.
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-school-gold" />
                 <strong>Community Leadership:</strong> Service to Nasarawa and humanity.
               </li>
             </ul>

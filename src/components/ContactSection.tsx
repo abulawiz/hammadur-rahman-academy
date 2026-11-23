@@ -44,19 +44,19 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-slate-50 dark:bg-[#021d15] text-slate-800 dark:text-white transition-colors duration-300 relative border-t border-slate-200 dark:border-emerald-800/40">
+    <section id="contact" className="py-20 bg-[#033827] dark:bg-[#021d15] text-white transition-colors duration-300 relative border-t border-emerald-800/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-white/10 text-emerald-800 dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-emerald-200 dark:border-school-gold/30">
-            <MessageSquare className="w-4 h-4 text-emerald-700 dark:text-school-gold" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
+            <MessageSquare className="w-4 h-4 text-school-gold" />
             <span>Connect with our Admissions Office</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
             Visit Our Lafia Campus or Send an Inquiry
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-emerald-100/90 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
             Our admissions counselors and administrative officers are available Monday through Saturday to guide you through enrollment, fees, and campus tours.
           </p>
         </div>

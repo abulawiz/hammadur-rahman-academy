@@ -82,24 +82,24 @@ export const AdminSection: React.FC<AdminSectionProps> = ({
   };
 
   return (
-    <section id="admin" className="py-20 bg-slate-50 dark:bg-[#021d15] text-slate-800 dark:text-white relative border-t border-slate-200 dark:border-emerald-800/40 transition-colors duration-300">
+    <section id="admin" className="py-20 bg-[#022419] dark:bg-[#011a12] text-white relative border-t border-emerald-800/40 transition-colors duration-300">
       {/* Decorative ambient gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-500/5 dark:from-emerald-800/30 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute right-0 top-1/4 w-96 h-96 bg-emerald-600/5 dark:bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute left-0 bottom-1/4 w-96 h-96 bg-amber-500/5 dark:bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-800/30 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute left-0 bottom-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-white/5 border border-emerald-300 dark:border-school-gold/40 text-emerald-800 dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-emerald-700 dark:text-school-gold" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-school-gold/40 text-school-gold text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+            <ShieldCheck className="w-4 h-4 text-school-gold" />
             <span>Administrative Management Suite</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-heading text-white tracking-tight">
             Staff & Administrator Portal
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-emerald-100/90 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
             Authorized management area for Hammadur Rahman Academy administrators, examiners, house masters, and accounts bursary.
           </p>
         </div>

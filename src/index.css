@@ -9,13 +9,13 @@
   }
 
   body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: #043324;
+    color: #f8fafc;
     min-height: 100vh;
   }
 
   html.dark body {
-    background-color: #021812;
+    background-color: #011a12;
     color: #f8fafc;
   }
 
