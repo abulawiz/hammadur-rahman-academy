@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SCHOOL_INFO, ANNOUNCEMENTS } from '../data/schoolData';
+import { SchoolImageSlot } from './SchoolImageSlot';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -172,24 +173,18 @@ export const Hero: React.FC<HeroProps> = ({
                   </span>
                 </div>
 
-                {/* Hero Showcase Image */}
-                <div className="relative rounded-xl overflow-hidden aspect-video border border-white/10 group">
-                  <img 
-                    src="/images/hero-students.jpg" 
-                    alt="Nigerian secondary school students in classroom at Hammadur Rahman Academy Lafia" 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-4">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-school-gold bg-black/60 px-2 py-0.5 rounded">
-                        Campus Spotlight
-                      </span>
-                      <p className="text-xs font-semibold text-white mt-1">
-                        Active Secondary Classroom & Collaborative Learning
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                {/* Hero Showcase Image Slot */}
+                <SchoolImageSlot
+                  id="hero_campus_students"
+                  title="Campus & Classroom Activity"
+                  category="Campus Spotlight"
+                  aspectRatio="aspect-video"
+                  recommendedDimensions="1200 × 675 px (PNG / JPG)"
+                  overlayBadge="Campus Spotlight"
+                  overlayCaption="Active Secondary Classroom & Collaborative Learning"
+                  altText="Hammadur Rahman Academy Lafia Campus Activity"
+                  className="border border-white/10"
+                />
 
                 {/* Quick Info Grid */}
                 <div className="grid grid-cols-2 gap-3 pt-1">

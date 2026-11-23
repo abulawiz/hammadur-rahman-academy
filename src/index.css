@@ -9,14 +9,14 @@
   }
 
   body {
-    background-color: #064e3b;
-    color: #f8fafc;
+    background-color: #f8fafc;
+    color: #0f172a;
     min-height: 100vh;
   }
 
   html.dark body {
-    background-color: #022c22;
-    color: #f1f5f9;
+    background-color: #021812;
+    color: #f8fafc;
   }
 
   html.dark {

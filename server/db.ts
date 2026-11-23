@@ -687,21 +687,23 @@ function seedDefaultData() {
     );
   }
 
-  // 8. Seed Default Admins if empty
-  const adminsCount = (db.prepare('SELECT COUNT(*) as count FROM admins').get() as { count: number }).count;
-  if (adminsCount === 0) {
-    const insertAdmin = db.prepare(`
-      INSERT INTO admins (username, password, full_name, role)
-      VALUES (?, ?, ?, ?)
-    `);
+  // 8. Seed Default Admins if missing
+  const checkAdmin = db.prepare('SELECT id FROM admins WHERE LOWER(username) = ?');
+  const insertAdmin = db.prepare(`
+    INSERT INTO admins (username, password, full_name, role)
+    VALUES (?, ?, ?, ?)
+  `);
 
+  if (!checkAdmin.get('admin')) {
     insertAdmin.run(
       'admin',
       'admin123',
       'Dr. Abdur-Rahman A. Al-Hassan',
       'Principal & Director of Studies'
     );
+  }
 
+  if (!checkAdmin.get('bursar')) {
     insertAdmin.run(
       'bursar',
       'bursar123',

@@ -108,7 +108,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#043324] dark:bg-[#021d15] text-slate-100 font-sans selection:bg-school-gold selection:text-emerald-950 relative transition-colors duration-300">
+    <div className="min-h-screen bg-[#f8faf9] dark:bg-[#021812] text-slate-900 dark:text-slate-100 font-sans selection:bg-school-gold selection:text-emerald-950 relative transition-colors duration-300">
       {/* Navigation Bar */}
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}

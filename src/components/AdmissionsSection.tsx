@@ -18,23 +18,23 @@ interface AdmissionsSectionProps {
 
 export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => {
   return (
-    <section id="admissions" className="py-20 bg-emerald-950 text-white relative overflow-hidden border-t border-emerald-800/40">
+    <section id="admissions" className="py-20 bg-white dark:bg-[#021d15] text-slate-800 dark:text-white relative overflow-hidden border-t border-slate-200 dark:border-emerald-800/40 transition-colors duration-300">
       {/* Background accents */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-96 h-96 bg-school-blue/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/5 dark:bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-96 h-96 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-goldLight text-xs font-bold uppercase tracking-wider mb-3 border border-white/15">
-            <Sparkles className="w-4 h-4 text-school-gold" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-white/10 text-emerald-800 dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-emerald-200 dark:border-school-gold/30">
+            <Sparkles className="w-4 h-4 text-emerald-700 dark:text-school-gold" />
             <span>Admissions Portal 2026/2027</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
             Begin Your Child's Journey to Excellence
           </h2>
-          <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-slate-600 dark:text-emerald-100/90 text-sm sm:text-base leading-relaxed">
             Admissions are ongoing for Junior Secondary (JSS 1, JSS 2) and Senior Secondary (SSS 1, SSS 2 transfers). Day and Boarding slots are available on merit.
           </p>
         </div>
@@ -44,15 +44,15 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
           {ADMISSION_STEPS.map((item, idx) => (
             <div 
               key={idx}
-              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-school-gold/50 transition-all duration-300 relative group"
+              className="p-6 rounded-2xl bg-slate-50 dark:bg-emerald-950/40 border border-slate-200 dark:border-emerald-800/60 hover:border-school-gold/60 shadow-sm hover:shadow-md transition-all duration-300 relative group"
             >
-              <div className="text-4xl font-black font-heading text-school-gold/30 group-hover:text-school-gold transition-colors mb-4">
+              <div className="text-4xl font-black font-heading text-amber-500/40 dark:text-school-gold/30 group-hover:text-amber-500 dark:group-hover:text-school-gold transition-colors mb-4">
                 {item.step}
               </div>
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-school-goldLight transition-colors">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-emerald-700 dark:group-hover:text-school-goldLight transition-colors">
                 {item.title}
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-emerald-100/80 leading-relaxed">
                 {item.description}
               </p>
             </div>
@@ -63,15 +63,15 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
           
           {/* Left: Requirements Checklist (7 cols) */}
-          <div className="lg:col-span-7 bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-md flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-slate-50 dark:bg-emerald-950/40 border border-slate-200 dark:border-emerald-800/60 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2.5 mb-4 text-school-gold">
+              <div className="flex items-center gap-2.5 mb-4 text-emerald-800 dark:text-school-gold">
                 <FileCheck className="w-5 h-5" />
-                <h3 className="text-lg font-bold text-white uppercase tracking-wider">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider font-heading">
                   Admission Requirements Checklist
                 </h3>
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 mb-6">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-6">
                 Please prepare the following credentials before sitting for the screening exercise at our Lafia campus:
               </p>
 
@@ -85,22 +85,22 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
                   "Certificate of Medical Fitness from a recognized Government/General Hospital",
                   "Letter of Identification from Parent's/Guardian's Employer or Traditional Ruler"
                 ].map((req, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm text-slate-200">{req}</span>
+                  <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-emerald-900/30 border border-slate-200 dark:border-emerald-800/40">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm text-slate-800 dark:text-slate-200">{req}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+            <div className="mt-6 pt-4 border-t border-slate-200 dark:border-emerald-800/60 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
               <span>Age Requirement: Minimum of 10 years for JSS1 entry.</span>
-              <span className="text-school-gold font-semibold">Strict Merit Policy</span>
+              <span className="text-emerald-800 dark:text-school-gold font-bold">Strict Merit Policy</span>
             </div>
           </div>
 
           {/* Right: Key Dates & Quick Register (5 cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-school-dark via-school-navy to-slate-900 border border-school-gold/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#033527] to-emerald-950 border border-school-gold/40 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl text-white">
             
             <div className="space-y-6">
               <div className="flex items-center justify-between">
@@ -113,30 +113,30 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
               </div>
 
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
                   <Calendar className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-bold text-white">First Entrance Examination</h4>
-                    <p className="text-xs text-slate-300 mt-0.5">Saturday, 8th August 2026 • 8:30 AM</p>
-                    <p className="text-[11px] text-slate-400 mt-1">Main Hall, HRA Campus, Lafia, Nasarawa State</p>
+                    <p className="text-xs text-emerald-100 mt-0.5">Saturday, 8th August 2026 • 8:30 AM</p>
+                    <p className="text-[11px] text-emerald-200/80 mt-1">Main Hall, HRA Campus, Lafia, Nasarawa State</p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
                   <Calendar className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-bold text-white">Second (Supplementary) Examination</h4>
-                    <p className="text-xs text-slate-300 mt-0.5">Saturday, 29th August 2026 • 8:30 AM</p>
-                    <p className="text-[11px] text-slate-400 mt-1">For candidates unable to attend Batch 1</p>
+                    <p className="text-xs text-emerald-100 mt-0.5">Saturday, 29th August 2026 • 8:30 AM</p>
+                    <p className="text-[11px] text-emerald-200/80 mt-1">For candidates unable to attend Batch 1</p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">
+                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
                   <Clock className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="text-sm font-bold text-white">Resumption for 2026/2027 Session</h4>
-                    <p className="text-xs text-slate-300 mt-0.5">Monday, 14th September 2026</p>
-                    <p className="text-[11px] text-slate-400 mt-1">Boarders check-in on Sunday, 13th September</p>
+                    <p className="text-xs text-emerald-100 mt-0.5">Monday, 14th September 2026</p>
+                    <p className="text-[11px] text-emerald-200/80 mt-1">Boarders check-in on Sunday, 13th September</p>
                   </div>
                 </div>
               </div>
@@ -146,14 +146,14 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
             <div className="pt-6 space-y-3">
               <button
                 onClick={onOpenApply}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-gold-glow transition-all duration-300 transform hover:-translate-y-0.5"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-gold text-emerald-950 font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-gold-glow transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <Sparkles className="w-5 h-5 text-school-dark" />
+                <Sparkles className="w-5 h-5 text-emerald-950" />
                 <span>Fill Online Application Form</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-center text-[11px] text-slate-400">
+              <p className="text-center text-[11px] text-emerald-200/80">
                 Application takes only 3 minutes. Instant confirmation and reference ID.
               </p>
             </div>

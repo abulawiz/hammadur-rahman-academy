@@ -1,28 +1,29 @@
 import React from 'react';
 import { SCHOOL_INFO, LEADERSHIP } from '../data/schoolData';
+import { SchoolImageSlot } from './SchoolImageSlot';
 import { Quote, Award, CheckCircle2, BookMarked, Compass, Shield } from 'lucide-react';
 
 export const PrincipalWelcome: React.FC = () => {
   const principal = LEADERSHIP[0];
 
   return (
-    <section id="about" className="py-20 bg-emerald-900/40 dark:bg-[#021d15] text-white relative overflow-hidden transition-colors duration-300 border-t border-emerald-800/40">
+    <section id="about" className="py-20 bg-white dark:bg-[#021d15] text-slate-800 dark:text-white relative overflow-hidden transition-colors duration-300 border-t border-slate-200 dark:border-emerald-800/40">
       {/* Decorative subtle background accents */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-school-goldLight/20 dark:bg-school-gold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 dark:bg-school-gold/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header Badge */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
-            <Compass className="w-4 h-4 text-school-gold" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-white/10 text-emerald-800 dark:text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-emerald-200 dark:border-school-gold/30">
+            <Compass className="w-4 h-4 text-emerald-700 dark:text-school-gold" />
             <span>Welcome to Hammadur Rahman Academy</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
-            Cultivating Leaders of <span className="text-school-gold">Intellect</span>, <span className="text-amber-400">Integrity</span> & <span className="text-emerald-400">Faith</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 dark:text-white tracking-tight">
+            Cultivating Leaders of <span className="text-emerald-700 dark:text-school-gold">Intellect</span>, <span className="text-amber-600 dark:text-amber-400">Integrity</span> & <span className="text-emerald-600 dark:text-emerald-400">Faith</span>
           </h2>
-          <p className="mt-4 text-emerald-100/90 text-base sm:text-lg leading-relaxed">
+          <p className="mt-4 text-slate-600 dark:text-emerald-100/90 text-base sm:text-lg leading-relaxed">
             Established in the heart of Lafia, Nasarawa State, Hammadur Rahman Academy Secondary School is committed to holistic, 21st-century secondary school education that nurtures the mind, body, and soul.
           </p>
         </div>
@@ -38,10 +39,14 @@ export const PrincipalWelcome: React.FC = () => {
               <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-school-gold via-amber-200 to-school-blue/40 opacity-40 blur-sm transform -rotate-1" />
               
               <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800">
-                <img 
-                  src="/images/principal.jpg" 
-                  alt="Dr. Abdur-Rahman A. Al-Hassan - Principal Hammadur Rahman Academy Lafia" 
-                  className="w-full h-96 object-cover object-top"
+                <SchoolImageSlot
+                  id="principal_portrait"
+                  title="Principal's Official Portrait"
+                  category="Leadership Portrait"
+                  aspectRatio="aspect-[4/5]"
+                  recommendedDimensions="800 × 1000 px"
+                  altText="Dr. Abdur-Rahman A. Al-Hassan - Principal Hammadur Rahman Academy Lafia"
+                  showOverlayOnImage={false}
                 />
                 
                 {/* Overlay card */}
