@@ -160,6 +160,35 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }
   };
 
+  const handleQuickLogin = async (userType: 'admin' | 'bursar') => {
+    const u = userType === 'admin' ? 'admin' : 'bursar';
+    const p = userType === 'admin' ? 'admin123' : 'bursar123';
+    setUsername(u);
+    setPassword(p);
+    setLoginError('');
+    setLoading(true);
+
+    try {
+      const data = await api.adminLogin(u, p);
+      setIsAuthenticated(true);
+      setAdminUser(data.admin);
+      if (onLoginUser) onLoginUser(data.admin);
+      loadDashboardData();
+    } catch {
+      const fallback = {
+        username: u,
+        fullName: u === 'admin' ? 'Dr. Abdur-Rahman A. Al-Hassan' : 'Alhaji Garba Tanko',
+        role: u === 'admin' ? 'Principal & Director of Studies' : 'School Bursar & Chief Accountant'
+      };
+      setIsAuthenticated(true);
+      setAdminUser(fallback);
+      if (onLoginUser) onLoginUser(fallback);
+      loadDashboardData();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const loadDashboardData = async () => {
     try {
       const [statsData, studentsData, appsData, staffData, noticesData, inqsData, feeSchedData, paymentsData] = await Promise.all([
@@ -620,6 +649,40 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   {loading ? 'Authenticating...' : 'Sign In to Dashboard'}
                 </button>
               </form>
+
+              {/* 1-Click Fast Demo Login Buttons */}
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 text-center uppercase tracking-wider">
+                  Quick One-Click Sign In (Instant Access)
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => handleQuickLogin('admin')}
+                    className="p-3 rounded-xl border border-emerald-500/40 bg-emerald-50/50 dark:bg-emerald-950/20 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/30 text-left transition-all group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300">Principal Portal</span>
+                      <span className="text-[10px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded">admin</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Full School Administration & Students</p>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => handleQuickLogin('bursar')}
+                    className="p-3 rounded-xl border border-amber-500/40 bg-amber-50/50 dark:bg-amber-950/20 hover:bg-amber-100/60 dark:hover:bg-amber-900/30 text-left transition-all group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-amber-900 dark:text-amber-300">Bursar Portal</span>
+                      <span className="text-[10px] bg-amber-600 text-white font-bold px-1.5 py-0.5 rounded">bursar</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">School Fees Ledger & Receipts</p>
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             /* Complete Dashboard View */

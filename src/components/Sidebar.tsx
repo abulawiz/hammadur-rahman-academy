@@ -176,22 +176,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <ChevronRight className="w-4 h-4 text-[#022419]" />
             </button>
 
-            {/* Student Result Portal */}
+            {/* Student & Fee Payment Portal */}
             <button
               onClick={() => {
                 onClose();
                 onOpenPortal();
               }}
               className="w-full py-3 px-3.5 rounded-xl bg-emerald-900/90 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-between border border-school-gold/40 shadow-sm transition-all transform hover:scale-[1.02]"
-              title="Open Student Result Checker"
+              title="Open Student Portal for Results, School Fees & Receipts"
             >
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 rounded-lg bg-school-gold/20 flex items-center justify-center border border-school-gold/40">
                   <UserCheck className="w-4 h-4 text-school-gold" />
                 </div>
                 <div className="text-left">
-                  <div className="font-bold text-xs text-white leading-tight">Student Result Portal</div>
-                  <div className="text-[10px] text-emerald-300">Termly Online Checker</div>
+                  <div className="font-bold text-xs text-white leading-tight">Student & Fees Portal</div>
+                  <div className="text-[10px] text-emerald-300">Check Results & Pay School Fees</div>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-school-gold" />
@@ -237,15 +237,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <button
                 onClick={() => {
                   onClose();
-                  handleNavClick('admin', '#admin');
+                  onOpenAdmin();
                 }}
                 className="w-full py-2.5 px-3.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 text-xs font-semibold flex items-center justify-between border border-emerald-700/60 transition-colors"
+                title="Open Administrative Staff Login"
               >
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-school-gold" />
                   <span>Admin Login & Staff Access</span>
                 </div>
-                <ChevronRight className="w-4 h-4 opacity-40 text-school-gold" />
+                <ChevronRight className="w-4 h-4 opacity-70 text-school-gold" />
               </button>
             )}
           </div>

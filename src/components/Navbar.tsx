@@ -226,7 +226,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={link.id}
-                  onClick={() => handleLinkClick(link.id, link.href)}
+                  onClick={() => {
+                    if (link.id === 'admin') {
+                      onOpenAdmin();
+                    } else {
+                      handleLinkClick(link.id, link.href);
+                    }
+                  }}
                   className={`px-2 xl:px-2.5 py-1.5 text-xs xl:text-[13px] font-semibold rounded-lg transition-all duration-200 relative whitespace-nowrap ${
                     isActive
                       ? 'text-school-gold bg-emerald-950/80 font-bold border border-school-gold/40 shadow-sm'
@@ -324,7 +330,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={link.id}
-                  onClick={() => handleLinkClick(link.id, link.href)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (link.id === 'admin') {
+                      onOpenAdmin();
+                    } else {
+                      handleLinkClick(link.id, link.href);
+                    }
+                  }}
                   className={`w-full flex items-center justify-between px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors ${
                     isActive
                       ? 'bg-emerald-950 text-school-gold font-bold border border-school-gold/40'
