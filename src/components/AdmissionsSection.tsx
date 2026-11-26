@@ -18,17 +18,13 @@ interface AdmissionsSectionProps {
 
 export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => {
   return (
-    <section id="admissions" className="py-20 bg-[#033827] dark:bg-[#021d15] text-white relative overflow-hidden border-t border-emerald-800/40 transition-colors duration-300">
-      {/* Background accents */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="admissions" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white relative border-t border-emerald-700/40 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
-            <Sparkles className="w-4 h-4 text-school-gold" />
+            <FileCheck className="w-4 h-4 text-school-gold" />
             <span>Admissions Portal 2026/2027</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
@@ -146,9 +142,9 @@ export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenAppl
             <div className="pt-6 space-y-3">
               <button
                 onClick={onOpenApply}
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-gold text-emerald-950 font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-gold-glow transition-all duration-300 transform hover:-translate-y-0.5"
+                className="w-full py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-md transition-all duration-200"
               >
-                <Sparkles className="w-5 h-5 text-emerald-950" />
+                <FileCheck className="w-5 h-5 text-emerald-950" />
                 <span>Fill Online Application Form</span>
                 <ArrowRight className="w-4 h-4" />
               </button>

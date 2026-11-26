@@ -82,10 +82,9 @@ export const AdminSection: React.FC<AdminSectionProps> = ({
   };
 
   return (
-    <section id="admin" className="py-20 bg-[#022419] dark:bg-[#011a12] text-white relative border-t border-emerald-800/40 transition-colors duration-300">
+    <section id="admin" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white relative border-t border-emerald-700/40 transition-colors duration-300">
       {/* Decorative ambient gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-800/30 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute right-0 top-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute right-0 top-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute left-0 bottom-1/4 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

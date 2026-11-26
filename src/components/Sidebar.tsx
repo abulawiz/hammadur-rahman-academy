@@ -95,7 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Drawer Container */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-gradient-to-b from-[#021d15] via-emerald-950 to-[#022c22] text-white z-50 shadow-2xl border-r border-school-gold/30 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-0 left-0 bottom-0 w-80 sm:w-96 bg-[#046a38] text-white z-50 shadow-2xl border-r border-school-gold/30 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -132,7 +132,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
           
           {/* WAEC & NECO Accreditation Badge (Moved from Top Bar) */}
-          <div className="p-3.5 rounded-2xl bg-[#022419] border border-school-gold/40 flex items-center justify-between text-xs shadow-md">
+          <div className="p-3.5 rounded-2xl bg-[#03542c] border border-school-gold/40 flex items-center justify-between text-xs shadow-md">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-school-gold/20 border border-school-gold/40 flex items-center justify-center flex-shrink-0">
                 <ShieldCheck className="w-4 h-4 text-school-gold" />
@@ -160,19 +160,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClose();
                 onOpenApply();
               }}
-              className="w-full py-3 px-3.5 rounded-xl bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-[#022419] text-xs font-black flex items-center justify-between shadow-gold-glow transition-all transform hover:scale-[1.02]"
+              className="w-full py-3 px-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black flex items-center justify-between shadow transition-all"
               title="Apply Online for 2026/2027 Admission"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-[#022419]/20 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-[#022419]" />
+                <div className="w-7 h-7 rounded-lg bg-emerald-950/20 flex items-center justify-center">
+                  <GraduationCap className="w-4 h-4 text-emerald-950" />
                 </div>
                 <div className="text-left">
                   <div className="font-black text-xs leading-tight">Apply Online</div>
-                  <div className="text-[10px] font-bold text-[#022419]/80">2026/2027 Admission Form</div>
+                  <div className="text-[10px] font-bold text-emerald-900/80">2026/2027 Admission Form</div>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-[#022419]" />
+              <ChevronRight className="w-4 h-4 text-emerald-950" />
             </button>
 
             {/* Student & Fee Payment Portal */}
@@ -204,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </p>
 
               {adminUser ? (
-                <div className="p-3.5 rounded-2xl bg-[#022419] border border-school-gold/50 shadow-md space-y-2.5">
+                <div className="p-3.5 rounded-2xl bg-[#03542c] border border-school-gold/50 shadow-md space-y-2.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />

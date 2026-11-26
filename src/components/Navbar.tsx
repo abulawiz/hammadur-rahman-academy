@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Clean Header: Email | Helpline Phone | Light/Dark Mode   */}
       {/* (WAEC/NECO, Admin Login & Portals moved to Sidebar)      */}
       {/* ======================================================== */}
-      <div className="bg-[#022419] dark:bg-[#01140e] text-emerald-100 text-xs py-2 px-3 sm:px-6 border-b border-emerald-800/60 transition-colors duration-300">
+      <div className="bg-[#03542c] dark:bg-[#024423] text-emerald-100 text-xs py-2 px-3 sm:px-6 border-b border-emerald-700/60 transition-colors duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           
           {/* Top Bar Left: Email & Phone */}
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="tracking-tight">{SCHOOL_INFO.email}</span>
             </a>
 
-            <span className="hidden sm:inline text-emerald-700/80">•</span>
+            <span className="hidden sm:inline text-emerald-700/80">|</span>
 
             {/* Helpline Phone */}
             <a 
@@ -143,10 +143,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* 3-Line Sidebar Toggle | Logo/Name | Navigation Links     */}
       {/* ======================================================== */}
       <nav 
-        className={`w-full transition-all duration-300 border-b border-emerald-800/50 shadow-xl ${
+        className={`w-full transition-all duration-300 border-b border-emerald-700/50 shadow-xl ${
           isScrolled 
-            ? 'bg-[#022419]/98 dark:bg-[#01140e]/98 backdrop-blur-md py-2.5' 
-            : 'bg-[#033527] dark:bg-[#021d15] py-3 sm:py-3.5'
+            ? 'bg-[#03542c]/98 dark:bg-[#024423]/98 backdrop-blur-md py-2.5' 
+            : 'bg-[#046a38] dark:bg-[#03542c] py-3 sm:py-3.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {/* Crest Monogram Badge */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-school-gold via-amber-500 to-emerald-700 p-0.5 shadow-md flex items-center justify-center group-hover:shadow-royal transition-all duration-300">
-                <div className="w-full h-full bg-[#022419] rounded-[10px] flex flex-col items-center justify-center p-1 border border-school-gold/50">
+                <div className="w-full h-full bg-[#03542c] rounded-[10px] flex flex-col items-center justify-center p-1 border border-school-gold/50">
                   <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-school-gold group-hover:scale-110 transition-transform duration-300" />
                   <span className="text-[7px] sm:text-[8px] font-black tracking-widest text-school-goldLight uppercase">HRA</span>
                 </div>
@@ -202,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-200/90 font-medium whitespace-nowrap">
                   <span className="text-school-goldLight font-semibold">Secondary School</span>
-                  <span>•</span>
+                  <span className="opacity-60">|</span>
                   <span>Lafia, Nasarawa State</span>
                 </div>
               </div>
@@ -239,10 +239,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Enroll Now Button */}
             <button
               onClick={onOpenApply}
-              className="bg-gradient-to-r from-school-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-[#022419] text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg shadow-md hover:shadow-gold-glow transition-all duration-300 flex items-center gap-1.5 border border-school-gold/60 transform hover:scale-105 whitespace-nowrap"
+              className="bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center gap-1.5 border border-amber-300 whitespace-nowrap"
               title="Enroll into Hammadur Rahman Academy"
             >
-              <FileText className="w-3.5 h-3.5 text-[#022419]" />
+              <FileText className="w-3.5 h-3.5 text-emerald-950" />
               <span>Enroll Now</span>
             </button>
 
@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Comprehensive responsive menu with all links & actions   */}
       {/* ======================================================== */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#022419]/98 dark:bg-[#01140e]/98 backdrop-blur-xl border-b border-emerald-800/60 shadow-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-300 max-h-[85vh] overflow-y-auto">
+        <div className="lg:hidden bg-[#03542c]/98 dark:bg-[#024423]/98 backdrop-blur-xl border-b border-emerald-700/60 shadow-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-300 max-h-[85vh] overflow-y-auto">
           
           {/* Header Card inside Mobile Menu */}
           <div className="p-3 rounded-xl bg-emerald-950/90 border border-school-gold/40 flex items-center justify-between">
@@ -275,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div>
                 <p className="text-xs font-bold text-white">Hammadur Rahman Academy</p>
-                <p className="text-[10px] text-emerald-200">Secondary School • Lafia, Nasarawa</p>
+                <p className="text-[10px] text-emerald-200">Secondary School | Lafia, Nasarawa</p>
               </div>
             </div>
             <span className="text-[9px] bg-school-gold text-[#022419] font-black px-2 py-0.5 rounded uppercase tracking-wider">
@@ -301,9 +301,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setMobileMenuOpen(false);
                 onOpenApply();
               }}
-              className="p-2.5 rounded-lg bg-school-gold hover:bg-amber-400 text-[#022419] flex items-center justify-center gap-1.5 font-extrabold text-center shadow-sm"
+              className="p-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-emerald-950 flex items-center justify-center gap-1.5 font-black text-center shadow-sm"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#022419]" />
+              <FileText className="w-3.5 h-3.5 text-emerald-950" />
               <span>Apply Online</span>
             </button>
           </div>

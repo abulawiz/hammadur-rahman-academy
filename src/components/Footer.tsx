@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPortal, onOpenApply }) => 
   };
 
   return (
-    <footer className="bg-[#021d15] text-emerald-100 pt-16 pb-12 border-t border-emerald-900/40">
+    <footer className="bg-[#034a27] text-emerald-100 pt-16 pb-12 border-t border-emerald-700/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Grid */}
@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPortal, onOpenApply }) => 
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-school-gold to-amber-600 p-0.5 flex items-center justify-center">
-                <div className="w-full h-full bg-[#021d15] rounded-[10px] flex items-center justify-center">
+                <div className="w-full h-full bg-[#034a27] rounded-[10px] flex items-center justify-center">
                   <GraduationCap className="w-6 h-6 text-school-gold" />
                 </div>
               </div>
@@ -50,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPortal, onOpenApply }) => 
                   Hammadur Rahman Academy
                 </h3>
                 <p className="text-xs text-school-goldLight">
-                  Secondary School • Lafia, Nasarawa State
+                  Secondary School | Lafia, Nasarawa State
                 </p>
               </div>
             </div>
@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPortal, onOpenApply }) => 
                 <span className="font-semibold text-white">Full Examination Center Accreditation:</span>
               </div>
               <p className="text-[11px] text-emerald-300/80 pl-6">
-                WAEC Center No: <strong>4260189</strong> • NECO Center No: <strong>025114</strong>
+                WAEC Center No: <strong>4260189</strong> | NECO Center No: <strong>025114</strong>
               </p>
             </div>
           </div>

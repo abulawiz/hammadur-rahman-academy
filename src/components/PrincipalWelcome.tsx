@@ -7,11 +7,7 @@ export const PrincipalWelcome: React.FC = () => {
   const principal = LEADERSHIP[0];
 
   return (
-    <section id="about" className="py-20 bg-[#033827] dark:bg-[#021d15] text-white relative overflow-hidden transition-colors duration-300 border-t border-emerald-800/40">
-      {/* Decorative subtle background accents */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-school-gold/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="about" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white relative transition-colors duration-300 border-t border-emerald-700/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header Badge */}
@@ -34,11 +30,7 @@ export const PrincipalWelcome: React.FC = () => {
           {/* Principal Image & Credentials */}
           <div className="lg:col-span-5">
             <div className="relative mx-auto max-w-sm lg:max-w-none">
-              
-              {/* Gold decorative border backdrop */}
-              <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-school-gold via-amber-200 to-school-blue/40 opacity-40 blur-sm transform -rotate-1" />
-              
-              <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800">
+              <div className="relative bg-[#034d28] dark:bg-[#023a1e] rounded-2xl overflow-hidden shadow-xl border border-emerald-500/30">
                 <SchoolImageSlot
                   id="principal_portrait"
                   title="Principal's Official Portrait"

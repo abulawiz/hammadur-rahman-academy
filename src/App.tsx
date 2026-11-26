@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from './contexts/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { Hero } from './components/Hero';
@@ -22,7 +23,9 @@ export function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // Authenticated Administrator Session with localStorage persistence
+  const { user: supabaseUser, signOut: supabaseSignOut } = useAuth();
+
+  // Authenticated Administrator Session with Supabase & localStorage synchronization
   const [adminUser, setAdminUser] = useState<any>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('hra_admin_user');
@@ -37,6 +40,25 @@ export function App() {
     return null;
   });
 
+  // Sync Supabase Auth state with adminUser
+  useEffect(() => {
+    if (supabaseUser) {
+      const role = (supabaseUser.app_metadata?.role as string) || (supabaseUser.user_metadata?.role as string) || 'Administrator';
+      const userObj = {
+        id: supabaseUser.id,
+        email: supabaseUser.email,
+        username: supabaseUser.email?.split('@')[0] || 'admin',
+        fullName: (supabaseUser.user_metadata?.full_name as string) || supabaseUser.email?.split('@')[0] || 'Administrator',
+        role: role,
+        source: 'supabase'
+      };
+      setAdminUser(userObj);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('hra_admin_user', JSON.stringify(userObj));
+      }
+    }
+  }, [supabaseUser]);
+
   const handleAdminLogin = (user: any) => {
     setAdminUser(user);
     if (typeof window !== 'undefined') {
@@ -44,11 +66,12 @@ export function App() {
     }
   };
 
-  const handleAdminLogout = () => {
+  const handleAdminLogout = async () => {
     setAdminUser(null);
     if (typeof window !== 'undefined') {
       localStorage.removeItem('hra_admin_user');
     }
+    await supabaseSignOut();
   };
 
   // Dark / Black Light Mode State with Persistence
@@ -107,7 +130,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#043324] dark:bg-[#011a12] text-slate-100 font-sans selection:bg-school-gold selection:text-emerald-950 relative transition-colors duration-300">
+    <div className="min-h-screen bg-[#046a38] dark:bg-[#03542c] text-slate-100 font-sans selection:bg-school-gold selection:text-emerald-950 relative transition-colors duration-300">
       {/* Navigation Bar */}
       <Navbar
         onOpenPortal={() => setIsPortalOpen(true)}

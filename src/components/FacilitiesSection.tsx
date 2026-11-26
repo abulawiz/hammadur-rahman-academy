@@ -20,7 +20,7 @@ export const FacilitiesSection: React.FC = () => {
     : FACILITIES.filter(f => f.category === selectedCategory);
 
   return (
-    <section id="facilities" className="py-20 bg-[#022419] dark:bg-[#011a12] text-white transition-colors duration-300 relative border-t border-emerald-800/40">
+    <section id="facilities" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white transition-colors duration-300 relative border-t border-emerald-700/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -43,10 +43,10 @@ export const FacilitiesSection: React.FC = () => {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 border ${
                 selectedCategory === cat
-                  ? 'bg-emerald-800 dark:bg-school-gold text-white dark:text-emerald-950 shadow-md font-bold'
-                  : 'bg-slate-100 dark:bg-emerald-950/80 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-emerald-900 border border-slate-200 dark:border-emerald-800'
+                  ? 'bg-amber-400 text-emerald-950 border-amber-300 shadow-md font-extrabold'
+                  : 'bg-[#034d28] hover:bg-[#023a1e] text-emerald-100 border-emerald-600/40'
               }`}
             >
               {cat}
@@ -59,7 +59,7 @@ export const FacilitiesSection: React.FC = () => {
           {filteredFacilities.map((facility) => (
             <div
               key={facility.id}
-              className="bg-white dark:bg-emerald-950/40 rounded-2xl border border-slate-200 dark:border-emerald-800/60 shadow-sm hover:shadow-xl hover:border-school-gold/60 transition-all duration-300 overflow-hidden flex flex-col group"
+              className="bg-[#034d28] dark:bg-[#023a1e] rounded-2xl border border-emerald-500/30 shadow-md hover:shadow-xl hover:border-school-gold/60 transition-all duration-300 overflow-hidden flex flex-col group text-white"
             >
               {/* Facility Image Slot */}
               <div className="relative">
@@ -78,20 +78,20 @@ export const FacilitiesSection: React.FC = () => {
               {/* Facility Content */}
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-school-gold transition-colors">
+                  <h3 className="text-lg font-bold text-white group-hover:text-school-gold transition-colors">
                     {facility.name}
                   </h3>
-                  <p className="mt-2 text-xs text-slate-600 dark:text-emerald-100/80 line-clamp-2 leading-relaxed">
+                  <p className="mt-2 text-xs text-emerald-100/90 line-clamp-2 leading-relaxed">
                     {facility.description}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-slate-100 dark:border-emerald-800/60 space-y-2">
+                <div className="mt-4 pt-4 border-t border-emerald-700/50 space-y-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-emerald-400">Key Highlights</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">Key Highlights</p>
                     <button
                       onClick={() => setActiveFacilityModal(facility)}
-                      className="text-[11px] font-bold text-emerald-700 dark:text-school-gold hover:underline flex items-center gap-1"
+                      className="text-[11px] font-bold text-school-gold hover:underline flex items-center gap-1"
                     >
                       <span>Details</span>
                       <ExternalLink className="w-3 h-3" />
@@ -99,8 +99,8 @@ export const FacilitiesSection: React.FC = () => {
                   </div>
                   <div className="space-y-1.5">
                     {facility.features.slice(0, 2).map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-school-gold flex-shrink-0" />
+                      <div key={idx} className="flex items-center gap-2 text-xs text-emerald-100">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-school-gold flex-shrink-0" />
                         <span className="truncate">{feat}</span>
                       </div>
                     ))}

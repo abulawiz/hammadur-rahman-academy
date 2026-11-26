@@ -186,54 +186,54 @@ export const SchoolImageSlot: React.FC<SchoolImageSlotProps> = ({
         /* ==================== 2. PROFESSIONAL PLACEHOLDER (NO STOCK PHOTO) ==================== */
         <div 
           onClick={triggerUpload}
-          className={`w-full h-full flex flex-col items-center justify-center p-6 text-center cursor-pointer border-2 border-dashed transition-all duration-300 ${
+          className={`w-full h-full flex flex-col items-center justify-center p-6 text-center cursor-pointer border-2 border-solid transition-all duration-300 ${
             isDragOver 
-              ? 'border-school-gold bg-amber-500/10 dark:bg-school-gold/20 scale-[0.99]' 
-              : 'border-emerald-300/80 dark:border-emerald-700/60 bg-gradient-to-b from-emerald-50/90 to-emerald-100/60 dark:from-emerald-950/70 dark:to-[#022419]/90 hover:border-school-gold hover:bg-emerald-50 dark:hover:bg-emerald-900/40 shadow-inner'
+              ? 'border-amber-400 bg-emerald-950/90 scale-[0.99]' 
+              : 'border-emerald-600/50 bg-[#023a1e] hover:border-amber-400 hover:bg-[#024423] shadow-md text-white'
           }`}
         >
           {/* Slot Category Badge */}
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/60 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-school-goldLight text-[10px] font-bold uppercase tracking-wider mb-3">
-            <Building className="w-3 h-3 text-emerald-700 dark:text-school-gold" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-900/80 border border-emerald-600 text-school-gold text-[10px] font-bold uppercase tracking-wider mb-3">
+            <Building className="w-3 h-3 text-school-gold" />
             <span>{category}</span>
           </div>
 
           {/* Icon Crest */}
           <div className="relative mb-3">
-            <div className="w-14 h-14 rounded-2xl bg-white dark:bg-emerald-900/80 border border-emerald-200 dark:border-emerald-600/50 shadow-md flex items-center justify-center text-emerald-700 dark:text-school-gold group-hover:scale-110 transition-transform duration-300">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-950 border border-emerald-600/60 shadow-md flex items-center justify-center text-school-gold group-hover:scale-105 transition-transform duration-200">
               <Camera className="w-7 h-7" />
             </div>
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-school-gold text-emerald-950 flex items-center justify-center shadow">
+            <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center shadow font-bold">
               <UploadCloud className="w-3.5 h-3.5 stroke-[2.5]" />
             </div>
           </div>
 
           {/* Title & Prompt */}
-          <h4 className="text-sm sm:text-base font-extrabold text-slate-800 dark:text-white font-heading">
+          <h4 className="text-sm sm:text-base font-extrabold text-white font-heading">
             {title}
           </h4>
-          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 mt-1 flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-school-gold" />
-            <span>Click to upload your original school photo</span>
+          <p className="text-xs font-semibold text-emerald-200 mt-1 flex items-center gap-1">
+            <UploadCloud className="w-3.5 h-3.5 text-school-gold" />
+            <span>Click to upload your official school photo</span>
           </p>
 
           {/* Specs / Dimensions */}
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-[10px] text-slate-500 dark:text-emerald-300/80">
-            <span className="px-2 py-0.5 rounded bg-white/80 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 font-mono">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-[10px] text-emerald-200/80">
+            <span className="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-700/60 font-mono text-emerald-200">
               {recommendedDimensions}
             </span>
-            <span className="hidden sm:inline">•</span>
-            <span className="hidden sm:inline">Drag & Drop Supported</span>
+            <span className="hidden sm:inline text-emerald-400">|</span>
+            <span className="hidden sm:inline">PNG or JPG Format</span>
           </div>
 
           {/* CTA Button */}
           <div className="mt-4">
             <button
               type="button"
-              className="px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 dark:bg-school-gold dark:hover:bg-amber-400 text-white dark:text-emerald-950 text-xs font-bold shadow-md transition-all flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black shadow transition-all flex items-center gap-1.5"
             >
               <UploadCloud className="w-3.5 h-3.5" />
-              <span>Select Photo</span>
+              <span>Select School Photo</span>
             </button>
           </div>
         </div>

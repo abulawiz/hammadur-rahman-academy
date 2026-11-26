@@ -264,7 +264,7 @@ export const StudentPortalModal: React.FC<StudentPortalModalProps> = ({
         <div className="bg-gradient-to-r from-[#022419] via-[#043324] to-[#022419] text-white p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-school-gold/40 flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-school-gold via-amber-400 to-amber-600 p-0.5 shadow-gold-glow flex items-center justify-center">
-              <div className="w-full h-full bg-[#022419] rounded-[14px] flex items-center justify-center">
+              <div className="w-full h-full bg-[#03542c] rounded-[14px] flex items-center justify-center">
                 {activePortalTab === 'fees' ? (
                   <CreditCard className="w-5 h-5 text-school-gold" />
                 ) : (
@@ -331,7 +331,7 @@ export const StudentPortalModal: React.FC<StudentPortalModalProps> = ({
         </div>
 
         {/* ==================== PORTAL BODY ==================== */}
-        <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto flex-1 bg-slate-50 dark:bg-[#021d15] transition-colors">
+        <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto flex-1 bg-slate-50 dark:bg-[#03542c] transition-colors">
           
           {/* ========================================================================= */}
           {/* TAB 1: SCHOOL FEE PAYMENT & BURSARY PORTAL                               */}
@@ -471,7 +471,7 @@ export const StudentPortalModal: React.FC<StudentPortalModalProps> = ({
                         <p className="font-bold text-slate-900">Alhaji Garba Tanko</p>
                         <p className="text-[10px] text-slate-500">School Bursar & Chief Accountant</p>
                       </div>
-                      <div className="w-20 h-20 rounded-full border-2 border-emerald-700 flex flex-col items-center justify-center text-center p-1 text-[8px] font-black text-emerald-800 uppercase transform -rotate-12 border-dashed">
+                      <div className="w-20 h-20 rounded-full border-2 border-emerald-700 flex flex-col items-center justify-center text-center p-1 text-[8px] font-black text-emerald-800 uppercase transform -rotate-12">
                         <span>HRA BURSARY</span>
                         <span className="text-emerald-600 font-extrabold">PAID</span>
                         <span>LAFIA CAMPUS</span>

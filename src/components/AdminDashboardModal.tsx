@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { api } from '../services/api';
 import { 
   X, 
@@ -38,6 +39,13 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   onLogoutUser,
   onLoginUser
 }) => {
+  const { 
+    user: supabaseUser, 
+    signInWithEmail, 
+    signOut: supabaseSignOut, 
+    isConfigured: isSupabaseConfigured 
+  } = useAuth();
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminUser, setAdminUser] = useState<any>(null);
   const [username, setUsername] = useState('admin');
@@ -47,7 +55,19 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      if (currentUser) {
+      if (supabaseUser) {
+        setIsAuthenticated(true);
+        const role = (supabaseUser.app_metadata?.role as string) || (supabaseUser.user_metadata?.role as string) || 'Administrator';
+        const su = {
+          id: supabaseUser.id,
+          username: supabaseUser.email?.split('@')[0] || 'admin',
+          fullName: (supabaseUser.user_metadata?.full_name as string) || supabaseUser.email?.split('@')[0] || 'Administrator',
+          role: role,
+          email: supabaseUser.email,
+          source: 'supabase'
+        };
+        setAdminUser(su);
+      } else if (currentUser) {
         setIsAuthenticated(true);
         setAdminUser(currentUser);
       } else if (typeof window !== 'undefined') {
@@ -63,7 +83,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         }
       }
     }
-  }, [isOpen, currentUser]);
+  }, [isOpen, currentUser, supabaseUser]);
 
 
   // Active Tab
@@ -136,6 +156,29 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     setLoading(true);
 
     try {
+      // 1. If username is an email address and Supabase is configured, authenticate via Supabase Auth
+      if (username.includes('@') && isSupabaseConfigured) {
+        const { data, error } = await signInWithEmail(username.trim(), password);
+        if (error) throw error;
+        if (data?.user) {
+          const role = (data.user.app_metadata?.role as string) || (data.user.user_metadata?.role as string) || 'Administrator';
+          const su = {
+            id: data.user.id,
+            username: data.user.email?.split('@')[0] || 'admin',
+            fullName: (data.user.user_metadata?.full_name as string) || data.user.email?.split('@')[0] || 'Administrator',
+            role: role,
+            email: data.user.email,
+            source: 'supabase'
+          };
+          setIsAuthenticated(true);
+          setAdminUser(su);
+          if (onLoginUser) onLoginUser(su);
+          loadDashboardData();
+          return;
+        }
+      }
+
+      // 2. Standard backend endpoint
       const data = await api.adminLogin(username, password);
       setIsAuthenticated(true);
       setAdminUser(data.admin);
@@ -533,13 +576,14 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setIsAuthenticated(false);
     setAdminUser(null);
     if (onLogoutUser) onLogoutUser();
     if (typeof window !== 'undefined') {
       localStorage.removeItem('hra_admin_user');
     }
+    await supabaseSignOut();
   };
 
 
@@ -615,16 +659,19 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                    Username
+                    Username or Supabase Email
                   </label>
                   <input
                     type="text"
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    placeholder="admin or staff@hammaduracademy.edu.ng"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-school-blue/40"
                   />
-                  <p className="text-[10px] text-slate-400 mt-1">Default demo: <strong>admin</strong> or <strong>bursar</strong></p>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    {isSupabaseConfigured ? 'Sign in with your Supabase staff email or quick demo (admin / bursar)' : 'Default demo: admin or bursar'}
+                  </p>
                 </div>
 
                 <div>

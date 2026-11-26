@@ -27,7 +27,7 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-[#033827] dark:bg-[#021d15] text-white transition-colors duration-300 relative overflow-hidden border-t border-emerald-800/40">
+    <section className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white transition-colors duration-300 relative overflow-hidden border-t border-emerald-700/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -49,13 +49,13 @@ export const TestimonialsSection: React.FC = () => {
           {TESTIMONIALS.map((item, idx) => (
             <div 
               key={item.id}
-              className="bg-white dark:bg-emerald-950/40 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-emerald-800/60 shadow-sm hover:shadow-xl hover:border-school-gold/50 transition-all duration-300 flex flex-col justify-between relative group"
+              className="bg-[#034d28] dark:bg-[#023a1e] rounded-3xl p-6 sm:p-8 border border-emerald-500/30 text-white shadow-md hover:shadow-xl hover:border-school-gold/50 transition-all duration-300 flex flex-col justify-between relative group"
             >
               <div>
                 {/* Quote Icon & Stars */}
                 <div className="flex items-center justify-between mb-5">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 dark:bg-school-gold/10 text-school-gold flex items-center justify-center">
-                    <Quote className="w-5 h-5 text-amber-600 dark:text-school-gold" />
+                  <div className="w-10 h-10 rounded-xl bg-emerald-950/80 text-school-gold flex items-center justify-center border border-emerald-700/50">
+                    <Quote className="w-5 h-5 text-school-gold" />
                   </div>
                   <div className="flex items-center gap-1">
                     {[...Array(item.rating)].map((_, i) => (
@@ -65,13 +65,13 @@ export const TestimonialsSection: React.FC = () => {
                 </div>
 
                 {/* Comment Text */}
-                <p className="text-slate-700 dark:text-emerald-100/90 text-sm leading-relaxed italic">
+                <p className="text-emerald-100/95 text-sm leading-relaxed italic">
                   "{item.comment}"
                 </p>
               </div>
 
               {/* Author Info with Authentic Monogram Badge */}
-              <div className="mt-6 pt-5 border-t border-slate-100 dark:border-emerald-800/60 flex items-center gap-3.5">
+              <div className="mt-6 pt-5 border-t border-emerald-700/50 flex items-center gap-3.5">
                 <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${getGradientForIdx(idx)} text-white font-extrabold text-sm flex items-center justify-center shadow-md border-2 border-school-gold/40 flex-shrink-0 relative`}>
                   <span>{getInitials(item.author)}</span>
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center text-white text-[9px] border border-white">
@@ -79,13 +79,13 @@ export const TestimonialsSection: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
                     <span>{item.author}</span>
                   </h4>
-                  <p className="text-[11px] font-medium text-emerald-700 dark:text-school-gold">
+                  <p className="text-[11px] font-medium text-school-gold">
                     {item.role}
                   </p>
-                  <p className="text-[10px] text-slate-400 dark:text-emerald-300/70">
+                  <p className="text-[10px] text-emerald-300/80">
                     {item.location}
                   </p>
                 </div>
@@ -96,7 +96,7 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Trust Seal Banner */}
-        <div className="mt-14 p-6 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#033527] to-emerald-950 text-white border border-school-gold/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-14 p-6 rounded-2xl bg-[#022c1f] text-white border border-school-gold/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-school-gold text-emerald-950 flex items-center justify-center font-black text-lg shadow">
               <CheckCircle2 className="w-7 h-7 text-emerald-950" />
