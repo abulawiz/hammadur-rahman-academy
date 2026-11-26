@@ -61,6 +61,14 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ onOpenApply 
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
           {ACADEMIC_PROGRAMS.map((program) => {
             const isSelected = program.id === selectedProgramId;
+            const tabLabel = 
+              program.id === 'junior-sec' ? 'Junior Secondary' :
+              program.id === 'senior-science' ? 'Pure & Applied Science' :
+              program.id === 'senior-arts' ? 'Arts & Islamic Studies' :
+              program.id === 'senior-commercial' ? 'Commercial & Business' :
+              program.id === 'tahfeez-program' ? 'Tahfeez & Mentorship' :
+              program.title.includes(':') ? program.title.split(':')[1].trim() : program.title;
+
             return (
               <button
                 key={program.id}
@@ -74,7 +82,7 @@ export const AcademicsSection: React.FC<AcademicsSectionProps> = ({ onOpenApply 
                 <span className={isSelected ? 'text-emerald-950' : 'text-school-gold'}>
                   {getProgramIcon(program.iconName)}
                 </span>
-                <span>{program.title.split(':')[0]}</span>
+                <span>{tabLabel}</span>
               </button>
             );
           })}

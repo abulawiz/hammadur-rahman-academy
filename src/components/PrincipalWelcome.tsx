@@ -162,7 +162,7 @@ export const PrincipalWelcome: React.FC = () => {
           </div>
 
           {/* Vision */}
-          <div className="p-7 rounded-2xl bg-gradient-to-br from-[#022419] to-emerald-950 text-white shadow-xl relative overflow-hidden group border border-school-gold/30">
+          <div className="p-7 rounded-2xl bg-emerald-950/90 text-white shadow-xl relative border border-school-gold/40">
             <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center mb-5 border border-white/20 shadow-md">
               <Compass className="w-6 h-6 text-school-gold" />
             </div>
@@ -170,7 +170,6 @@ export const PrincipalWelcome: React.FC = () => {
             <p className="text-sm text-emerald-100 leading-relaxed">
               To stand as the foremost citadel of secondary academic excellence in Nasarawa State and Northern Nigeria, renowned for unmatched WAEC/NECO results and virtuous character.
             </p>
-            <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-school-gold/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500 pointer-events-none" />
           </div>
 
           {/* Core Values */}

@@ -211,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation Links (Center) */}
-          <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1.5">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 flex-shrink">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -234,15 +234,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Action: Enroll Now CTA + Mobile Hamburger */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
             
             {/* Enroll Now Button */}
             <button
               onClick={onOpenApply}
-              className="bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black uppercase tracking-wider px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center gap-1.5 border border-amber-300 whitespace-nowrap"
+              className="bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black uppercase tracking-wider px-3 sm:px-3.5 py-2 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center gap-1.5 border border-amber-300 whitespace-nowrap flex-shrink-0"
               title="Enroll into Hammadur Rahman Academy"
             >
-              <FileText className="w-3.5 h-3.5 text-emerald-950" />
+              <FileText className="w-3.5 h-3.5 text-emerald-950 flex-shrink-0" />
               <span>Enroll Now</span>
             </button>
 

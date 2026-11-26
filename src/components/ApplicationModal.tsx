@@ -110,29 +110,29 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
               <div className="flex items-center justify-between mb-8 max-w-sm mx-auto">
                 <div className="flex flex-col items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    step >= 1 ? 'bg-school-dark text-school-gold border-2 border-school-gold' : 'bg-slate-200 text-slate-500'
+                    step >= 1 ? 'bg-amber-400 text-emerald-950 border-2 border-amber-300 font-extrabold' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                   }`}>
                     1
                   </div>
-                  <span className="text-[10px] font-bold text-slate-600 mt-1">Student</span>
+                  <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mt-1">Student</span>
                 </div>
-                <div className={`flex-1 h-0.5 mx-2 ${step >= 2 ? 'bg-school-gold' : 'bg-slate-200'}`} />
+                <div className={`flex-1 h-0.5 mx-2 ${step >= 2 ? 'bg-amber-400' : 'bg-slate-200 dark:bg-slate-800'}`} />
                 <div className="flex flex-col items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    step >= 2 ? 'bg-school-dark text-school-gold border-2 border-school-gold' : 'bg-slate-200 text-slate-500'
+                    step >= 2 ? 'bg-amber-400 text-emerald-950 border-2 border-amber-300 font-extrabold' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                   }`}>
                     2
                   </div>
-                  <span className="text-[10px] font-bold text-slate-600 mt-1">Guardian</span>
+                  <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mt-1">Guardian</span>
                 </div>
-                <div className={`flex-1 h-0.5 mx-2 ${step >= 3 ? 'bg-school-gold' : 'bg-slate-200'}`} />
+                <div className={`flex-1 h-0.5 mx-2 ${step >= 3 ? 'bg-amber-400' : 'bg-slate-200 dark:bg-slate-800'}`} />
                 <div className="flex flex-col items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    step >= 3 ? 'bg-school-dark text-school-gold border-2 border-school-gold' : 'bg-slate-200 text-slate-500'
+                    step >= 3 ? 'bg-amber-400 text-emerald-950 border-2 border-amber-300 font-extrabold' : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                   }`}>
                     3
                   </div>
-                  <span className="text-[10px] font-bold text-slate-600 mt-1">Academics</span>
+                  <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 mt-1">Academics</span>
                 </div>
               </div>
 
@@ -142,106 +142,108 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
                 {/* Step 1: Student Biodata */}
                 {step === 1 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h4 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
                       Step 1: Student Information
                     </h4>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">First Name *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">First Name *</label>
                         <input
                           type="text"
                           required
                           placeholder="e.g. Ibrahim"
                           value={formData.studentFirstName}
                           onChange={(e) => setFormData({ ...formData, studentFirstName: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-school-blue/40"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Surname / Last Name *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Surname / Last Name *</label>
                         <input
                           type="text"
                           required
                           placeholder="e.g. Abubakar"
                           value={formData.studentLastName}
                           onChange={(e) => setFormData({ ...formData, studentLastName: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-school-blue/40"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Gender *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Gender *</label>
                         <select
                           value={formData.gender}
                           onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white"
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         >
-                          <option>Male</option>
-                          <option>Female</option>
+                          <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Male</option>
+                          <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Female</option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Date of Birth *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Date of Birth *</label>
                         <input
                           type="date"
                           required
                           value={formData.dob}
                           onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white"
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Boarding / Day *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Boarding / Day *</label>
                         <select
                           value={formData.enrollmentType}
                           onChange={(e) => setFormData({ ...formData, enrollmentType: e.target.value })}
-                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white"
+                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         >
-                          <option>Boarding Student</option>
-                          <option>Day Scholar</option>
+                          <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Boarding Student</option>
+                          <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Day Scholar</option>
                         </select>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Class Applied For *</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Class Applied For *</label>
                       <select
                         value={formData.classApplied}
                         onChange={(e) => setFormData({ ...formData, classApplied: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm bg-white"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       >
-                        <option>Junior Secondary School 1 (JSS1)</option>
-                        <option>Junior Secondary School 2 (JSS2 - Transfer)</option>
-                        <option>Senior Secondary School 1: Pure Sciences (SSS1)</option>
-                        <option>Senior Secondary School 1: Arts & Humanities (SSS1)</option>
-                        <option>Senior Secondary School 1: Commercial (SSS1)</option>
-                        <option>Senior Secondary School 2: Transfer (SSS2)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Junior Secondary School 1 (JSS1)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Junior Secondary School 2 (JSS2 - Transfer)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Senior Secondary School 1: Pure Sciences (SSS1)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Senior Secondary School 1: Arts & Humanities (SSS1)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Senior Secondary School 1: Commercial (SSS1)</option>
+                        <option className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white">Senior Secondary School 2: Transfer (SSS2)</option>
                       </select>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">State of Origin</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">State of Origin</label>
                         <input
                           type="text"
+                          placeholder="e.g. Nasarawa"
                           value={formData.stateOfOrigin}
                           onChange={(e) => setFormData({ ...formData, stateOfOrigin: e.target.value })}
-                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Local Govt Area (LGA)</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Local Govt Area (LGA)</label>
                         <input
                           type="text"
+                          placeholder="e.g. Lafia"
                           value={formData.lga}
                           onChange={(e) => setFormData({ ...formData, lga: e.target.value })}
-                          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
                     </div>
@@ -251,57 +253,57 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
                 {/* Step 2: Parent / Guardian Info */}
                 {step === 2 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h4 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
                       Step 2: Parent / Guardian Details
                     </h4>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Parent/Guardian Full Name *</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Parent/Guardian Full Name *</label>
                       <input
                         type="text"
                         required
                         placeholder="e.g. Alhaji Mohammed Danladi"
                         value={formData.parentName}
                         onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-school-blue/40"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Emergency Phone Number *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Emergency Phone Number *</label>
                         <input
                           type="tel"
                           required
                           placeholder="0803 000 0000"
                           value={formData.parentPhone}
                           onChange={(e) => setFormData({ ...formData, parentPhone: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Parent Email Address *</label>
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Parent Email Address *</label>
                         <input
                           type="email"
                           required
                           placeholder="parent@example.com"
                           value={formData.parentEmail}
                           onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Residential Address *</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Residential Address *</label>
                       <textarea
                         rows={2}
                         required
                         placeholder="e.g. Plot 15, GRA, Lafia, Nasarawa State"
                         value={formData.parentAddress}
                         onChange={(e) => setFormData({ ...formData, parentAddress: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       />
                     </div>
                   </div>
@@ -310,56 +312,57 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
                 {/* Step 3: Academic History & Medical */}
                 {step === 3 && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <h4 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-2">
                       Step 3: Academic Background & Health Notes
                     </h4>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Primary or Previous School Attended *</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Primary or Previous School Attended *</label>
                       <input
                         type="text"
                         required
                         placeholder="e.g. Al-Iman International School, Lafia"
                         value={formData.previousSchool}
                         onChange={(e) => setFormData({ ...formData, previousSchool: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Last Class Completed</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Last Class Completed</label>
                       <input
                         type="text"
+                        placeholder="e.g. Primary 6 or JSS 1"
                         value={formData.lastClassPassed}
                         onChange={(e) => setFormData({ ...formData, lastClassPassed: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Known Allergies or Medical Conditions (if any)</label>
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1">Known Allergies or Medical Conditions (if any)</label>
                       <input
                         type="text"
                         placeholder="e.g. None or Asthma, Peanuts allergy"
                         value={formData.medicalNotes}
                         onChange={(e) => setFormData({ ...formData, medicalNotes: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-school-gold"
                       />
                     </div>
 
-                    <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-800">
+                    <div className="p-3 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 dark:border-amber-800/60 text-xs text-amber-800 dark:text-amber-200">
                       <strong>Note:</strong> By submitting this form, you confirm that all information provided is accurate and agree to appear for the screening examination on Saturday, 8th August 2026 at Lafia campus.
                     </div>
                   </div>
                 )}
 
                 {/* Step Navigation Buttons */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
                   {step > 1 ? (
                     <button
                       type="button"
                       onClick={() => setStep(step - 1)}
-                      className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-200 transition-colors"
+                      className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
                       <span>Back</span>
@@ -369,7 +372,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onCl
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-school-gold to-amber-500 hover:from-amber-400 hover:to-school-goldHover text-school-dark text-xs font-extrabold flex items-center gap-1.5 shadow-md transition-all disabled:opacity-50"
+                    className="px-6 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black flex items-center gap-1.5 shadow-md transition-all disabled:opacity-50"
                   >
                     <span>
                       {loading ? 'Saving to Database...' : (step === 3 ? 'Submit Online Application' : 'Continue to Next Step')}
