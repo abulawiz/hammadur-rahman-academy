@@ -13,7 +13,6 @@ import {
   CreditCard, 
   FileText, 
   Sparkles,
-  Clock,
   Laptop
 } from 'lucide-react';
 import { api } from '../services/api';
@@ -31,54 +30,24 @@ export const AdminSection: React.FC<AdminSectionProps> = ({
   onLogout,
   onOpenDashboard
 }) => {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setSuccessMsg('');
     setLoading(true);
 
     try {
       const res = await api.adminLogin(username, password);
       onLogin(res.admin);
-      setSuccessMsg(`Welcome, ${res.admin.fullName}!`);
     } catch (err: any) {
-      // Fallback for demo accounts if offline
-      if (username.trim().toLowerCase() === 'admin' && password === 'admin123') {
-        const fallbackAdmin = {
-          id: 1,
-          username: 'admin',
-          fullName: 'Dr. Abdur-Rahman A. Al-Hassan',
-          role: 'Principal & Director of Studies'
-        };
-        onLogin(fallbackAdmin);
-        setSuccessMsg(`Welcome, ${fallbackAdmin.fullName}!`);
-      } else if (username.trim().toLowerCase() === 'bursar' && password === 'bursar123') {
-        const fallbackBursar = {
-          id: 2,
-          username: 'bursar',
-          fullName: 'Alhaji Garba Tanko',
-          role: 'School Bursar & Chief Accountant'
-        };
-        onLogin(fallbackBursar);
-        setSuccessMsg(`Welcome, ${fallbackBursar.fullName}!`);
-      } else {
-        setError(err.message || 'Invalid administrator username or password.');
-      }
+      setError(err.message || 'Invalid administrator username or password.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleFillAccount = (user: string, pass: string) => {
-    setUsername(user);
-    setPassword(pass);
-    setError('');
   };
 
   return (
@@ -164,31 +133,6 @@ export const AdminSection: React.FC<AdminSectionProps> = ({
                   </div>
                 </div>
 
-                {/* Quick Test Demo Account Shortcuts */}
-                <div className="mt-8 pt-6 border-t border-emerald-800/60">
-                  <span className="text-xs text-emerald-300 font-bold uppercase tracking-wider block mb-3">
-                    Quick-Fill Demo Credentials:
-                  </span>
-                  <div className="flex flex-wrap gap-2.5">
-                    <button
-                      type="button"
-                      onClick={() => handleFillAccount('admin', 'admin123')}
-                      className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-school-gold hover:text-emerald-950 border border-emerald-700/60 text-xs font-semibold text-emerald-100 transition-all duration-200 flex items-center gap-1.5"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>Principal: <strong>admin</strong> / <strong>admin123</strong></span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleFillAccount('bursar', 'bursar123')}
-                      className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-school-gold hover:text-emerald-950 border border-emerald-700/60 text-xs font-semibold text-emerald-100 transition-all duration-200 flex items-center gap-1.5"
-                    >
-                      <CreditCard className="w-3.5 h-3.5" />
-                      <span>Bursar: <strong>bursar</strong> / <strong>bursar123</strong></span>
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
 

@@ -400,86 +400,24 @@ export const api = {
 
   // 9. Admin API
   async adminLogin(username: string, password: string) {
-    try {
-      const res = await fetch(`${API_BASE}/admin/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const contentType = res.headers.get('content-type') || '';
-      if (res.ok && contentType.includes('application/json')) {
-        const data = await res.json();
-        return {
-          ...data,
-          user: data.user || data.admin
-        };
-      }
-
-      if (!res.ok && contentType.includes('application/json')) {
-        const data = await res.json();
-        throw new Error(data.error || 'Authentication failed.');
-      }
-    } catch (err: any) {
-      if (err.message && !err.message.includes('Failed to fetch') && !err.message.includes('NetworkError') && !err.message.includes('Unexpected token')) {
-        throw err;
-      }
-    }
-
-    // Resilient fallback for demonstration and offline accounts
-    if (username === 'admin' && password === 'admin123') {
-      return {
-        success: true,
-        token: 'hra-token-admin-demo-9921',
-        user: {
-          id: 1,
-          username: 'admin',
-          fullName: 'Dr. Abdur-Rahman A. Al-Hassan',
-          role: 'Super Administrator',
-          email: 'principal@hammadurrahman.sch.ng'
-        }
-      };
-    }
-
-    if (username === 'bursar' && password === 'bursar123') {
-      return {
-        success: true,
-        token: 'hra-token-bursar-demo-3310',
-        user: {
-          id: 2,
-          username: 'bursar',
-          fullName: 'Alhaji Garba Tanko',
-          role: 'Bursar & Accounts Head',
-          email: 'bursary@hammadurrahman.sch.ng'
-        }
-      };
-    }
-
-    throw new Error('Invalid staff username or password. Please verify credentials or use demo pills.');
+    const res = await fetch(`${API_BASE}/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Authentication failed.');
+    return {
+      ...data,
+      user: data.user || data.admin
+    };
   },
 
   async getAdminStats() {
-    try {
-      const res = await fetch(`${API_BASE}/admin/stats`);
-      const contentType = res.headers.get('content-type') || '';
-      if (res.ok && contentType.includes('application/json')) {
-        const data = await res.json();
-        return data.stats;
-      }
-    } catch {
-      // Fallback below
-    }
-
-    return {
-      activeStudents: 486,
-      pendingAdmissions: 28,
-      totalFeesCollected: 45850000,
-      activeStaff: 38,
-      totalClasses: 12,
-      unreadInquiries: 5,
-      activeAnnouncements: 4,
-      publishedResults: 1420
-    };
+    const res = await fetch(`${API_BASE}/admin/stats`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to load dashboard statistics.');
+    return data.stats;
   },
 
   // 10. Attendance API

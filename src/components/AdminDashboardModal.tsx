@@ -5,12 +5,9 @@ import {
   X, 
   ShieldCheck, 
   Users, 
-  FileText, 
   Bell, 
-  Mail, 
   Lock, 
   LogOut, 
-  CheckCircle, 
   Trash2, 
   Plus, 
   AlertCircle,
@@ -18,10 +15,8 @@ import {
   GraduationCap,
   Briefcase,
   CreditCard,
-  KeyRound,
   RotateCw,
-  Search,
-  BookOpen
+  Search
 } from 'lucide-react';
 
 interface AdminDashboardModalProps {
@@ -43,21 +38,22 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     user: supabaseUser, 
     signInWithEmail, 
     signOut: supabaseSignOut, 
-    isConfigured: isSupabaseConfigured 
+    isConfigured: isSupabaseConfigured,
+    isAdmin
   } = useAuth();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminUser, setAdminUser] = useState<any>(null);
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      if (supabaseUser) {
+      if (supabaseUser && isAdmin) {
         setIsAuthenticated(true);
-        const role = (supabaseUser.app_metadata?.role as string) || (supabaseUser.user_metadata?.role as string) || 'Administrator';
+        const role = (supabaseUser.app_metadata?.role as string) || 'Administrator';
         const su = {
           id: supabaseUser.id,
           username: supabaseUser.email?.split('@')[0] || 'admin',
@@ -70,20 +66,12 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       } else if (currentUser) {
         setIsAuthenticated(true);
         setAdminUser(currentUser);
-      } else if (typeof window !== 'undefined') {
-        const saved = localStorage.getItem('hra_admin_user');
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
-            setIsAuthenticated(true);
-            setAdminUser(parsed);
-          } catch {
-            // ignore
-          }
-        }
+      } else {
+        setIsAuthenticated(false);
+        setAdminUser(null);
       }
     }
-  }, [isOpen, currentUser, supabaseUser]);
+  }, [isOpen, currentUser, supabaseUser, isAdmin]);
 
 
   // Active Tab
@@ -91,6 +79,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
   // Data states
   const [stats, setStats] = useState<any>(null);
+  const [dashboardError, setDashboardError] = useState('');
   const [students, setStudents] = useState<any[]>([]);
   const [studentSearch, setStudentSearch] = useState('');
   const [applications, setApplications] = useState<any[]>([]);
@@ -133,12 +122,12 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
   const [showAddPayment, setShowAddPayment] = useState(false);
   const [newPayment, setNewPayment] = useState({
-    admissionNo: 'HRA/2024/048',
-    studentName: 'Mustapha Ibrahim Al-Hassan',
-    classLevel: 'SSS 2 (Science)',
+    admissionNo: '',
+    studentName: '',
+    classLevel: '',
     term: 'First Term',
     session: '2026/2027',
-    amountPaid: 225000,
+    amountPaid: 0,
     paymentMethod: 'Bank Transfer'
   });
 
@@ -161,7 +150,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         const { data, error } = await signInWithEmail(username.trim(), password);
         if (error) throw error;
         if (data?.user) {
-          const role = (data.user.app_metadata?.role as string) || (data.user.user_metadata?.role as string) || 'Administrator';
+          const role = data.user.app_metadata?.role as string | undefined;
+          if (!['admin', 'super_admin', 'bursar'].includes(role || '')) {
+            throw new Error('This account does not have staff administration access.');
+          }
           const su = {
             id: data.user.id,
             username: data.user.email?.split('@')[0] || 'admin',
@@ -173,7 +165,6 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
           setIsAuthenticated(true);
           setAdminUser(su);
           if (onLoginUser) onLoginUser(su);
-          loadDashboardData();
           return;
         }
       }
@@ -183,264 +174,26 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       setIsAuthenticated(true);
       setAdminUser(data.admin);
       if (onLoginUser) onLoginUser(data.admin);
-      loadDashboardData();
     } catch (err: any) {
-      if ((username === 'admin' && password === 'admin123') || (username === 'bursar' && password === 'bursar123')) {
-        const fallback = {
-          username,
-          fullName: username === 'admin' ? 'Dr. Abdur-Rahman A. Al-Hassan' : 'Alhaji Garba Tanko',
-          role: username === 'admin' ? 'Principal & Director of Studies' : 'School Bursar & Chief Accountant'
-        };
-        setIsAuthenticated(true);
-        setAdminUser(fallback);
-        if (onLoginUser) onLoginUser(fallback);
-        loadDashboardData();
-      } else {
-        setLoginError(err.message || 'Invalid administrator login.');
-      }
+      setLoginError(err.message || 'Unable to sign in. Check your credentials and try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleQuickLogin = async (userType: 'admin' | 'bursar') => {
-    const u = userType === 'admin' ? 'admin' : 'bursar';
-    const p = userType === 'admin' ? 'admin123' : 'bursar123';
-    setUsername(u);
-    setPassword(p);
-    setLoginError('');
-    setLoading(true);
-
-    try {
-      const data = await api.adminLogin(u, p);
-      setIsAuthenticated(true);
-      setAdminUser(data.admin);
-      if (onLoginUser) onLoginUser(data.admin);
-      loadDashboardData();
-    } catch {
-      const fallback = {
-        username: u,
-        fullName: u === 'admin' ? 'Dr. Abdur-Rahman A. Al-Hassan' : 'Alhaji Garba Tanko',
-        role: u === 'admin' ? 'Principal & Director of Studies' : 'School Bursar & Chief Accountant'
-      };
-      setIsAuthenticated(true);
-      setAdminUser(fallback);
-      if (onLoginUser) onLoginUser(fallback);
-      loadDashboardData();
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const loadDashboardData = async () => {
+    setDashboardError('');
     try {
       const [statsData, studentsData, appsData, staffData, noticesData, inqsData, feeSchedData, paymentsData] = await Promise.all([
-        api.getAdminStats().catch(() => ({
-          totalApplications: 2,
-          pendingApplications: 1,
-          enrolledStudents: 4,
-          activeStaff: 5,
-          academicClasses: 9,
-          unreadInquiries: 0,
-          publishedAnnouncements: 4,
-          totalFeesCollected: 450000,
-          totalHostels: 4,
-          activeCbtExams: 2,
-          totalCbtAttempts: 1,
-          activeAssignments: 3
-        })),
-        api.getStudents(studentSearch).catch(() => [
-          {
-            id: 1,
-            admission_no: 'HRA/2024/048',
-            pin: '8842-1903-7521',
-            full_name: 'Mustapha Ibrahim Al-Hassan',
-            class_grade: 'Senior Secondary School 2 (Science - Diamond)',
-            gender: 'Male',
-            guardian_name: 'Alhaji Ibrahim M. Al-Hassan',
-            guardian_phone: '0803 892 4110',
-            enrollment_type: 'Boarding Student',
-            status: 'Enrolled'
-          },
-          {
-            id: 2,
-            admission_no: 'HRA/2024/015',
-            pin: '1122-3344-5566',
-            full_name: 'Amina Bello Suleiman',
-            class_grade: 'Senior Secondary School 1 (Arts & Humanities)',
-            gender: 'Female',
-            guardian_name: 'Dr. Suleiman Bello',
-            guardian_phone: '0802 334 5566',
-            enrollment_type: 'Boarding Student',
-            status: 'Enrolled'
-          },
-          {
-            id: 3,
-            admission_no: 'HRA/2025/102',
-            pin: '9988-7766-5544',
-            full_name: 'Farouq Usman Danladi',
-            class_grade: 'Junior Secondary School 1 (Gold)',
-            gender: 'Male',
-            guardian_name: 'Mallam Usman Danladi',
-            guardian_phone: '0815 674 2200',
-            enrollment_type: 'Day Scholar',
-            status: 'Enrolled'
-          },
-          {
-            id: 4,
-            admission_no: 'HRA/2025/119',
-            pin: '4433-2211-7788',
-            full_name: 'Fatima Zahra Garba',
-            class_grade: 'Senior Secondary School 1: Pure Sciences (SSS1)',
-            gender: 'Female',
-            guardian_name: 'Alhaji Garba Tanko',
-            guardian_phone: '0807 112 3344',
-            enrollment_type: 'Boarding Student',
-            status: 'Enrolled'
-          }
-        ]),
-        api.getApplications().catch(() => [
-          {
-            id: 1,
-            ref_number: 'HRA-ADM-2026-8819',
-            first_name: 'Zainab',
-            last_name: 'Gambo',
-            gender: 'Female',
-            dob: '2014-05-12',
-            class_applied: 'Junior Secondary School 1 (JSS1)',
-            enrollment_type: 'Boarding Student',
-            parent_name: 'Alhaji Gambo Umar',
-            parent_phone: '0803 456 7890',
-            parent_email: 'gambo.umar@gmail.com',
-            status: 'Interview Scheduled',
-            created_at: '2026-10-24'
-          },
-          {
-            id: 2,
-            ref_number: 'HRA-ADM-2026-4402',
-            first_name: 'Abubakar',
-            last_name: 'Aliyu',
-            gender: 'Male',
-            dob: '2012-08-20',
-            class_applied: 'Senior Secondary School 1: Pure Sciences (SSS1)',
-            enrollment_type: 'Day Scholar',
-            parent_name: 'Hon. Aliyu Tanko',
-            parent_phone: '0812 998 1234',
-            parent_email: 'tanko.aliyu@yahoo.com',
-            status: 'Pending Review',
-            created_at: '2026-10-25'
-          }
-        ]),
-        api.getStaff().catch(() => [
-          {
-            id: 1,
-            staff_id: 'HRA/ST/001',
-            full_name: 'Dr. Abdur-Rahman A. Al-Hassan',
-            role: 'Principal & Director of Studies',
-            department: 'Executive',
-            qualification: 'B.Ed, M.Sc, Ph.D, TRCN',
-            phone: '0803 892 4110',
-            email: 'principal@hammadurrahman.sch.ng',
-            status: 'Active'
-          },
-          {
-            id: 2,
-            staff_id: 'HRA/ST/002',
-            full_name: 'Mrs. Halima Gambo Umar',
-            role: 'Vice Principal (Academic Affairs)',
-            department: 'Science & Technology',
-            qualification: 'B.Sc Chemistry, PGDE, M.Ed',
-            phone: '0815 674 2200',
-            email: 'vp.academics@hammadurrahman.sch.ng',
-            status: 'Active'
-          },
-          {
-            id: 3,
-            staff_id: 'HRA/ST/003',
-            full_name: 'Mallam Suleiman Danladi',
-            role: 'Vice Principal (Administration & Boarding)',
-            department: 'Humanities',
-            qualification: 'B.A. (Ed) English, MPA',
-            phone: '0803 112 9988',
-            email: 'vp.admin@hammadurrahman.sch.ng',
-            status: 'Active'
-          },
-          {
-            id: 4,
-            staff_id: 'HRA/ST/004',
-            full_name: 'Ustadh Mukhtar Al-Misri',
-            role: 'Head of Tahfeez & Islamic Studies',
-            department: 'Islamic Heritage',
-            qualification: 'B.A. Shariah & Arabic (Al-Azhar), Ijazah Hafiz',
-            phone: '0802 554 1122',
-            email: 'tahfeez@hammadurrahman.sch.ng',
-            status: 'Active'
-          },
-          {
-            id: 5,
-            staff_id: 'HRA/ST/005',
-            full_name: 'Engr. David O. Emmanuel',
-            role: 'Head of STEM & Computer CBT Lab',
-            department: 'Sciences & ICT',
-            qualification: 'B.Eng Computer Engr, Cisco CCNA, TRCN',
-            phone: '0809 332 7788',
-            email: 'ict@hammadurrahman.sch.ng',
-            status: 'Active'
-          }
-        ]),
-        api.getAnnouncements().catch(() => []),
-        api.getInquiries().catch(() => []),
-        api.getFeeSchedules().catch(() => [
-          {
-            id: 1,
-            class_level: 'Junior Secondary (JSS 1 - 3)',
-            category: 'Day Scholar',
-            term: 'First Term',
-            session: '2026/2027',
-            tuition: 65000,
-            boarding_fee: 0,
-            ict_lab_fee: 15000,
-            development_levy: 10000,
-            total_amount: 90000
-          },
-          {
-            id: 2,
-            class_level: 'Junior Secondary (JSS 1 - 3)',
-            category: 'Boarding Student',
-            term: 'First Term',
-            session: '2026/2027',
-            tuition: 65000,
-            boarding_fee: 110000,
-            ict_lab_fee: 15000,
-            development_levy: 10000,
-            total_amount: 200000
-          },
-          {
-            id: 3,
-            class_level: 'Senior Secondary (SSS 1 - 3)',
-            category: 'Day Scholar',
-            term: 'First Term',
-            session: '2026/2027',
-            tuition: 75000,
-            boarding_fee: 0,
-            ict_lab_fee: 20000,
-            development_levy: 10000,
-            total_amount: 105000
-          },
-          {
-            id: 4,
-            class_level: 'Senior Secondary (SSS 1 - 3)',
-            category: 'Boarding Student',
-            term: 'First Term',
-            session: '2026/2027',
-            tuition: 75000,
-            boarding_fee: 120000,
-            ict_lab_fee: 20000,
-            development_levy: 10000,
-            total_amount: 225000
-          }
-        ]),
-        api.getFeePayments().catch(() => ({ payments: [] }))
+        api.getAdminStats(),
+        api.getStudents(studentSearch),
+        api.getApplications(),
+        api.getStaff(),
+        api.getAnnouncements(),
+        api.getInquiries(),
+        api.getFeeSchedules(),
+        api.getFeePayments()
       ]);
       setStats(statsData);
       setStudents(studentsData || []);
@@ -452,6 +205,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       setFeePayments(paymentsData.payments || []);
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
+      setDashboardError(err instanceof Error ? err.message : 'Dashboard data could not be loaded.');
     }
   };
 
@@ -580,9 +334,6 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     setIsAuthenticated(false);
     setAdminUser(null);
     if (onLogoutUser) onLogoutUser();
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('hra_admin_user');
-    }
     await supabaseSignOut();
   };
 
@@ -603,7 +354,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   HRA School Administrative Portal
                 </h3>
                 <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-2 py-0.5 rounded border border-emerald-500/30">
-                  SQLite Live Backend
+                  Authorized Staff Access
                 </span>
               </div>
               <p className="text-[11px] text-school-goldLight">
@@ -666,11 +417,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="admin or staff@hammaduracademy.edu.ng"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-school-blue/40"
+                    placeholder="Your staff email or username"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 text-sm focus:ring-2 focus:ring-school-blue/40"
                   />
                   <p className="text-[10px] text-slate-400 mt-1">
-                    {isSupabaseConfigured ? 'Sign in with your Supabase staff email or quick demo (admin / bursar)' : 'Default demo: admin or bursar'}
+                    Use the username or staff email assigned to you by the school.
                   </p>
                 </div>
 
@@ -685,7 +436,6 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-school-blue/40"
                   />
-                  <p className="text-[10px] text-slate-400 mt-1">Default password: <strong>admin123</strong> or <strong>bursar123</strong></p>
                 </div>
 
                 <button
@@ -697,44 +447,16 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 </button>
               </form>
 
-              {/* 1-Click Fast Demo Login Buttons */}
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 text-center uppercase tracking-wider">
-                  Quick One-Click Sign In (Instant Access)
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    disabled={loading}
-                    onClick={() => handleQuickLogin('admin')}
-                    className="p-3 rounded-xl border border-emerald-500/40 bg-emerald-50/50 dark:bg-emerald-950/20 hover:bg-emerald-100/60 dark:hover:bg-emerald-900/30 text-left transition-all group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300">Principal Portal</span>
-                      <span className="text-[10px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded">admin</span>
-                    </div>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">Full School Administration & Students</p>
-                  </button>
-
-                  <button
-                    type="button"
-                    disabled={loading}
-                    onClick={() => handleQuickLogin('bursar')}
-                    className="p-3 rounded-xl border border-amber-500/40 bg-amber-50/50 dark:bg-amber-950/20 hover:bg-amber-100/60 dark:hover:bg-amber-900/30 text-left transition-all group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-amber-900 dark:text-amber-300">Bursar Portal</span>
-                      <span className="text-[10px] bg-amber-600 text-white font-bold px-1.5 py-0.5 rounded">bursar</span>
-                    </div>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">School Fees Ledger & Receipts</p>
-                  </button>
-                </div>
-              </div>
             </div>
           ) : (
             /* Complete Dashboard View */
             <div className="space-y-6">
-              
+              {dashboardError && (
+                <div role="alert" className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+                  Dashboard information is temporarily unavailable. {dashboardError}
+                </div>
+              )}
+
               {/* Top Admin Info & Navigation Tabs */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
                 <div>
