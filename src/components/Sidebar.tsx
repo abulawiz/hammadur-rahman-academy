@@ -9,21 +9,15 @@ import {
   Users, 
   Bell, 
   Phone, 
-  UserCheck, 
-  Sparkles, 
   ChevronRight, 
   BookOpen, 
   Atom, 
   Scroll, 
   TrendingUp, 
   HeartHandshake, 
-  ShieldCheck,
   FileCheck,
   MapPin,
-  Clock,
-  Sun,
-  Moon,
-  LogOut
+  Clock
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -33,11 +27,8 @@ interface SidebarProps {
   setActiveSection: (section: string) => void;
   onOpenPortal: () => void;
   onOpenApply: () => void;
-  onOpenAdmin: () => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
-  adminUser?: any;
-  onLogout?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -47,11 +38,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setActiveSection,
   onOpenPortal,
   onOpenApply,
-  onOpenAdmin,
-  isDarkMode,
-  onToggleDarkMode,
-  adminUser,
-  onLogout,
 }) => {
   const handleNavClick = (sectionId: string, href: string) => {
     setActiveSection(sectionId);
@@ -66,9 +52,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'home', label: 'Home Page', href: '#home', icon: <Home className="w-4 h-4" /> },
     { id: 'about', label: "About & Principal's Welcome", href: '#about', icon: <Info className="w-4 h-4" /> },
     { id: 'academics', label: 'Academic Programs', href: '#academics', icon: <GraduationCap className="w-4 h-4" /> },
-    { id: 'admissions', label: 'Admissions 2026/2027', href: '#admissions', icon: <FileCheck className="w-4 h-4" /> },
+    { id: 'admissions', label: 'Admissions', href: '#admissions', icon: <FileCheck className="w-4 h-4" /> },
     { id: 'facilities', label: 'Campus Infrastructure', href: '#facilities', icon: <Building2 className="w-4 h-4" /> },
-    { id: 'student-life', label: 'Student & Boarding Life', href: '#student-life', icon: <Users className="w-4 h-4" /> },
+    { id: 'student-life', label: 'Student life & wellbeing', href: '#student-life', icon: <Users className="w-4 h-4" /> },
     { id: 'news', label: 'Bulletins & Term Calendar', href: '#news', icon: <Bell className="w-4 h-4" /> },
     { id: 'contact', label: 'Contact & Lafia Location', href: '#contact', icon: <Phone className="w-4 h-4" /> },
   ];
@@ -131,144 +117,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Scrollable Navigation Body */}
         <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
           
-          {/* WAEC & NECO Accreditation Badge (Moved from Top Bar) */}
-          <div className="p-3.5 rounded-2xl bg-[#03542c] border border-school-gold/40 flex items-center justify-between text-xs shadow-md">
+          <div className="rounded-xl border border-school-gold/30 bg-[#03542c] p-3.5 text-xs shadow-md">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-school-gold/20 border border-school-gold/40 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck className="w-4 h-4 text-school-gold" />
-              </div>
-              <div className="text-[11px] text-emerald-100">
-                <div className="font-extrabold text-white text-xs uppercase tracking-wide">Accredited Center</div>
-                <div className="text-school-gold font-mono font-bold">WAEC: 4260189 • NECO: 025114</div>
+              <MapPin className="h-4 w-4 shrink-0 text-school-gold" aria-hidden="true" />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-200">Campus location</p>
+                <p className="mt-1 text-xs font-semibold text-white">Lafia, Nasarawa State</p>
               </div>
             </div>
-            <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              Lafia
-            </span>
           </div>
 
-          {/* Quick Services & Portals (Moved from Top Bar) */}
           <div className="space-y-2.5">
-            <p className="text-[10px] font-black uppercase tracking-wider text-school-gold px-1 flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-school-gold" />
-              <span>Student & Parent Portals</span>
-            </p>
-
-            {/* Apply Online */}
+            <p className="text-[10px] font-bold uppercase tracking-wider text-school-gold px-1">Families & admissions</p>
             <button
               onClick={() => {
                 onClose();
                 onOpenApply();
               }}
-              className="w-full py-3 px-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black flex items-center justify-between shadow transition-all"
-              title="Apply Online for 2026/2027 Admission"
+              className="w-full rounded-xl bg-amber-400 px-3.5 py-3 text-left text-xs font-bold text-emerald-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-emerald-950/20 flex items-center justify-center">
-                  <GraduationCap className="w-4 h-4 text-emerald-950" />
-                </div>
-                <div className="text-left">
-                  <div className="font-black text-xs leading-tight">Apply Online</div>
-                  <div className="text-[10px] font-bold text-emerald-900/80">2026/2027 Admission Form</div>
-                </div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-emerald-950" />
+              <span className="block">Ask about admissions</span>
+              <span className="mt-1 block text-[10px] font-medium text-emerald-900/80">Contact the school for current intake details</span>
             </button>
-
-            {/* Student & Fee Payment Portal */}
             <button
               onClick={() => {
                 onClose();
                 onOpenPortal();
               }}
-              className="w-full py-3 px-3.5 rounded-xl bg-emerald-900/90 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-between border border-school-gold/40 shadow-sm transition-all transform hover:scale-[1.02]"
-              title="Open Student Portal for Results, School Fees & Receipts"
+              className="w-full rounded-xl border border-emerald-700 bg-[#034d28] px-3.5 py-3 text-left text-xs font-semibold text-white transition-colors hover:border-school-gold/60 hover:bg-[#023a1e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-school-gold"
             >
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-school-gold/20 flex items-center justify-center border border-school-gold/40">
-                  <UserCheck className="w-4 h-4 text-school-gold" />
-                </div>
-                <div className="text-left">
-                  <div className="font-bold text-xs text-white leading-tight">Student & Fees Portal</div>
-                  <div className="text-[10px] text-emerald-300">Check Results & Pay School Fees</div>
-                </div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-school-gold" />
+              <span className="block">Student & parent support</span>
+              <span className="mt-1 block text-[10px] font-medium text-emerald-200">Contact the school office directly</span>
             </button>
-
-            {/* Staff Administrative Access Section (Exclusively in Sidebar) */}
-            <div className="pt-2 border-t border-white/10 space-y-1.5">
-              <p className="text-[10px] font-black uppercase tracking-wider text-school-gold px-1 flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-school-gold" />
-                <span>Staff & Administrative Access</span>
-              </p>
-
-              {adminUser ? (
-                <div className="p-3.5 rounded-2xl bg-[#03542c] border border-school-gold/50 shadow-md space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <div>
-                        <div className="text-xs font-bold text-white truncate max-w-[180px]">
-                          {adminUser.fullName || adminUser.username}
-                        </div>
-                        <div className="text-[10px] text-school-gold font-medium">
-                          {adminUser.role || 'Staff Administrator'}
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-extrabold uppercase">
-                      Active
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/10">
-                    <button
-                      onClick={() => {
-                        onClose();
-                        onOpenAdmin();
-                      }}
-                      className="py-2 px-3 bg-school-gold hover:bg-amber-400 text-emerald-950 rounded-xl text-xs font-black text-center transition-colors shadow-sm"
-                    >
-                      Dashboard
-                    </button>
-                    <button
-                      onClick={() => {
-                        onClose();
-                        if (onLogout) onLogout();
-                      }}
-                      className="py-2 px-3 bg-red-600/30 hover:bg-red-600 text-red-200 hover:text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-red-500/30"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Log Out</span>
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    onClose();
-                    onOpenAdmin();
-                  }}
-                  className="w-full py-3 px-3.5 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#033022] to-emerald-950 hover:border-school-gold text-white text-xs font-bold flex items-center justify-between border border-school-gold/40 shadow-md transition-all group hover:scale-[1.01]"
-                  title="Staff & Administrative Login (Principal & Bursar)"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-school-gold/20 border border-school-gold/40 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <ShieldCheck className="w-4 h-4 text-school-gold" />
-                    </div>
-                    <div className="text-left">
-                      <div className="font-bold text-xs text-white group-hover:text-school-gold transition-colors">
-                        Admin & Staff Login
-                      </div>
-                      <div className="text-[10px] text-emerald-300/80">
-                        Principal & Bursar Portals
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-school-gold group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              )}
-            </div>
           </div>
 
           {/* Main Navigation Sections */}

@@ -1,252 +1,100 @@
 import React, { useState } from 'react';
-import { SchoolImageSlot } from './SchoolImageSlot';
-import { 
-  Users2, 
-  Cpu, 
-  Mic2, 
-  Heart, 
-  Sprout, 
-  BookOpenCheck, 
-  Activity, 
-  Home, 
-  Clock, 
-  Utensils, 
-  ShieldCheck
-} from 'lucide-react';
+import { BookOpen, HeartHandshake, Lightbulb, UsersRound } from 'lucide-react';
+
+const opportunities = [
+  {
+    icon: Lightbulb,
+    category: 'Curiosity',
+    title: 'Explore new ideas',
+    description: 'Encourage questions, problem-solving and learning that extends beyond a single subject.',
+  },
+  {
+    icon: BookOpen,
+    category: 'Expression',
+    title: 'Share a point of view',
+    description: 'Reading, writing and discussion help students communicate with clarity and confidence.',
+  },
+  {
+    icon: HeartHandshake,
+    category: 'Character',
+    title: 'Learn with consideration',
+    description: 'Personal responsibility and respect for others are part of a positive school community.',
+  },
+  {
+    icon: UsersRound,
+    category: 'Participation',
+    title: 'Take part in school life',
+    description: 'Students can grow through shared interests, collaboration and community involvement.',
+  },
+];
+
+type StudentLifeView = 'activities' | 'support';
 
 export const StudentLifeSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'clubs' | 'boarding' | 'routine'>('clubs');
-
-  const clubs = [
-    {
-      title: "JETS & STEM Club",
-      category: "Science & Innovation",
-      icon: <Cpu className="w-5 h-5 text-amber-500" />,
-      description: "Junior Engineers, Technicians, and Scientists club engaging in robotics, electronics, chemical reactions, and STAN competitions."
-    },
-    {
-      title: "Press & Literary Debating Club",
-      category: "Communications",
-      icon: <Mic2 className="w-5 h-5 text-blue-500" />,
-      description: "Sharpening public speaking, journalistic reporting, editorial writing, and state championship inter-school debates."
-    },
-    {
-      title: "Quranic & Islamic Heritage Society",
-      category: "Spiritual & Ethics",
-      icon: <BookOpenCheck className="w-5 h-5 text-emerald-500" />,
-      description: "Weekly circles for Tajweed, Hadith memorization, spiritual reflections, and moral character counseling."
-    },
-    {
-      title: "Red Cross & First Aid Cadet",
-      category: "Humanitarian",
-      icon: <Heart className="w-5 h-5 text-red-500" />,
-      description: "Practical lifesaving first-aid training, disaster safety consciousness, and community hygiene initiatives in Lafia."
-    },
-    {
-      title: "Young Farmers & Agri-Tech Club",
-      category: "Vocational",
-      icon: <Sprout className="w-5 h-5 text-green-600" />,
-      description: "Hands-on poultry and crop farming on the school demonstration farm, learning modern agricultural science."
-    },
-    {
-      title: "Sports & Athletics Guild",
-      category: "Athletics",
-      icon: <Activity className="w-5 h-5 text-indigo-500" />,
-      description: "Football, basketball, volleyball, table tennis, and track athletics with dedicated training under professional physical educators."
-    }
-  ];
-
-  const routine = [
-    { time: "5:00 AM – 6:00 AM", event: "Fajr Prayer, Dawn Quranic Recitation & Hostel Inspection" },
-    { time: "6:00 AM – 7:15 AM", event: "Morning Chores, Personal Grooming & Nutritious Breakfast" },
-    { time: "7:30 AM – 8:00 AM", event: "School Morning Assembly & Moral Exhortation" },
-    { time: "8:00 AM – 11:20 AM", event: "Academic Lessons (Periods 1 to 4)" },
-    { time: "11:20 AM – 12:00 PM", event: "Mid-Day Snack & Refreshment Break" },
-    { time: "12:00 PM – 2:00 PM", event: "Academic Lessons & Science Practicals (Periods 5 to 7)" },
-    { time: "2:00 PM – 2:40 PM", event: "Dhuhr Congregational Prayer & Lunch" },
-    { time: "2:40 PM – 4:00 PM", event: "Co-curricular Clubs, ICT Coding & Prep Study" },
-    { time: "4:00 PM – 5:45 PM", event: "Sports, Athletics & Recreation / Day Students Dismissal" },
-    { time: "6:30 PM – 7:30 PM", event: "Maghrib Prayer, Evening Dinner & Isha Prayer" },
-    { time: "7:45 PM – 9:30 PM", event: "Supervised Evening Prep (Night Study in Classrooms)" },
-    { time: "10:00 PM", event: "Hostel Lights Out & Rest" }
-  ];
+  const [activeView, setActiveView] = useState<StudentLifeView>('activities');
 
   return (
-    <section id="student-life" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white transition-colors duration-300 relative border-t border-emerald-700/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
-            <Users2 className="w-4 h-4 text-school-gold" />
-            <span>Vibrant Campus Life</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
-            Nurturing Well-Rounded, Confident Scholars
-          </h2>
-          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-            Education at Hammadur Rahman Academy extends far beyond textbooks. We balance academic rigor with creative clubs, physical fitness, and disciplined boarding life.
+    <section id="student-life" className="border-t border-emerald-700/40 bg-[#046a38] py-20 text-white dark:bg-[#03542c]">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="mb-10 max-w-2xl">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Student life</p>
+          <h2 className="font-heading text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Learning continues beyond the classroom.</h2>
+          <p className="mt-4 text-sm leading-7 text-emerald-100/85">
+            A balanced school experience makes room for curiosity, personal growth and positive relationships.
           </p>
         </div>
 
-        {/* Tab Selector */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex p-1.5 rounded-2xl bg-[#034d28] border border-emerald-600/40">
-            <button
-              onClick={() => setActiveTab('clubs')}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'clubs'
-                  ? 'bg-amber-400 text-emerald-950 shadow-md font-extrabold'
-                  : 'text-emerald-100 hover:text-white'
-              }`}
-            >
-              Clubs & Societies
-            </button>
-            <button
-              onClick={() => setActiveTab('boarding')}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'boarding'
-                  ? 'bg-amber-400 text-emerald-950 shadow-md font-extrabold'
-                  : 'text-emerald-100 hover:text-white'
-              }`}
-            >
-              Boarding Experience
-            </button>
-            <button
-              onClick={() => setActiveTab('routine')}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === 'routine'
-                  ? 'bg-amber-400 text-emerald-950 shadow-md font-extrabold'
-                  : 'text-emerald-100 hover:text-white'
-              }`}
-            >
-              Daily Schedule
-            </button>
-          </div>
+        <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Student life information">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeView === 'activities'}
+            aria-controls="student-life-activities"
+            id="student-life-activities-tab"
+            onClick={() => setActiveView('activities')}
+            className={`min-h-11 rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${activeView === 'activities' ? 'bg-amber-400 text-emerald-950' : 'border border-emerald-400/40 text-emerald-100 hover:bg-emerald-900/50'}`}
+          >
+            Enrichment
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeView === 'support'}
+            aria-controls="student-life-support"
+            id="student-life-support-tab"
+            onClick={() => setActiveView('support')}
+            className={`min-h-11 rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${activeView === 'support' ? 'bg-amber-400 text-emerald-950' : 'border border-emerald-400/40 text-emerald-100 hover:bg-emerald-900/50'}`}
+          >
+            Student support
+          </button>
         </div>
 
-        {/* Tab 1: Clubs & Societies */}
-        {activeTab === 'clubs' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-300">
-            {clubs.map((club, idx) => (
-              <div 
-                key={idx}
-                className="bg-[#034d28] dark:bg-[#023a1e] p-6 rounded-2xl border border-emerald-500/30 text-white shadow-md hover:shadow-xl hover:border-school-gold/60 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-emerald-950/80 border border-emerald-700/50 flex items-center justify-center">
-                      {club.icon}
-                    </div>
-                    <span className="text-[10px] font-bold text-school-gold uppercase tracking-wider bg-emerald-950/70 border border-emerald-700/40 px-2.5 py-1 rounded-md">
-                      {club.category}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2">
-                    {club.title}
-                  </h3>
-                  <p className="text-xs text-emerald-100/90 leading-relaxed">
-                    {club.description}
-                  </p>
+        {activeView === 'activities' ? (
+          <div id="student-life-activities" role="tabpanel" aria-labelledby="student-life-activities-tab" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {opportunities.map(({ icon: Icon, category, title, description }) => (
+              <article key={title} className="rounded-lg border border-emerald-500/35 bg-[#034d28] p-6 dark:bg-[#023a1e]">
+                <div className="mb-8 flex items-center justify-between">
+                  <Icon className="h-5 w-5 text-amber-300" aria-hidden="true" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-200">{category}</span>
                 </div>
-                <div className="mt-4 pt-4 border-t border-emerald-700/40 flex items-center text-xs font-semibold text-school-gold">
-                  <span>Weekly Wednesday Meetings</span>
-                </div>
-              </div>
+                <h3 className="text-base font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-emerald-100/75">{description}</p>
+              </article>
             ))}
           </div>
-        )}
-
-        {/* Tab 2: Boarding Experience */}
-        {activeTab === 'boarding' && (
-          <div className="bg-[#034d28] dark:bg-[#023a1e] rounded-3xl border border-emerald-500/30 p-6 sm:p-10 shadow-xl animate-in fade-in duration-300 text-white">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              
-              <div className="lg:col-span-6 space-y-6">
-                <div className="inline-flex items-center gap-2 text-school-gold font-bold text-xs uppercase tracking-wider">
-                  <Home className="w-4 h-4 text-school-gold" />
-                  <span>A Safe Home Away From Home</span>
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-heading">
-                  Nurturing Pastoral Care in Lafia, Nasarawa State
-                </h3>
-                <p className="text-sm text-emerald-100/90 leading-relaxed">
-                  Our boarding system is designed to inculcate self-reliance, camaraderie, and rigorous time management. Supervised by seasoned house masters and matrons, boarders enjoy a warm, structured, and spiritually uplifting community.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  <div className="p-4 rounded-xl bg-emerald-950/70 border border-emerald-700/50">
-                    <ShieldCheck className="w-5 h-5 text-emerald-400 mb-2" />
-                    <h4 className="text-xs font-bold text-white">Perimeter Security & CCTV</h4>
-                    <p className="text-[11px] text-emerald-200 mt-1">24/7 armed security personnel and surveillance system.</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-emerald-950/70 border border-emerald-700/50">
-                    <Utensils className="w-5 h-5 text-amber-400 mb-2" />
-                    <h4 className="text-xs font-bold text-white">Hygienic Dining Hall</h4>
-                    <p className="text-[11px] text-emerald-200 mt-1">Three hot, wholesome, dietitian-approved meals daily.</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-emerald-950/70 border border-emerald-700/50">
-                    <BookOpenCheck className="w-5 h-5 text-sky-400 mb-2" />
-                    <h4 className="text-xs font-bold text-white">Supervised Prep Studies</h4>
-                    <p className="text-[11px] text-emerald-200 mt-1">Two hours of guided night prep every weekday evening.</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-emerald-950/70 border border-emerald-700/50">
-                    <Activity className="w-5 h-5 text-purple-400 mb-2" />
-                    <h4 className="text-xs font-bold text-white">Healthcare on Standby</h4>
-                    <p className="text-[11px] text-emerald-200 mt-1">Resident nurses and rapid medical referral protocols.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-6 relative">
-                <div className="rounded-2xl overflow-hidden aspect-[4/3] shadow-xl border border-emerald-600/40">
-                  <SchoolImageSlot
-                    id="student_life_boarding"
-                    title="Boarding Life & Hostels"
-                    category="Hostel Experience"
-                    aspectRatio="aspect-[4/3]"
-                    recommendedDimensions="1200 × 900 px"
-                    overlayBadge="Hostel Experience"
-                    overlayCaption="Clean, Comfortable & Well-Supervised Dormitories"
-                    altText="Boarding students at Hammadur Rahman Academy Lafia"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-[#022c1f] text-white p-4 rounded-2xl shadow-xl border border-school-gold/40">
-                  <p className="text-xs font-bold text-school-gold">Separate Boys & Girls Hostels</p>
-                  <p className="text-[11px] text-emerald-200">Spacious, well-ventilated rooms with private storage lockers</p>
-                </div>
-              </div>
-
+        ) : (
+          <div id="student-life-support" role="tabpanel" aria-labelledby="student-life-support-tab" className="grid gap-8 rounded-lg border border-emerald-500/35 bg-[#034d28] p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center dark:bg-[#023a1e]">
+            <div>
+              <h3 className="text-xl font-semibold">Questions about student support?</h3>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-emerald-100/80">
+                Details about boarding, student services and current school arrangements are best confirmed directly with the office.
+              </p>
             </div>
+            <a href="#contact" className="inline-flex min-h-11 items-center justify-center rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold text-emerald-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+              Contact the school
+            </a>
           </div>
         )}
-
-        {/* Tab 3: Daily Routine Schedule */}
-        {activeTab === 'routine' && (
-          <div className="bg-[#034d28] dark:bg-[#023a1e] rounded-3xl border border-emerald-500/30 p-6 sm:p-10 shadow-xl max-w-4xl mx-auto animate-in fade-in duration-300 text-white">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-emerald-700/50">
-              <Clock className="w-6 h-6 text-school-gold" />
-              <div>
-                <h3 className="text-lg font-bold text-white">Official Daily Timetable & Routine</h3>
-                <p className="text-xs text-emerald-200">Structured discipline ensuring balance between studies, worship, and rest</p>
-              </div>
-            </div>
-
-            <div className="divide-y divide-emerald-700/40">
-              {routine.map((item, idx) => (
-                <div key={idx} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-emerald-950/60 px-3 rounded-lg transition-colors">
-                  <span className="text-xs font-mono font-bold text-amber-300 sm:w-44 flex-shrink-0">
-                    {item.time}
-                  </span>
-                  <span className="text-xs sm:text-sm text-emerald-100 flex-1 font-medium">
-                    {item.event}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
       </div>
     </section>
   );

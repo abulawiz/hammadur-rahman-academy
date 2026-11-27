@@ -9,39 +9,29 @@ import {
   UserCheck, 
   FileText, 
   ChevronRight,
-  Sparkles,
   Sun,
   Moon,
-  ShieldCheck,
-  LogOut,
-  Lock,
   ArrowRight
 } from 'lucide-react';
 
 interface NavbarProps {
   onOpenPortal: () => void;
   onOpenApply: () => void;
-  onOpenAdmin: () => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onToggleSidebar: () => void;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
-  adminUser?: any;
-  onLogout?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   onOpenPortal, 
   onOpenApply, 
-  onOpenAdmin,
   activeSection,
   setActiveSection,
   onToggleSidebar,
   isDarkMode,
-  onToggleDarkMode,
-  adminUser,
-  onLogout
+  onToggleDarkMode
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -81,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* ======================================================== */}
       {/* 1. TOP BAR                                               */}
       {/* Clean Header: Email | Helpline Phone | Light/Dark Mode   */}
-      {/* (WAEC/NECO, Admin Login & Portals moved to Sidebar)      */}
+      {/* Contact and support actions remain in the section menu. */}
       {/* ======================================================== */}
       <div className="bg-[#03542c] dark:bg-[#024423] text-emerald-100 text-xs py-2 px-3 sm:px-6 border-b border-emerald-700/60 transition-colors duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
@@ -157,8 +147,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Sidebar Toggle Button - Prominent 3 Horizontal Lines */}
             <button
               onClick={onToggleSidebar}
-              className="p-2 sm:px-3 sm:py-2.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-school-gold hover:text-white border border-emerald-700/60 hover:border-school-gold transition-all flex items-center gap-2 shadow-sm group"
-              title="Open Navigation Menu & Portals"
+              className="hidden 2xl:flex p-2 sm:px-3 sm:py-2.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-school-gold hover:text-white border border-emerald-700/60 hover:border-school-gold transition-all items-center gap-2 shadow-sm group"
+              title="Open school section menu"
               aria-label="Open Sidebar Menu"
             >
               {/* Three horizontal lines (hamburger icon) */}
@@ -200,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     Academy
                   </span>
                 </div>
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-200/90 font-medium whitespace-nowrap">
+                <div className="hidden sm:flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] text-emerald-200/90 font-medium whitespace-nowrap">
                   <span className="text-school-goldLight font-semibold">Secondary School</span>
                   <span className="opacity-60">|</span>
                   <span>Lafia, Nasarawa State</span>
@@ -211,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Desktop Navigation Links (Center) */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 flex-shrink">
+          <div className="hidden 2xl:flex items-center space-x-1 xl:space-x-1.5 flex-shrink">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -238,18 +228,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             
             {/* Enroll Now Button */}
             <button
-              onClick={onOpenApply}
-              className="bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black uppercase tracking-wider px-3 sm:px-3.5 py-2 rounded-lg shadow-sm hover:shadow transition-all duration-200 flex items-center gap-1.5 border border-amber-300 whitespace-nowrap flex-shrink-0"
+              onClick={() => handleLinkClick('admissions', '#admissions')}
+              className="hidden md:flex bg-amber-400 hover:bg-amber-300 text-emerald-950 text-xs font-black uppercase tracking-wider px-3 sm:px-3.5 py-2 rounded-lg shadow-sm hover:shadow transition-all duration-200 items-center gap-1.5 border border-amber-300 whitespace-nowrap flex-shrink-0"
               title="Enroll into Hammadur Rahman Academy"
             >
               <FileText className="w-3.5 h-3.5 text-emerald-950 flex-shrink-0" />
-              <span>Enroll Now</span>
+              <span>Admissions</span>
             </button>
 
             {/* Mobile Menu Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-emerald-100 hover:text-white bg-emerald-950/70 hover:bg-emerald-800/80 border border-emerald-700/60 lg:hidden transition-colors"
+              className="p-2 rounded-xl text-emerald-100 hover:text-white bg-emerald-950/70 hover:bg-emerald-800/80 border border-emerald-700/60 2xl:hidden transition-colors"
               aria-label="Toggle Mobile Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-school-gold" /> : <Menu className="w-5 h-5 text-emerald-100" />}
@@ -265,7 +255,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Comprehensive responsive menu with all links & actions   */}
       {/* ======================================================== */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#03542c]/98 dark:bg-[#024423]/98 backdrop-blur-xl border-b border-emerald-700/60 shadow-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-300 max-h-[85vh] overflow-y-auto">
+        <div className="2xl:hidden bg-[#03542c]/98 dark:bg-[#024423]/98 backdrop-blur-xl border-b border-emerald-700/60 shadow-2xl px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-3 duration-300 max-h-[85vh] overflow-y-auto">
           
           {/* Header Card inside Mobile Menu */}
           <div className="p-3 rounded-xl bg-emerald-950/90 border border-school-gold/40 flex items-center justify-between">
@@ -293,7 +283,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="p-2.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 text-white border border-emerald-700/60 flex items-center justify-center gap-1.5 font-bold text-center"
             >
               <UserCheck className="w-3.5 h-3.5 text-school-gold" />
-              <span>Result Portal</span>
+              <span>Student support</span>
             </button>
 
             <button
@@ -304,7 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="p-2.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-emerald-950 flex items-center justify-center gap-1.5 font-black text-center shadow-sm"
             >
               <FileText className="w-3.5 h-3.5 text-emerald-950" />
-              <span>Apply Online</span>
+              <span>Admissions enquiry</span>
             </button>
           </div>
 
@@ -334,36 +324,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile Footer: Sidebar Opener */}
           <div className="pt-3 border-t border-emerald-800/50 space-y-2">
-            {adminUser && (
-              <div className="p-3 rounded-xl bg-emerald-950 border border-school-gold/40 flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-bold text-school-gold">{adminUser.fullName || adminUser.username}</p>
-                  <p className="text-[10px] text-emerald-200">{adminUser.role || 'Administrator'}</p>
-                </div>
-                <div className="flex gap-1.5">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      onOpenAdmin();
-                    }}
-                    className="px-2.5 py-1 bg-school-gold text-[#022419] rounded text-xs font-bold"
-                  >
-                    Dashboard
-                  </button>
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      if (onLogout) onLogout();
-                    }}
-                    className="px-2 py-1 bg-red-600/80 hover:bg-red-600 text-white rounded text-xs font-bold flex items-center gap-1"
-                  >
-                    <LogOut className="w-3 h-3" />
-                    <span>Logout</span>
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* Sidebar Opener from inside Mobile Drawer */}
             <button
               onClick={() => {
@@ -373,7 +333,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="w-full py-2.5 px-4 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-200 text-xs font-bold flex items-center justify-center gap-2 border border-emerald-700/60 shadow-sm"
             >
               <Menu className="w-4 h-4 text-school-gold" />
-              <span>Open Campus Sidebar & Staff Access</span>
+              <span>Browse all sections</span>
               <ArrowRight className="w-3.5 h-3.5 text-school-gold" />
             </button>
           </div>
