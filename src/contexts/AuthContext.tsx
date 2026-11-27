@@ -20,13 +20,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isSupabaseConfigured);
 
   useEffect(() => {
-    if (!isSupabaseConfigured) {
-      setLoading(false);
-      return;
-    }
+    if (!isSupabaseConfigured) return;
 
     // 1. Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -105,16 +102,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error };
   };
 
-  // Safe role check: prioritize app_metadata (set by server/admin) over user_metadata
-  const userRole = (user?.app_metadata?.role as string) || (user?.user_metadata?.role as string) || null;
-  const isAdmin = Boolean(
-    user && (
-      userRole === 'admin' || 
-      userRole === 'super_admin' || 
-      userRole === 'bursar' ||
-      user?.email?.toLowerCase().includes('admin')
-    )
-  );
+  const userRole = (user?.app_metadata?.role as string) || null;
+  const isAdmin = Boolean(user && ['admin', 'super_admin', 'bursar'].includes(userRole ?? ''));
 
   return (
     <AuthContext.Provider
@@ -136,6 +125,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
+// Keep the provider and its matching hook together as the context's public API.
+// eslint-disable-next-line react/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

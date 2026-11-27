@@ -1,164 +1,68 @@
 import React from 'react';
-import { SCHOOL_INFO, ADMISSION_STEPS } from '../data/schoolData';
-import { 
-  FileCheck, 
-  Sparkles, 
-  Calendar, 
-  Download, 
-  HelpCircle, 
-  CheckCircle, 
-  ArrowRight,
-  Clock,
-  BadgeAlert
-} from 'lucide-react';
+import { ArrowRight, ClipboardList, MessageCircle, School } from 'lucide-react';
 
 interface AdmissionsSectionProps {
   onOpenApply: () => void;
 }
 
-export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => {
-  return (
-    <section id="admissions" className="py-20 bg-[#046a38] dark:bg-[#03542c] text-white relative border-t border-emerald-700/40 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-school-gold text-xs font-bold uppercase tracking-wider mb-3 border border-school-gold/30">
-            <FileCheck className="w-4 h-4 text-school-gold" />
-            <span>Admissions Portal 2026/2027</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
-            Begin Your Child's Journey to Excellence
-          </h2>
-          <p className="mt-4 text-emerald-100/90 text-sm sm:text-base leading-relaxed">
-            Admissions are ongoing for Junior Secondary (JSS 1, JSS 2) and Senior Secondary (SSS 1, SSS 2 transfers). Day and Boarding slots are available on merit.
-          </p>
-        </div>
+const nextSteps = [
+  {
+    number: '01',
+    icon: MessageCircle,
+    title: 'Speak with the school',
+    description: 'Contact the admissions office for current intake information and entry requirements.',
+  },
+  {
+    number: '02',
+    icon: ClipboardList,
+    title: 'Confirm what to prepare',
+    description: 'The office will let you know which documents are needed for your child’s year level.',
+  },
+  {
+    number: '03',
+    icon: School,
+    title: 'Arrange a campus visit',
+    description: 'Ask about visiting the Lafia campus and the next steps for an application.',
+  },
+];
 
-        {/* 4-Step Admission Pathway */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {ADMISSION_STEPS.map((item, idx) => (
-            <div 
-              key={idx}
-              className="p-6 rounded-2xl bg-emerald-950/60 border border-emerald-800/60 hover:border-school-gold/60 shadow-md transition-all duration-300 relative group"
-            >
-              <div className="text-4xl font-black font-heading text-school-gold/40 group-hover:text-school-gold transition-colors mb-4">
-                {item.step}
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-school-gold transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-xs text-emerald-100/80 leading-relaxed">
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Requirements & Key Dates Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
-          
-          {/* Left: Requirements Checklist (7 cols) */}
-          <div className="lg:col-span-7 bg-emerald-950/70 border border-emerald-800/70 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2.5 mb-4 text-school-gold">
-                <FileCheck className="w-5 h-5 text-school-gold" />
-                <h3 className="text-lg font-bold text-white uppercase tracking-wider font-heading">
-                  Admission Requirements Checklist
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-emerald-100/90 mb-6">
-                Please prepare the following credentials before sitting for the screening exercise at our Lafia campus:
-              </p>
-
-              <div className="space-y-3">
-                {[
-                  "Completed Online Application Form or Physical Application Dossier",
-                  "Photocopy of Candidate's National Birth Certificate or Statutory Age Declaration",
-                  "Primary Six (6) School Testimonial / Continuous Assessment Record (for JSS1)",
-                  "Official Transcript & Last Promotion Report Card (for SSS1 / JSS2 transfers)",
-                  "Four (4) recent passport-sized photographs (red/white background)",
-                  "Certificate of Medical Fitness from a recognized Government/General Hospital",
-                  "Letter of Identification from Parent's/Guardian's Employer or Traditional Ruler"
-                ].map((req, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm text-emerald-100">{req}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-emerald-800/60 flex items-center justify-between text-xs text-emerald-200/80">
-              <span>Age Requirement: Minimum of 10 years for JSS1 entry.</span>
-              <span className="text-school-gold font-bold">Strict Merit Policy</span>
-            </div>
-          </div>
-
-          {/* Right: Key Dates & Quick Register (5 cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-[#033527] to-emerald-950 border border-school-gold/40 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-2xl text-white">
-            
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-school-gold uppercase tracking-wider">
-                  2026/2027 Screening Schedule
-                </span>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded border border-emerald-500/30">
-                  Batch 1 Open
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-school-gold flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">First Entrance Examination</h4>
-                    <p className="text-xs text-emerald-100 mt-0.5">Saturday, 8th August 2026 • 8:30 AM</p>
-                    <p className="text-[11px] text-emerald-200/80 mt-1">Main Hall, HRA Campus, Lafia, Nasarawa State</p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Second (Supplementary) Examination</h4>
-                    <p className="text-xs text-emerald-100 mt-0.5">Saturday, 29th August 2026 • 8:30 AM</p>
-                    <p className="text-[11px] text-emerald-200/80 mt-1">For candidates unable to attend Batch 1</p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-white/10 border border-white/10 flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Resumption for 2026/2027 Session</h4>
-                    <p className="text-xs text-emerald-100 mt-0.5">Monday, 14th September 2026</p>
-                    <p className="text-[11px] text-emerald-200/80 mt-1">Boarders check-in on Sunday, 13th September</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Direct CTA */}
-            <div className="pt-6 space-y-3">
-              <button
-                onClick={onOpenApply}
-                className="w-full py-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-md transition-all duration-200"
-              >
-                <FileCheck className="w-5 h-5 text-emerald-950" />
-                <span>Fill Online Application Form</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <p className="text-center text-[11px] text-emerald-200/80">
-                Application takes only 3 minutes. Instant confirmation and reference ID.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-
+export const AdmissionsSection: React.FC<AdmissionsSectionProps> = ({ onOpenApply }) => (
+  <section id="admissions" className="border-t border-emerald-700/40 bg-[#046a38] py-20 text-white transition-colors duration-300 dark:bg-[#03542c]">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto mb-12 max-w-3xl text-center">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-school-gold">Admissions</p>
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">A clear path to joining our school</h2>
+        <p className="mt-4 text-sm leading-7 text-emerald-100/90 sm:text-base">
+          Intake dates and requirements can change. Please contact the school office for the latest information before preparing an application.
+        </p>
       </div>
-    </section>
-  );
-};
+
+      <div className="grid gap-5 md:grid-cols-3">
+        {nextSteps.map(({ number, icon: Icon, title, description }) => (
+          <article key={number} className="rounded-xl border border-emerald-700/60 bg-[#034d28] p-6 sm:p-7">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold tracking-widest text-school-gold">{number}</span>
+              <Icon className="h-5 w-5 text-school-gold" aria-hidden="true" />
+            </div>
+            <h3 className="mt-6 text-lg font-semibold text-white">{title}</h3>
+            <p className="mt-2 text-sm leading-6 text-emerald-100/80">{description}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-8 flex flex-col items-start justify-between gap-5 rounded-xl border border-emerald-700/60 bg-[#023a1e] p-6 sm:flex-row sm:items-center sm:p-8">
+        <div>
+          <h3 className="text-lg font-semibold text-white">Interested in joining Hammadur Rahman Academy?</h3>
+          <p className="mt-1 text-sm text-emerald-100/80">Our team can answer questions about entry, school life and visits.</p>
+        </div>
+        <button
+          type="button"
+          onClick={onOpenApply}
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-school-gold px-5 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#023a1e]"
+        >
+          Contact admissions <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  </section>
+);
