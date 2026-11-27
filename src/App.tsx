@@ -23,27 +23,15 @@ export function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  const { user: supabaseUser, signOut: supabaseSignOut } = useAuth();
+  const { user: supabaseUser, signOut: supabaseSignOut, isAdmin } = useAuth();
 
-  // Authenticated Administrator Session with Supabase & localStorage synchronization
-  const [adminUser, setAdminUser] = useState<any>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('hra_admin_user');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          return null;
-        }
-      }
-    }
-    return null;
-  });
+  // Admin UI state is memory-only; authentication is managed by the auth provider.
+  const [adminUser, setAdminUser] = useState<any>(null);
 
   // Sync Supabase Auth state with adminUser
   useEffect(() => {
-    if (supabaseUser) {
-      const role = (supabaseUser.app_metadata?.role as string) || (supabaseUser.user_metadata?.role as string) || 'Administrator';
+    if (supabaseUser && isAdmin) {
+      const role = (supabaseUser.app_metadata?.role as string) || 'Administrator';
       const userObj = {
         id: supabaseUser.id,
         email: supabaseUser.email,
@@ -53,24 +41,17 @@ export function App() {
         source: 'supabase'
       };
       setAdminUser(userObj);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('hra_admin_user', JSON.stringify(userObj));
-      }
+    } else {
+      setAdminUser(null);
     }
-  }, [supabaseUser]);
+  }, [supabaseUser, isAdmin]);
 
   const handleAdminLogin = (user: any) => {
     setAdminUser(user);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('hra_admin_user', JSON.stringify(user));
-    }
   };
 
   const handleAdminLogout = async () => {
     setAdminUser(null);
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('hra_admin_user');
-    }
     await supabaseSignOut();
   };
 

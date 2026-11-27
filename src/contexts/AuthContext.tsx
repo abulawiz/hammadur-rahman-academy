@@ -106,14 +106,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Safe role check: prioritize app_metadata (set by server/admin) over user_metadata
-  const userRole = (user?.app_metadata?.role as string) || (user?.user_metadata?.role as string) || null;
+  const userRole = (user?.app_metadata?.role as string) || null;
   const isAdmin = Boolean(
-    user && (
-      userRole === 'admin' || 
-      userRole === 'super_admin' || 
-      userRole === 'bursar' ||
-      user?.email?.toLowerCase().includes('admin')
-    )
+    user && ['admin', 'super_admin', 'bursar'].includes(userRole || '')
   );
 
   return (
