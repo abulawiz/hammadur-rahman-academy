@@ -283,7 +283,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="p-2.5 rounded-lg bg-emerald-900/80 hover:bg-emerald-800 text-white border border-emerald-700/60 flex items-center justify-center gap-1.5 font-bold text-center"
             >
               <UserCheck className="w-3.5 h-3.5 text-school-gold" />
-              <span>Student support</span>
+              <span>Pay school fees</span>
             </button>
 
             <button

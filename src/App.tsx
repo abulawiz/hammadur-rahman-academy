@@ -10,10 +10,12 @@ import { StudentLifeSection } from './components/StudentLifeSection';
 import { NewsEventsSection } from './components/NewsEventsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { StudentPortalModal } from './components/StudentPortalModal';
 
 export function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isStudentPortalOpen, setIsStudentPortalOpen] = useState(false);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
@@ -43,13 +45,14 @@ export function App() {
   }, []);
 
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const openStudentPortal = () => setIsStudentPortalOpen(true);
   const scrollToAcademics = () => document.getElementById('academics')?.scrollIntoView({ behavior: 'smooth' });
   const toggleDarkMode = () => setIsDarkMode((previous) => !previous);
 
   return (
     <div className="min-h-screen bg-[#046a38] font-sans text-slate-100 selection:bg-school-gold selection:text-emerald-950 transition-colors duration-300 dark:bg-[#03542c]">
       <Navbar
-        onOpenPortal={scrollToContact}
+        onOpenPortal={openStudentPortal}
         onOpenApply={scrollToContact}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
@@ -63,14 +66,14 @@ export function App() {
         onClose={() => setIsSidebarOpen(false)}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
-        onOpenPortal={scrollToContact}
+        onOpenPortal={openStudentPortal}
         onOpenApply={scrollToContact}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
       />
 
       <main>
-        <Hero onOpenApply={scrollToContact} onOpenPortal={scrollToContact} onExploreAcademics={scrollToAcademics} />
+        <Hero onOpenApply={scrollToContact} onOpenPortal={openStudentPortal} onExploreAcademics={scrollToAcademics} />
         <PrincipalWelcome />
         <AcademicsSection onOpenApply={scrollToContact} />
         <AdmissionsSection onOpenApply={scrollToContact} />
@@ -80,7 +83,8 @@ export function App() {
         <ContactSection />
       </main>
 
-      <Footer onOpenPortal={scrollToContact} onOpenApply={scrollToContact} />
+      <Footer onOpenPortal={openStudentPortal} onOpenApply={scrollToContact} />
+      <StudentPortalModal isOpen={isStudentPortalOpen} onClose={() => setIsStudentPortalOpen(false)} />
     </div>
   );
 }
